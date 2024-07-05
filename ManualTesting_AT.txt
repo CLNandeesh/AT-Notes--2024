@@ -1,0 +1,27 @@
+->Types of Software
+System software
+ Software controls system internal functioning and hardware devices like speakers, monitors,..
+ OS, Drivers, Language processors,..
+ Written in Low level language C, C++, ...
+
+Application software
+ Designed to perform specific task for the end users
+ General purpose: Ms Word, Power point,...
+ Utility purpose: Antivirus, Disk cleaner, ...
+ Customized software: FB,...
+ Written in High level language like Python,...
+ 
+ ->What is Software testing
+ Vaidate actual implementation and expected requirement are matching
+ Part of SDLC
+
+->Obj and Purpose of ST
+ Quality product
+ To meet Business requirement specification
+ Find and Prevent defects
+ Within time and budget
+ Customer satisfaction
+ 
+Req specified is delivered to Customer with minimal or no defects[Requirement fulfilling] and minimal budget and time-> QUALITY
+
+->Daily activities as QA
