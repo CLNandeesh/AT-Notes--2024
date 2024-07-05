@@ -159,7 +159,8 @@ Performance Tuning: Fixing bottle neck either in WebApp server or Db server or i
 Set of rules to be followed by client to connect with server.
 http/https/ftp/smtp/,...
 
-->
+->What is an PT
+Testing application for speed[quick response time under concurrent load ], stability[longer duration with same performance Ex:8hrs/70% max load], scalability[increasing the load/future load] in production like environment under vuser load to meet NFR
 
 
 
