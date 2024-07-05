@@ -1,0 +1,93 @@
+->Non Functional testing
+	Performance testing
+
+->Bottleneck
+Defects are referred as Bottleneck in PT
+Cause for the deviation in the requirement.
+Ex: Login should take 2sec but its taking 6 sec. The reason for this slowness is the Bottleneck.
+
+->Why Perf testing
+To maintain quality of the Application , make sure application runs faster.
+As load[# users] increases on the AUT, Perf of the application may deteriorates.
+
+->NFR
+Non functional requirements to perform Perf Testing
+
+->What is Perf Testing
+Concurrent users: # users using application at same point of time
+Applying load on AUT and check the behaviour of the application wrt response time.
+# users count will be given by client as part of NFR
+These users are called Vusers: Machine generated users
+
+->PT Tools
+Load Runner
+Performance center
+Jmeter
+NewLoad
+SilkPerformer
+Webload
+OATS
+
+->Types of Users
+User base: Total number of users who can access the Application
+Application Users/Concurrent Users: Total number of users using[transaction or think time] system at specific point of time. 
+Simultaneous users:  Total number of users performing same operation at specific point of time. 
+
+Ex:
+UB:100 Users
+CU:20 using login/10 using payment/10 Waiting/25 Searching the product = 70 users using the application 
+SU:25 Searching the product at same time 
+
+->Install Load Runner
+Mercury came out Load runner from 1993 till 2016, now acquired by HP at 2004, Micro focus acquired from HP 
+Install Load runner
+ Vugen
+ Controller
+ Analysis
+
+->Software Architecture
+Hw+Sw
+To identify the reason for bottleneck, we need to aware of the architecture.
+
+->Server
+Processor+Memory[RAM]+Harddisk
+Software which understand and process the client request
+Place where our application is hosted
+
+File server: Process request related to files 
+Database Server: Process request related to data
+Application Server[App server]: Process request related to the application. Ex: Need to login to FB, Need to delete post in twitter.
+
+Presentation layer[UI]
+Business layer[Backend]
+Data layer[DB]
+
+Desktop App: Thin client [2 Tier Arch/Client Server]
+Web App: Thick client [2 Tier Arch/Client Server]
+
+3 Tier Arch [UI Layer+ Business logic Layer[App Server]+Data Layer] All 3 in different machine
+
+Web Application 3 Tier Architecture:
+Client<->Webserver<->App Server<->DB Server
+
+->Transaction
+Each request sent from Client to Server
+Any request sent to Server is known as transaction
+Note: UI level actions are not transaction, ex: entering UN is not transaction. Enter un,pw and Click on Login button , a request is sent to Server to perform login this is considered as Transaction
+Ex: Launch Page transaction, Login transaction, Logout Transaction
+
+->Response Time or E to E Transaction response time
+Time taken for the complete request to be processed by Server and sends back response to Client.
+Client---request->Server
+Server--response-->Client 
+
+->Internet: between client and server
+  Intranet: between web, app and db server
+
+->Request processing
+If App server takes more time to process the request then we may need to increase the count of App server.
+
+
+
+
+
