@@ -12,7 +12,7 @@ Application software
  Written in High level language like Python,...
  
  ->What is Software testing
- Vaidate actual implementation and expected requirement are matching
+ Validate actual implementation and expected requirement are matching
  Part of SDLC
 
 ->Obj and Purpose of ST

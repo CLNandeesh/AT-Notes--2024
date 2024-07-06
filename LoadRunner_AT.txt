@@ -195,8 +195,17 @@ Test Result Analysis 15 days
  After fixing, Re Execution wil happen
  OP: Test Reports
 
+Bottleneck Analysis
+ If Bottle neck exists
+ Find if bottleneck exist and do analysis on the reason for the bottleneck 
+ Bottleneck can be in :Program written by Developer, WebApp Server, Processor, Memory, DB Server, Queries,....
+ Find issue exist, if yes where
+ After fixing, Re Execution wil happen
+
+
 ->When Perf Testing Start
  SDLC Requirement Analysis phase itself PTLC will starts or Dev phase it will start
 
+->NFR Gathering
 
        
