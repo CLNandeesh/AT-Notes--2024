@@ -160,10 +160,43 @@ Set of rules to be followed by client to connect with server.
 http/https/ftp/smtp/,...
 
 ->What is an PT
-Testing application for speed[quick response time under concurrent load ], stability[longer duration with same performance Ex:8hrs/70% max load], scalability[increasing the load/future load] in production like environment under vuser load to meet NFR
+Testing application for speed[quick response time under concurrent load ex 1000 users], stability[longer duration with same performance Ex:8hrs/70% max load], scalability[increasing the load/future load/50% increase in user load in next 1 year] in production like environment under vuser load to meet NFR
 
+->Definitions
+Throughput: # Transaction per seconds
+Response Time: Time taken by system to respond for a specific request [client <->Server], Taken by System.
+Think time: Waiting time between two transactions, 10 sec is the industry std think time, it will be different for different users. Taken by User.
+Transaction response time: Same as Response time [client <->Server]
 
+->PTLC: Performance testing Life Cycle
+NFR Gathering and Analysis 15 days
+ Test Lead or Manager collects the requirement from client and document it.
+ OP:NFR
 
+Test Strategy/Planning 15 days
+ Test Manager and Test Lead 15 days
+ Document to be prepared, reviewed and sign on.
+ OP: Test Plan
+
+Test Design and Development 1 month
+ Performance Test Specialist
+ Create Perf Test scripts
+ Multiple scripts will be created based on the critical scenarios
+ OP: Test Scripts
+
+Test Execution 15 days
+ OP: Test Results
+
+Test Result Analysis 15 days
+ Compare with benchmark result
+ Find if bottleneck exist and do analysis on the reason for the bottleneck 
+ Bottleneck can be in :Program written by Developer, WebApp Server, Processor, Memory, DB Server, Queries,....
+ Find issue exist, if yes where
+ After fixing, Re Execution wil happen
+ OP: Test Reports
+
+->When Perf Testing Start
+ SDLC Requirement Analysis phase itself PTLC will starts or Dev phase it will start
 
 
        
