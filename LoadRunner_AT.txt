@@ -200,15 +200,40 @@ Bottleneck Analysis
  Find if bottleneck exist and do analysis on the reason for the bottleneck 
  Bottleneck can be in :Program written by Developer, WebApp Server, Processor, Memory, DB Server, Queries,....
  Find issue exist, if yes where
- After fixing, Re Execution wil happen
+ After fixing, Re Execution will happen
 
 
 ->When Perf Testing Start
  SDLC Requirement Analysis phase itself PTLC will starts or Dev phase it will start
 
-->NFR Gathering
-Collect both Prod and Perft test env infrastructre details of both hardware and software.[OS,RAM,Processor speed,....of all Servers, Host machine,....]
-Treansaction details,mainly focus on critical business scenarios, high load business scenarios, ... Ex:Ticket booking in IRTC
+->Types of Perf test
+Load-speed
+Stress
+Endurance/Soak-Stability
+Scalability-
 
+->NFR Gathering
+Prod and Perf test env infrastructure details of both hardware and software.[WebApp server details, DB server details, LB details[OS, RAM, Processor speed]
+
+Transaction details, mainly focus on critical business scenarios, high load business scenarios, ... Ex: Ticket booking in IRTC
+
+Scalability related data
+
+Work load related data
+ Application usage pattern and volumes on business critical scenarios
+ Given by Client or Logs
+Ex: login scenario/high volume/700 tph[transaction per hour]
+    open or close fd/business critical/30tph
+    Statement for last 5 years/High resource intensive/10tph
+
+Peak hour details for all the scenarios and tph to be achieved details
+
+Expected Response time in seconds details for all the transactions[SLA]
+Ex:
+simple trs 2 sec Ex: login, navigation from one to other screen etc
+medium trs 5 sec Ex: create account
+complex trs 8 sec Ex: retrieve 100 records
+
+Database related details, Sensitive related info,...[Masking to be done]
 
        
