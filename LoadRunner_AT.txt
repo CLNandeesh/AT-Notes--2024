@@ -207,5 +207,8 @@ Bottleneck Analysis
  SDLC Requirement Analysis phase itself PTLC will starts or Dev phase it will start
 
 ->NFR Gathering
+Collect both Prod and Perft test env infrastructre details of both hardware and software.[OS,RAM,Processor speed,....of all Servers, Host machine,....]
+Treansaction details,mainly focus on critical business scenarios, high load business scenarios, ... Ex:Ticket booking in IRTC
+
 
        

@@ -113,3 +113,21 @@ https://courses.thetestingacademy.com/courses/learn-agile-and-scrum-fundamentals
 ->Goal setting 
 https://sdet.live/goals
 ->Install Software Testing Toolkit - ﻿sdet.club/wiki/5f36466b-cccd-45f7-8cb8-89959922ddc2
+
+
+UTL GitHub repo
+https://github.com/PramodDutta/LearningATB7xJavaPrograms/tree/main
+
+Attendance link:https://forms.gle/YuhTLeNC73po2Ep27
+Required Access
+Attendance 
+https://forms.gle/YuhTLeNC73po2Ep27
+Figma Link
+https://www.figma.com/board/swfQKkWjvVPOnMqQnNeNJf/ATB7x-Plan?node-id=0-1&t=SpqCrFNBOhAXdQM4-1
+Bonus Course Material
+https://courses.thetestingacademy.com/mycourses
+https://courses.thetestingacademy.com/courses/software-tester-blueprint/dashboard
+https://courses.thetestingacademy.com/courses/sdet-club-masterclasses-1337/dashboard
+
+
+

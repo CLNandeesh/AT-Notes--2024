@@ -95,3 +95,8 @@ Test scenario identification, TC creation and Review
 Test env setup
 Test execution
 Test closure
+
+Requirements->Test Plan ->Test Scenarios->Test Cases->Test case execution->Bug tracking
+Manual Test cases->Automation Test cases
+
+ 
