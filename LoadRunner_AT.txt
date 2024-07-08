@@ -135,7 +135,7 @@ LB checks which server is free and has less load and allocate request to that sp
 
 ->Three tier architecture
 
-Client<-->WebApp Servers[Tomcat,JBoss,Weblogic,Websphere,IS..]<-->DB Server
+Client<-->WebApp Servers[Tomcat, JBoss, Weblogic, Websphere, IS..]<-->DB Server
 
 ->User load
 New App: Client specify
@@ -143,7 +143,7 @@ Old App: Splunk logs
 
 ->Host machine: Where WebApp server[Tomcat,JBoss,...] / DB server [Oracle, DB2,..]is installed.Both can be in single host machine or it can in different host machine.
 One HM has WebApp server and other HM has DB server.
-OS:Redhat Linux, Solaris, HP-UX,...
+OS: Redhat Linux, Solaris, HP-UX,...
 
 ->Performance tuning
 Client-internet time->WebApp Server--intranet time->DB Server
@@ -215,16 +215,18 @@ Scalability-
 ->NFR Gathering
 Prod and Perf test env infrastructure details of both hardware and software.[WebApp server details, DB server details, LB details[OS, RAM, Processor speed]
 
-Transaction details, mainly focus on critical business scenarios, high load business scenarios, ... Ex: Ticket booking in IRTC
+Transaction details
+ Critical business scenarios/High load business scenarios/Frequently used scenarios
+ Ex: Ticket booking in IRTC
 
 Scalability related data
 
 Work load related data
  Application usage pattern and volumes on business critical scenarios
  Given by Client or Logs
-Ex: login scenario/high volume/700 tph[transaction per hour]
-    open or close fd/business critical/30tph
-    Statement for last 5 years/High resource intensive/10tph
+ Ex: login scenario/high volume/700 tph[transaction per hour]
+     open or close fd/business critical/30tph
+     Statement for last 5 years/High resource intensive/10tph
 
 Peak hour details for all the scenarios and tph to be achieved details
 
@@ -236,4 +238,58 @@ complex trs 8 sec Ex: retrieve 100 records
 
 Database related details, Sensitive related info,...[Masking to be done]
 
-       
+->Load Runner Suite
+Vugen [Virtual user generator]
+  Test script generation
+Controller
+  Test script execution
+Analysis
+  Test result analysis
+Agent[Load generator/Agent machine/Load injector]
+ Runs in background can able to see
+
+By default LoadRunner agent process .exe will be running in background process
+
+->Vugen [Virtual user generator]
+Used to create the Test script 
+Single user execution 
+Record and create the script
+Records the events between client and server on the network level[socket level] when an user perform any action with the server
+Load test in run for 1 hour to access the performance of the application. 
+
+->Controller
+Used to execute the script
+Simultaneous and Concurrent user execution 
+No of Scripts/No of Users to be executed is controlled by Controller
+Need to do Test run or dry run or shakeout test before running actual perf test to validate any env issue, data issue, LG issue, issue in script
+
+->Load runner Architecture
+
+Vugen:
+Creates two scripts and gives to Controller for WFM
+Check mail
+Compose mail
+
+Controller:
+Performs work force modeling based on client requirement and starts the execution.
+
+Scenario 1->
+            Group 1->Check mail   LG1  400 Users
+            Group ->Compose mail  LG2  600 Users
+
+LG/Load Injector/Agent machine
+In background LG/Load Injector/Agent machine downloads the scripts and start running these scripts on the AUT
+After running these scripts, LG will send result back to Controller, Controller now collates the result given by LG and send to Analysis for analysis.
+
+Analysis
+Client can start analyse the result given by Controller.
+
+Vugen[Script creation]->Controller[WFM]->LG[Execution]->Controller[Collate the result]->Analysis[Analyze the results]
+
+Note: 
+Same LG can execute many groups or different LG can be used to execute different group, based on capacity of LG
+One script have n number of transactions.
+One scenario will have 1 to N groups
+1 Groups will have one to N Scripts
+
+
