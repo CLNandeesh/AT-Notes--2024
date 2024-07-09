@@ -292,4 +292,38 @@ One script have n number of transactions.
 One scenario will have 1 to N groups
 1 Groups will have one to N Scripts
 
+->LR components installation
+Vugen and Analysis will be installed in Perf tester machine
+Controller will be installed in separate machine M1
+LG will be installed in separate machine M2[LG1],M3[LG2],...
+Connection between Controller and LG should be made[M1 to M2,M3,..]
+
+Same Controller will be sued by multiple Tester working in the project by booking slots. PT1 9am to 10 am, PT2 10 to 11 am,..
+
+->LG Machine calculation
+Memory footprint, its depends on protocol
+
+Ex 1:
+Http protocol needs 2.3 mb of RAM for one user
+To run 1000 users we need how many LG ?
+If processor has 500mb memory 
+500/2.3=217 approx. user load we can run on single lg machine
+Approx 5 LG needed t run 1000 user load
+
+
+Ex 2: 
+Need to execute SAP protocol script
+SAP protocol [memory footprint] needs 10mb per user
+2gb memory / 3.2 g HZ processor
+To run 1200 users how many LG needed
+
+2*1024/10=/10=204 Approx
+To run 1200 users we need Approx 6 LG
+
+->LG connection to Controller
+Through IP address we can able to connect LG to COntroller
+Contorller>Scenarios>Load generators>Click ADD>Add name>Add OS details>OK>Click on connect.It should be ready
+
+->Work Load modeling
+
 
