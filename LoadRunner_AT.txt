@@ -321,9 +321,47 @@ To run 1200 users how many LG needed
 To run 1200 users we need Approx 6 LG
 
 ->LG connection to Controller
-Through IP address we can able to connect LG to COntroller
-Contorller>Scenarios>Load generators>Click ADD>Add name>Add OS details>OK>Click on connect.It should be ready
+Through IP address we can able to connect LG to Controller
+Controller>Scenarios>Load generators>Click ADD>Add name>Add OS details>OK>Click on connect. It should be ready
 
-->Work Load modeling
+->Work Load modeling[WLM]
+Find No Of Vusers/No of Iteration/Pacing to achieve required TPH
 
+Think time: Time gap between transaction
+Pacing: Time gap between Iterations
 
+One Scenario->1 to N Groups->Each groups can have 1 to N LG->Each LG handles 1 to N VUsers OR one LG can be assigned to multiple groups
+
+Script  LG            VUsers
+Create  LG1, LG2  400 Vusers
+Delete  LG3       100 Vusers
+
+A  LG1 100 Vusers
+B  LG1 100 Vusers
+C  LG1 100 Vusers
+
+Ex 1: WLM
+Scenario ->Launch Think Time Login Think Time Logout =>Launch Scripts
+Required
+6 transactions per hour ie 6 Login should happen in one hour/need to run for 1 hour 
+How many Vusers and how many iterations per Vusers required ?
+
+Solution:
+Run for 1 VUsers and find how much time it takes to execute one scenario Ex: takes 10 min for exe of Login scenario
+
+Approach 1: 6 VUsers one iteration
+Approach 2: 1 VUsers 6 iteration
+Preferred Approach 2 since we need to reduce no of VUsers
+
+Ex 2: WLM
+Scenario ->Launch Think Time Login Think Time Logout =>Launch Scripts
+Required
+3 transactions per hour ie 6 Login should happen in one hour/need to run for 1 hour 
+How many Vusers and how many iterations per Vusers required ?
+
+Solution:
+Run for 1 VUsers and find how much time it takes to execute one scenario Ex: takes 10 min for exe of Login scenario
+
+Approach 1: 3 VUsers one iteration and idle for 30 min
+Approach 2: 1 VUsers 3 iteration 10 min idle between each iteration[Pacing]
+Preferred Approach 2 since we need to reduce no of VUsers
