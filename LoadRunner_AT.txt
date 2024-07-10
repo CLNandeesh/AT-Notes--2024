@@ -1,25 +1,31 @@
 ->Non Functional testing
+========================
 	Performance testing
 
 ->Bottleneck
+=============
 Defects are referred as Bottleneck in PT
 Cause for the deviation in the requirement.
 Ex: Login should take 2sec but its taking 6 sec. The reason for this slowness is the Bottleneck.
 
 ->Why Perf testing
+==================
 To maintain quality of the Application , make sure application runs faster.
 As load[# users] increases on the AUT, Perf of the application may deteriorates.
 
 ->NFR
+=======
 Non functional requirements to perform Perf Testing
 
 ->What is Perf Testing
+=======================
 Concurrent users: # users using application at same point of time
 Applying load on AUT and check the behaviour of the application wrt response time.
 # users count will be given by client as part of NFR
 These users are called Vusers: Machine generated users
 
 ->PT Tools
+==============
 Load Runner
 Performance center
 Jmeter
@@ -29,6 +35,7 @@ Webload
 OATS
 
 ->Types of Users
+=================
 User base: Total number of users who can access the Application
 Application Users/Concurrent Users: Total number of users using[transaction or think time] system at specific point of time. 
 Simultaneous users:  Total number of users performing same operation at specific point of time. 
@@ -39,6 +46,7 @@ CU:20 using login/10 using payment/10 Waiting/25 Searching the product = 70 user
 SU:25 Searching the product at same time 
 
 ->Install Load Runner
+=====================
 Mercury came out Load runner from 1993 till 2016, now acquired by HP at 2004, Micro focus acquired from HP 
 Install Load runner
  Vugen
@@ -46,6 +54,7 @@ Install Load runner
  Analysis
 
 ->Software Architecture
+=======================
 Hw+Sw
 To identify the reason for bottleneck, we need to aware of the architecture.
 
@@ -293,6 +302,7 @@ One scenario will have 1 to N groups
 1 Groups will have one to N Scripts
 
 ->LR components installation
+============================
 Vugen and Analysis will be installed in Perf tester machine
 Controller will be installed in separate machine M1
 LG will be installed in separate machine M2[LG1],M3[LG2],...
@@ -301,6 +311,7 @@ Connection between Controller and LG should be made[M1 to M2,M3,..]
 Same Controller will be sued by multiple Tester working in the project by booking slots. PT1 9am to 10 am, PT2 10 to 11 am,..
 
 ->LG Machine calculation
+========================
 Memory footprint, its depends on protocol
 
 Ex 1:
@@ -321,10 +332,12 @@ To run 1200 users how many LG needed
 To run 1200 users we need Approx 6 LG
 
 ->LG connection to Controller
+=============================
 Through IP address we can able to connect LG to Controller
 Controller>Scenarios>Load generators>Click ADD>Add name>Add OS details>OK>Click on connect. It should be ready
 
 ->Work Load modeling[WLM]
+=========================
 Find No Of Vusers/No of Iteration/Pacing to achieve required TPH
 
 Think time: Time gap between transaction
@@ -344,7 +357,7 @@ Ex 1: WLM
 Scenario ->Launch Think Time Login Think Time Logout =>Launch Scripts
 Required
 6 transactions per hour ie 6 Login should happen in one hour/need to run for 1 hour 
-How many Vusers and how many iterations per Vusers required ?
+How many Vusers and how many iterations per Vusers required and how much Pacing required?
 
 Solution:
 Run for 1 VUsers and find how much time it takes to execute one scenario Ex: takes 10 min for exe of Login scenario
@@ -356,12 +369,154 @@ Preferred Approach 2 since we need to reduce no of VUsers
 Ex 2: WLM
 Scenario ->Launch Think Time Login Think Time Logout =>Launch Scripts
 Required
-3 transactions per hour ie 6 Login should happen in one hour/need to run for 1 hour 
-How many Vusers and how many iterations per Vusers required ?
+3 transactions per hour ie 3 Login should happen in one hour/need to run for 1 hour 
+How many Vusers and how many iterations per Vusers required and how much Pacing required?
 
 Solution:
 Run for 1 VUsers and find how much time it takes to execute one scenario Ex: takes 10 min for exe of Login scenario
 
 Approach 1: 3 VUsers one iteration and idle for 30 min
-Approach 2: 1 VUsers 3 iteration 10 min idle between each iteration[Pacing]
+Approach 2: 1 VUsers 3 iteration 10 min idle between each iteration[Pacing=10min]
 Preferred Approach 2 since we need to reduce no of VUsers
+
+Ex 3: WLM
+Scenario ->Launch Think Time Login Think Time Logout =>Launch Scripts
+Required
+12 transactions per hour ie 12 Login should happen in one hour/need to run for 1 hour 
+How many Vusers and how many iterations per Vusers required and how much Pacing required?
+
+Solution:
+Run for 1 VUsers and find how much time it takes to execute one scenario Ex: takes 10 min for exe of Login scenario
+
+Approach 1: 2 VUsers each executing 6 iteration without any pacing total 12 TPH [Pacing=0min]
+
+Ex 4: WLM
+Scenario ->Launch Think Time Login Think Time Logout =>Launch Scripts
+
+Required
+6 transactions per hour with 2 Concurrent users 
+How many Vusers and how many iterations per Vusers and how much Pacing required?
+
+Solution:
+Run for 1 VUsers and find how much time it takes to execute one scenario Ex: takes 10 min for exe of Login scenario
+
+Approach:
+2 VUsers 3 Iterations 10 min pacing 
+
+U1  It1 10 min Pacing It2 10 min Pacing  It3 10 min Pacing 
+U2  It1 10 min Pacing It2 10 min Pacing  It3 10 min Pacing
+
+Ex 5:
+1025 Login TPH 298 Concurrent Users
+
+Solution:
+Run for 1 VUsers and find how much time it takes to execute one scenario Ex: takes 10 min for exe of Login scenario
+
+Little Formula
+
+N=X * (Rt)
+N:No of Concurrent Users
+X:Throughput per Second[Transactions per second]
+Rt: Response time per second
+
+N=X *(Rt+Zt)(For system with think time)
+
+Zt: Think time
+Industry standard Think time Zt is 10 sec
+
+Rt+Zt =Script Execution Time
+Time taken to execute a script for one user along with think time
+Ex: Login Scenario ->Launch Think Time Login Think Time Logout =>Launch Scripts
+
+N= TPS * (Time taken to execute script for one user along with think time + pacing)
+N= X * (SET +Pacing)
+
+
+Ex:
+600 Concurrent users
+
+Login Scenario
+TPH 700
+
+Account Summary
+TPH 1000
+
+Check Transactions
+TPH 800
+
+Open FD
+TPH 30
+
+Statements
+TPH 10
+
+Solution:
+
+Step 1: Calculate X in Sec
+
+X=TPS=TPH/360=700/3600=0.194444
+X=0.194444
+
+
+Step 2: Calculate N for each Scenario
+
+N=600[Given]
+
+Sum of all TPH=700+1000+800+30+10=2540
+
+Login Scenario: 700/2540*600=165
+Account Summary: 1000/2540*600=237
+Check Transactions: 800/2540*600=189
+Open FD: 30/2540*600=7
+Statements: 10/2540*600=2
+-------------------------
+Total: 600 
+
+Step 3: Get SET in seconds
+
+Create script and run for one user in Seconds
+
+Login Scenario: 180 sec
+Account Summary: 300 sec
+Check Transactions:  300 sec
+Open FD:  240 sec
+Statements: 180 sec
+
+Step 4: Calculate Pacing for each scenario
+
+Second checkbox of RTS
+Pacing=N/X-SET
+
+Pacing for Login Scenario: 165/0.194444-180=668 Sec
+Pacing for Account Summary: 237/0.194444-300=553 Sec
+Pacing for Check Transactions: 189/0.194444-300=550 Sec
+Pacing for Open FD:  7/0.194444-240=600 Sec
+Pacing for Statements: 2/0.194444-180=540 Sec
+
+Third checkbox of RTS
+Pacing=N/X
+
+Pacing for Login Scenario: 165/0.194444=668 Sec
+Pacing for Account Summary: 237/0.194444=553 Sec
+Pacing for Check Transactions: 189/0.194444=550 Sec
+Pacing for Open FD:  7/0.194444=600 Sec
+Pacing for Statements: 2/0.194444=540 Sec
+
+Step 5:
+Go to Run time setting , click on pacing, Select second check box  and then apply there
+
+OR 
+N/X
+Go to Run time setting , click on pacing, Select third check box  and then apply there
+
+->VUGEN
+=======
+Steps to create script
+ Understand AUT
+ Record the Transactions
+ Enhance the Script
+ Playback to make sure there is no issues in the script
+
+http://localhost:1080/WebTours/
+
+
