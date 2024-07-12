@@ -519,4 +519,49 @@ Steps to create script
 
 http://localhost:1080/WebTours/
 
+Vuser_init
+Action
+Vuser_end
+
+->RTS: Run Time Setting
+======================
+Order of action execution depends on RTS action sequence.
+Sequence of execution setup
+No of Iteration Setup
+Block creation
+
+Creating block:
+Click on Insert block>Click on Insert required actions>Set no of Iterations for the block>Execute
+
+
+->Script Recording
+==================
+Setup:
+Step 1:
+Click on record>Recording options link>General
+ Recording>HTML Advance>Click on Use Defaults
+ HTTP Properties>Advance>Disable Replace pass with enc parameters
+ Mapping and Filtering>Select Socket level data dropdown
+
+Step 2:
+Start recording
+
+Step 3:
+
+
+
+
+
+->C Programming Language
+========================
+Ctrl+Space for short cut
+
+return 0 Action exe successfully
+return -1 Action exe failed
+
+//to print any data
+lr_output_message("Any Data");
+
+->Protocol Advisor
+Used to analyze the protocol used in the AUT
 
