@@ -1,0 +1,27 @@
+Features
+========
+Simple/Object Oriented/Platform Independent/Portable/Robust/Secure/Interpreted/Multi Threaded
+
+Source code[.java]>Byte code[.class file][JVM understandable code]
+
+Execution of Java code
+=======================
+Compiler: Converts .java file to .class file at once during compilation time.
+JVM: Translates .class file to native specific code[based on OS] and execute[JIT] it line by line during runtime.[Interpreter]
+
+JDK VS JRE VS JVM
+=================
+JDK: Tool kit having both JRE and JVM
+JRE: Run time env to execute Java program
+JVM: Used to execute Java program
+     
+Memory in JVM
+Stack
+Heap
+Method
+Register
+
+Stable version of JDK:21
+Company: Open JDK or Oracle JDK
+
+
