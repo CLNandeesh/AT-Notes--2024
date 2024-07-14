@@ -1,3 +1,5 @@
+https://github.com/PramodDutta/LearningATB7xJavaPrograms/tree/main
+
 Features
 ========
 Simple/Object Oriented/Platform Independent/Portable/Robust/Secure/Interpreted/Multi Threaded
@@ -23,5 +25,65 @@ Register
 
 Stable version of JDK:21
 Company: Open JDK or Oracle JDK
+
+Comments
+========
+//
+/*
+
+*/
+
+Main method
+===========
+Entry point for the program, recognized and exe by JVM.
+JVM identify main having standard syntax
+Class without main method cannot be executed
+static public allowed
+main method can be overloaded
+
+Keywords and Identifiers
+========================
+Keywords: Reserve words which has pre defined functionality and can be used in the programs.
+Ex: for int char
+
+Identifiers: Name given to variables, methods, class, interface, ....
+Rules:
+Starts with Letters or _ or $
+No Keywords can be used
+Can contain letters, digits, _ and $
+No space, can be used _
+Meaning full
+
+Variables and Data types
+=========================
+Containers to store the values
+Type of data
+ Primitive: Cannot be broken
+       Bolen Types: boolean
+       Numeric
+          Integral: byte[1], short[2], int[4], long[8], char[2]
+          Floating point: float[4], double[8]
+ Non Primitive: Can be broken
+          Class[String], Interface, Enum, Annotation type
+
+0b/0O/0X
+
+Variable Types
+Local/Instance/Static
+
+Constants
+=========
+final int a=100; //Value cannot be changed
+
+Operators
+=========
+Assignment Operator: =
+Compound Assignment Operator:a=a+10; a+=10;
+Unary Operator:- +
+Arithmetic Operator:+ - * / %
+Relational Operator:> < <= >= == != !
+
+ 
+
 
 
