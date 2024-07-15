@@ -82,8 +82,22 @@ Compound Assignment Operator:a=a+10; a+=10;
 Unary Operator:- +
 Arithmetic Operator:+ - * / %
 Relational Operator:> < <= >= == != !
+Logical Operator: ! || &&
+Equality operator: == !=
+Bitwise Operator: | & 
+Ternary Operator: ?:
 
- 
+byte>short>int>long>float>double
+           char
 
+Type Casting
+============
+Converting data of one type to another type
+Type checking is done by Compiler at compilation time, Type casting is done by JVM at runtime
 
+Primitive data type Type casting
+Implicit[widening]: Internally done by JVM at run time
+Explicit[narrowing]: Need to do manually using cast operator
+int a=100;
+byte b=(byte) a;
 
