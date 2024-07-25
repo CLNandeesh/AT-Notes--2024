@@ -1,25 +1,31 @@
 ->Non Functional testing
+========================
 	Performance testing
 
 ->Bottleneck
+=============
 Defects are referred as Bottleneck in PT
 Cause for the deviation in the requirement.
 Ex: Login should take 2sec but its taking 6 sec. The reason for this slowness is the Bottleneck.
 
 ->Why Perf testing
+==================
 To maintain quality of the Application , make sure application runs faster.
 As load[# users] increases on the AUT, Perf of the application may deteriorates.
 
 ->NFR
+=======
 Non functional requirements to perform Perf Testing
 
 ->What is Perf Testing
+=======================
 Concurrent users: # users using application at same point of time
 Applying load on AUT and check the behaviour of the application wrt response time.
 # users count will be given by client as part of NFR
 These users are called Vusers: Machine generated users
 
 ->PT Tools
+==============
 Load Runner
 Performance center
 Jmeter
@@ -29,6 +35,7 @@ Webload
 OATS
 
 ->Types of Users
+=================
 User base: Total number of users who can access the Application
 Application Users/Concurrent Users: Total number of users using[transaction or think time] system at specific point of time. 
 Simultaneous users:  Total number of users performing same operation at specific point of time. 
@@ -39,6 +46,7 @@ CU:20 using login/10 using payment/10 Waiting/25 Searching the product = 70 user
 SU:25 Searching the product at same time 
 
 ->Install Load Runner
+=====================
 Mercury came out Load runner from 1993 till 2016, now acquired by HP at 2004, Micro focus acquired from HP 
 Install Load runner
  Vugen
@@ -46,6 +54,7 @@ Install Load runner
  Analysis
 
 ->Software Architecture
+=======================
 Hw+Sw
 To identify the reason for bottleneck, we need to aware of the architecture.
 
@@ -135,7 +144,7 @@ LB checks which server is free and has less load and allocate request to that sp
 
 ->Three tier architecture
 
-Client<-->WebApp Servers[Tomcat,JBoss,Weblogic,Websphere,IS..]<-->DB Server
+Client<-->WebApp Servers[Tomcat, JBoss, Weblogic, Websphere, IS..]<-->DB Server
 
 ->User load
 New App: Client specify
@@ -143,7 +152,7 @@ Old App: Splunk logs
 
 ->Host machine: Where WebApp server[Tomcat,JBoss,...] / DB server [Oracle, DB2,..]is installed.Both can be in single host machine or it can in different host machine.
 One HM has WebApp server and other HM has DB server.
-OS:Redhat Linux, Solaris, HP-UX,...
+OS: Redhat Linux, Solaris, HP-UX,...
 
 ->Performance tuning
 Client-internet time->WebApp Server--intranet time->DB Server
@@ -159,10 +168,430 @@ Performance Tuning: Fixing bottle neck either in WebApp server or Db server or i
 Set of rules to be followed by client to connect with server.
 http/https/ftp/smtp/,...
 
-->
+->What is an PT
+Testing application for speed[quick response time under concurrent load ex 1000 users], stability[longer duration with same performance Ex:8hrs/70% max load], scalability[increasing the load/future load/50% increase in user load in next 1 year] in production like environment under vuser load to meet NFR
+
+->Definitions
+Throughput: # Transaction per seconds
+Response Time: Time taken by system to respond for a specific request [client <->Server], Taken by System.
+Think time: Waiting time between two transactions, 10 sec is the industry std think time, it will be different for different users. Taken by User.
+Transaction response time: Same as Response time [client <->Server]
+
+->PTLC: Performance testing Life Cycle
+NFR Gathering and Analysis 15 days
+ Test Lead or Manager collects the requirement from client and document it.
+ OP:NFR
+
+Test Strategy/Planning 15 days
+ Test Manager and Test Lead 15 days
+ Document to be prepared, reviewed and sign on.
+ OP: Test Plan
+
+Test Design and Development 1 month
+ Performance Test Specialist
+ Create Perf Test scripts
+ Multiple scripts will be created based on the critical scenarios
+ OP: Test Scripts
+
+Test Execution 15 days
+ OP: Test Results
+
+Test Result Analysis 15 days
+ Compare with benchmark result
+ Find if bottleneck exist and do analysis on the reason for the bottleneck 
+ Bottleneck can be in :Program written by Developer, WebApp Server, Processor, Memory, DB Server, Queries,....
+ Find issue exist, if yes where
+ After fixing, Re Execution wil happen
+ OP: Test Reports
+
+Bottleneck Analysis
+ If Bottle neck exists
+ Find if bottleneck exist and do analysis on the reason for the bottleneck 
+ Bottleneck can be in :Program written by Developer, WebApp Server, Processor, Memory, DB Server, Queries,....
+ Find issue exist, if yes where
+ After fixing, Re Execution will happen
 
 
+->When Perf Testing Start
+ SDLC Requirement Analysis phase itself PTLC will starts or Dev phase it will start
+
+->Types of Perf test
+Load-speed
+Stress
+Endurance/Soak-Stability
+Scalability-
+
+->NFR Gathering
+Prod and Perf test env infrastructure details of both hardware and software.[WebApp server details, DB server details, LB details[OS, RAM, Processor speed]
+
+Transaction details
+ Critical business scenarios/High load business scenarios/Frequently used scenarios
+ Ex: Ticket booking in IRTC
+
+Scalability related data
+
+Work load related data
+ Application usage pattern and volumes on business critical scenarios
+ Given by Client or Logs
+ Ex: login scenario/high volume/700 tph[transaction per hour]
+     open or close fd/business critical/30tph
+     Statement for last 5 years/High resource intensive/10tph
+
+Peak hour details for all the scenarios and tph to be achieved details
+
+Expected Response time in seconds details for all the transactions[SLA]
+Ex:
+simple trs 2 sec Ex: login, navigation from one to other screen etc
+medium trs 5 sec Ex: create account
+complex trs 8 sec Ex: retrieve 100 records
+
+Database related details, Sensitive related info,...[Masking to be done]
+
+->Load Runner Suite
+Vugen [Virtual user generator]
+  Test script generation
+Controller
+  Test script execution
+Analysis
+  Test result analysis
+Agent[Load generator/Agent machine/Load injector]
+ Runs in background can able to see
+
+By default LoadRunner agent process .exe will be running in background process
+
+->Vugen [Virtual user generator]
+Used to create the Test script 
+Single user execution 
+Record and create the script
+Records the events between client and server on the network level[socket level] when an user perform any action with the server
+Load test in run for 1 hour to access the performance of the application. 
+
+->Controller
+Used to execute the script
+Simultaneous and Concurrent user execution 
+No of Scripts/No of Users to be executed is controlled by Controller
+Need to do Test run or dry run or shakeout test before running actual perf test to validate any env issue, data issue, LG issue, issue in script
+
+->Load runner Architecture
+
+Vugen:
+Creates two scripts and gives to Controller for WFM
+Check mail
+Compose mail
+
+Controller:
+Performs work force modeling based on client requirement and starts the execution.
+
+Scenario 1->
+            Group 1->Check mail   LG1  400 Users
+            Group ->Compose mail  LG2  600 Users
+
+LG/Load Injector/Agent machine
+In background LG/Load Injector/Agent machine downloads the scripts and start running these scripts on the AUT
+After running these scripts, LG will send result back to Controller, Controller now collates the result given by LG and send to Analysis for analysis.
+
+Analysis
+Client can start analyse the result given by Controller.
+
+Vugen[Script creation]->Controller[WFM]->LG[Execution]->Controller[Collate the result]->Analysis[Analyze the results]
+
+Note: 
+Same LG can execute many groups or different LG can be used to execute different group, based on capacity of LG
+One script have n number of transactions.
+One scenario will have 1 to N groups
+1 Groups will have one to N Scripts
+
+->LR components installation
+============================
+Vugen and Analysis will be installed in Perf tester machine
+Controller will be installed in separate machine M1
+LG will be installed in separate machine M2[LG1],M3[LG2],...
+Connection between Controller and LG should be made[M1 to M2,M3,..]
+
+Same Controller will be sued by multiple Tester working in the project by booking slots. PT1 9am to 10 am, PT2 10 to 11 am,..
+
+->LG Machine calculation
+========================
+Memory footprint, its depends on protocol
+
+Ex 1:
+Http protocol needs 2.3 mb of RAM for one user
+To run 1000 users we need how many LG ?
+If processor has 500mb memory 
+500/2.3=217 approx. user load we can run on single lg machine
+Approx 5 LG needed t run 1000 user load
 
 
+Ex 2: 
+Need to execute SAP protocol script
+SAP protocol [memory footprint] needs 10mb per user
+2gb memory / 3.2 g HZ processor
+To run 1200 users how many LG needed
 
-       
+2*1024/10=/10=204 Approx
+To run 1200 users we need Approx 6 LG
+
+->LG connection to Controller
+=============================
+Through IP address we can able to connect LG to Controller
+Controller>Scenarios>Load generators>Click ADD>Add name>Add OS details>OK>Click on connect. It should be ready
+
+->Work Load modeling[WLM]
+=========================
+Find No Of Vusers/No of Iteration/Pacing to achieve required TPH
+
+Think time: Time gap between transaction
+Pacing: Time gap between Iterations
+
+One Scenario->1 to N Groups->Each groups can have 1 to N LG->Each LG handles 1 to N VUsers OR one LG can be assigned to multiple groups
+
+Script  LG            VUsers
+Create  LG1, LG2  400 Vusers
+Delete  LG3       100 Vusers
+
+A  LG1 100 Vusers
+B  LG1 100 Vusers
+C  LG1 100 Vusers
+
+Ex 1: WLM
+Scenario ->Launch Think Time Login Think Time Logout =>Launch Scripts
+Required
+6 transactions per hour ie 6 Login should happen in one hour/need to run for 1 hour 
+How many Vusers and how many iterations per Vusers required and how much Pacing required?
+
+Solution:
+Run for 1 VUsers and find how much time it takes to execute one scenario Ex: takes 10 min for exe of Login scenario
+
+Approach 1: 6 VUsers one iteration
+Approach 2: 1 VUsers 6 iteration
+Preferred Approach 2 since we need to reduce no of VUsers
+
+Ex 2: WLM
+Scenario ->Launch Think Time Login Think Time Logout =>Launch Scripts
+Required
+3 transactions per hour ie 3 Login should happen in one hour/need to run for 1 hour 
+How many Vusers and how many iterations per Vusers required and how much Pacing required?
+
+Solution:
+Run for 1 VUsers and find how much time it takes to execute one scenario Ex: takes 10 min for exe of Login scenario
+
+Approach 1: 3 VUsers one iteration and idle for 30 min
+Approach 2: 1 VUsers 3 iteration 10 min idle between each iteration[Pacing=10min]
+Preferred Approach 2 since we need to reduce no of VUsers
+
+Ex 3: WLM
+Scenario ->Launch Think Time Login Think Time Logout =>Launch Scripts
+Required
+12 transactions per hour ie 12 Login should happen in one hour/need to run for 1 hour 
+How many Vusers and how many iterations per Vusers required and how much Pacing required?
+
+Solution:
+Run for 1 VUsers and find how much time it takes to execute one scenario Ex: takes 10 min for exe of Login scenario
+
+Approach 1: 2 VUsers each executing 6 iteration without any pacing total 12 TPH [Pacing=0min]
+
+Ex 4: WLM
+Scenario ->Launch Think Time Login Think Time Logout =>Launch Scripts
+
+Required
+6 transactions per hour with 2 Concurrent users 
+How many Vusers and how many iterations per Vusers and how much Pacing required?
+
+Solution:
+Run for 1 VUsers and find how much time it takes to execute one scenario Ex: takes 10 min for exe of Login scenario
+
+Approach:
+2 VUsers 3 Iterations 10 min pacing 
+
+U1  It1 10 min Pacing It2 10 min Pacing  It3 10 min Pacing 
+U2  It1 10 min Pacing It2 10 min Pacing  It3 10 min Pacing
+
+Ex 5:
+1025 Login TPH 298 Concurrent Users
+
+Solution:
+Run for 1 VUsers and find how much time it takes to execute one scenario Ex: takes 10 min for exe of Login scenario
+
+Little Formula
+
+N=X * (Rt)
+N:No of Concurrent Users
+X:Throughput per Second[Transactions per second]
+Rt: Response time per second
+
+N=X *(Rt+Zt)(For system with think time)
+
+Zt: Think time
+Industry standard Think time Zt is 10 sec
+
+Rt+Zt =Script Execution Time
+Time taken to execute a script for one user along with think time
+Ex: Login Scenario ->Launch Think Time Login Think Time Logout =>Launch Scripts
+
+N= TPS * (Time taken to execute script for one user along with think time + pacing)
+N= X * (SET +Pacing)
+
+
+Ex:
+600 Concurrent users
+
+Login Scenario
+TPH 700
+
+Account Summary
+TPH 1000
+
+Check Transactions
+TPH 800
+
+Open FD
+TPH 30
+
+Statements
+TPH 10
+
+Solution:
+
+Step 1: Calculate X in Sec
+
+X=TPS=TPH/360=700/3600=0.194444
+X=0.194444
+
+
+Step 2: Calculate N for each Scenario
+
+N=600[Given]
+
+Sum of all TPH=700+1000+800+30+10=2540
+
+Login Scenario: 700/2540*600=165
+Account Summary: 1000/2540*600=237
+Check Transactions: 800/2540*600=189
+Open FD: 30/2540*600=7
+Statements: 10/2540*600=2
+-------------------------
+Total: 600 
+
+Step 3: Get SET in seconds
+
+Create script and run for one user in Seconds
+
+Login Scenario: 180 sec
+Account Summary: 300 sec
+Check Transactions:  300 sec
+Open FD:  240 sec
+Statements: 180 sec
+
+Step 4: Calculate Pacing for each scenario
+
+Second checkbox of RTS
+Pacing=N/X-SET
+
+Pacing for Login Scenario: 165/0.194444-180=668 Sec
+Pacing for Account Summary: 237/0.194444-300=553 Sec
+Pacing for Check Transactions: 189/0.194444-300=550 Sec
+Pacing for Open FD:  7/0.194444-240=600 Sec
+Pacing for Statements: 2/0.194444-180=540 Sec
+
+Third checkbox of RTS
+Pacing=N/X
+
+Pacing for Login Scenario: 165/0.194444=668 Sec
+Pacing for Account Summary: 237/0.194444=553 Sec
+Pacing for Check Transactions: 189/0.194444=550 Sec
+Pacing for Open FD:  7/0.194444=600 Sec
+Pacing for Statements: 2/0.194444=540 Sec
+
+Step 5:
+Go to Run time setting , click on pacing, Select second check box  and then apply there
+
+OR 
+N/X
+Go to Run time setting , click on pacing, Select third check box  and then apply there
+
+->VUGEN
+=======
+Steps to create script
+ Understand AUT
+ Record the Transactions
+ Enhance the Script
+ Playback to make sure there is no issues in the script
+
+http://localhost:1080/WebTours/
+
+Vuser_init
+Action
+Vuser_end
+
+->RTS: Run Time Setting
+======================
+Order of action execution depends on RTS action sequence.
+Sequence of execution setup
+No of Iteration Setup
+Block creation
+
+Creating block:
+Click on Insert block>Click on Insert required actions>Set no of Iterations for the block>Execute
+
+
+->Script Recording
+==================
+
+Step 1:
+Setup: RTS
+
+Click on record>Recording options link>General
+ Recording>HTML Advance>Select second option in both 
+
+ HTTP Properties>Advance>Disable Replace pass with enc parameters
+ Mapping and Filtering>Select Socket level data dropdown
+
+Tools>Options>Replay>Enable Show run time viewer
+To see execution while executing the script
+
+Adding Headers
+->In recording option we can add all required Headers before recording the script. OR after recording we can add required Headers and Regenerate the scripts.
+
+Step 2:
+Start recording
+
+Step 3:
+RTS
+Log>Enable Extended log
+    Enable Data returned by Server[Server Response][If more debugging needed]
+
+Step 4:
+Execute/Run/Playback
+Step by Step OR
+Continuous
+
+We can see response while executing in
+Snapshot > Replay> Page view/HTTP View
+Runtime Viewer
+
+Main Request we see response from Server while executing the script[Main WebRequests]
+web_url()
+web_submit_form()
+web_submit_data()
+web_custom_request()
+
+
+->C Programming Language
+========================
+Ctrl+Space for short cut
+
+return 0 Action exe successfully
+return -1 Action exe failed
+
+//to print any data
+lr_output_message("Any Data");
+
+->Protocol Advisor
+==================
+Used to analyze the protocol used in the AUT
+
+->OUTPUT LOGS
+=============
+RTS-Logs-Extended Logs
+ Enable Parameter Substituion option and also Enable Data returned by Server if there is any issue in the script
+
