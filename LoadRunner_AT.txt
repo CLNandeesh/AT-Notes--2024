@@ -536,20 +536,44 @@ Click on Insert block>Click on Insert required actions>Set no of Iterations for 
 
 ->Script Recording
 ==================
-Setup:
+
 Step 1:
+Setup: RTS
+
 Click on record>Recording options link>General
- Recording>HTML Advance>Click on Use Defaults
+ Recording>HTML Advance>Select second option in both 
+
  HTTP Properties>Advance>Disable Replace pass with enc parameters
  Mapping and Filtering>Select Socket level data dropdown
+
+Tools>Options>Replay>Enable Show run time viewer
+To see execution while executing the script
+
+Adding Headers
+->In recording option we can add all required Headers before recording the script. OR after recording we can add required Headers and Regenerate the scripts.
 
 Step 2:
 Start recording
 
 Step 3:
+RTS
+Log>Enable Extended log
+    Enable Data returned by Server[Server Response][If more debugging needed]
 
+Step 4:
+Execute/Run/Playback
+Step by Step OR
+Continuous
 
+We can see response while executing in
+Snapshot > Replay> Page view/HTTP View
+Runtime Viewer
 
+Main Request we see response from Server while executing the script[Main WebRequests]
+web_url()
+web_submit_form()
+web_submit_data()
+web_custom_request()
 
 
 ->C Programming Language
@@ -563,5 +587,11 @@ return -1 Action exe failed
 lr_output_message("Any Data");
 
 ->Protocol Advisor
+==================
 Used to analyze the protocol used in the AUT
+
+->OUTPUT LOGS
+=============
+RTS-Logs-Extended Logs
+ Enable Parameter Substituion option and also Enable Data returned by Server if there is any issue in the script
 
