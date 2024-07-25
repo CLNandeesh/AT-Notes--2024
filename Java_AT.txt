@@ -414,7 +414,91 @@ a->a*a;
 OR
 a->{return n*n;};
 
-Functional Interface
--------------------
-Interface having single abstract method.
+Functional Interface[SAM]
+-------------------------
+From Java 8, Interface can have default method, static methods and abstract methods.
+Interface having single abstract method and any number of default method, static methods is SAM or Functional Interface.
 Lambda expression is used to implement Functional Interface abstract method.
+@FunctionalInterface annotaion
+
+Ex: Runnable Interface have run()
+Comparable Interface have compareTo()
+Callable Interface have call()
+Abstract Listener Interface have actionPerformed()
+
+
+Ex:
+@FunctionalInterface
+interface Cab
+{
+    public  void bookCab();
+}
+
+class Ola implements Cab
+{
+    public void bookCab()
+    {
+        System.out.println("Ola Cab is BOOKED");
+    }
+
+
+}
+public class Lambda1 {
+    public static void main(String[] args) {
+        Cab cab=new Ola();
+        cab.bookCab();
+    }
+
+}
+
+
+LAMBDA Exp
+
+@FunctionalInterface
+interface Cab
+{
+    public  void bookCab();
+}
+public class Lambda1 {
+    public static void main(String[] args) {
+        Cab cab=()->System.out.println("Ola Cab is BOOKED");
+        cab.bookCab();
+    }
+
+}
+
+Ex:
+@FunctionalInterface
+interface Cab2
+{
+    public  void bookCab(String source,String destination);
+}
+
+public class Lambda2 {
+
+    public static void main(String[] args) {
+        Cab2 cab=(so,des)->System.out.println("Ola Cab is BOOKED from "+so+" to "+des);
+        cab.bookCab("Mysore","Bangalore");
+    }
+}
+
+Ex:
+@FunctionalInterface
+interface Cab3
+{
+    public  int bookCab(String source,String destination);
+}
+
+public class Lambda3 {
+    public static void main(String[] args) {
+        Cab3 cab=(so,des)->
+        {
+            System.out.println("Ola Cab is BOOKED from "+so+" to "+des);
+             return 100;
+        };
+       int price= cab.bookCab("Mysore","Bangalore");
+        System.out.println("Price is: "+price);
+    }
+}
+
+
