@@ -358,4 +358,63 @@ public class ForloopDemo {
 
 break and continue can be used inside the loops.
 
+ini
+while(cond)
+{
+stm;
+inc/dec;
+}
 
+ini
+do 
+{
+stm;
+inc/dec;
+}while(cond);
+
+Functions
+=========
+Function wo Parameter and no Return type
+Function with Parameter and no Return type
+Function wo Parameter and with Return type
+Function with Parameter and with Return type
+
+Lambda Functions
+================
+Anonymous function with no return type, access modifiers and name.
+No data type in arguments
+No curly brackets if there is single statement.
+If there is single arg then no need to use bracket.
+If there is return statement then need to add curly braces else need to remove return statement and also curly braces.
+
+
+Ex:
+public void m1()
+{
+sop("hai");
+}
+
+()->sop("hai");
+
+Ex:
+public void m1(int a,int b)
+{
+sop(a+b);
+}
+
+(a, b)->sop(a+b);
+
+Ex:
+void m1(int a)
+{
+return a*a;
+}
+
+a->a*a;
+OR
+a->{return n*n;};
+
+Functional Interface
+-------------------
+Interface having single abstract method.
+Lambda expression is used to implement Functional Interface abstract method.
