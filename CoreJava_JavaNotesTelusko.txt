@@ -1,0 +1,2254 @@
+CORE JAVA CONTENTS
+==================
+INNER CLASS
+ARRAYS
+STRING
+LAMBDA EXPRESSION and FUNCTIONAL INTERFACE
+EXCEPTION HANDLING
+MULTITHREADING
+****************************************************************************************************************************************************
+INNER CLASS
+===========
+3 types
+->member/static/ananymous Inner class
+
+a)Member Inner class
+--------------------
+class A
+{
+	public void show() {
+		System.out.println("in A show");
+	}
+	
+	class B
+	{
+		public void show() {
+			System.out.println("in B show");
+		}
+	}
+}
+public class MemberInnerClass {
+
+	public static void main(String[] args) {
+		A a=new A();
+		a.show();
+
+		A.B  b=a.new B();
+		b.show();
+	}
+
+}
+
+b)Static Inner class
+--------------------
+class C
+{
+	public void show() {
+		System.out.println("in C show");
+	}
+	
+	static class D
+	{
+		public void show() {
+			System.out.println("in D show");
+		}
+	}
+}
+
+public class StaticInnerClass {
+
+	public static void main(String[] args) {
+		C c=new C();
+		c.show();
+
+		C.D  d=new C.D();
+		d.show();
+
+	}
+
+}
+
+
+c)Ananymous InnerClass
+----------------------
+->If any class has to be used only once then we can use Anonymous inner class
+->Can create Object only once
+->Can be used to provide body for abstract methods.
+
+Example 1:
+class X {
+	public void show() {
+		System.out.println("in X show");
+	}
+
+}
+
+public class AnonymousInnerClass {
+
+	public static void main(String[] args) {
+		X x = new X() {
+
+			public void show() {
+				System.out.println("in Y show");
+			}
+		}
+
+		;
+		x.show();
+
+	}
+
+}
+
+
+Example 2:Ananymonous inner class to provide implementation for abstract class
+abstract class P {
+	abstract public void show();
+
+}
+
+public class AnonymousInnerClassWothAbstractClass {
+
+	public static void main(String[] args) {
+		P p=new P()
+				{
+			@Override
+			public void show()
+			{
+				System.out.println("in Sub Class show");
+			}
+				};
+		
+		p.show();
+	}
+
+}
+
+Example 3:Ananymonous inner class to provide implementation for Interface
+
+interface I {
+	void m1();
+}
+
+public class AnonymousInnerClasswithInterface {
+
+	public static void main(String[] args) {
+		I i=new I()
+				{
+			public void m1()
+			{
+				System.out.println("M1 method");
+				
+			}
+				};
+				
+				i.m1();
+	}
+
+}
+
+****************************************************************************************************************************************************
+ARRAYS
+======
+->Index based DS to store large volume of Homogeneous type
+->Treated as object whose value will be stored in heap and ref var will be stored in Stack
+->datatype [] ref var=new datatype[size];
+->Chances of ArrayIndexOutOfBoundException while accessing or retrieving elements
+
+Limitations:
+Homogeneous data, Fixed Size
+
+1D Array
+--------
+public class ReadWriteArrayOneD {
+
+	public static void main(String[] args) {
+
+		int[] a = new int[5];
+
+		Scanner sc = new Scanner(System.in);
+		for (int i = 0; i < a.length; i++) {
+			System.out.println("Enter "+i+" value: ");
+			a[i] = sc.nextInt();
+		}
+		
+		for (int i = 0; i < a.length; i++) {
+			System.out.println("The value of "+i+" element is: "+a[i]);
+		}
+
+	}
+
+}
+
+2D Array
+--------
+public class ReadWritetwoDArray {
+
+	public static void main(String[] args) {
+
+		int[][] a = new int[2][3]; // Regular array
+
+//		int[][] a = new int[2][3]; //Irregular array
+//		a[0]=new int[3];
+//		a[1]=new int[4];
+//		a[2]=new int[5];
+
+		// int[][] a = {{1,2,3},{3,4,5}};
+
+		Scanner sc = new Scanner(System.in);
+		for (int i = 0; i < a.length; i++) {
+			for (int j = 0; j < a[i].length; j++) {
+				System.out.println("Enter " + i + " row " + j + " column value: ");
+				a[i][j] = sc.nextInt();
+			}
+		}
+
+		for (int i = 0; i < a.length; i++) {
+			for (int j = 0; j < a[i].length; j++) {
+				System.out.print("Value of " + i + " row " + j + " column is: " + a[i][j]);
+			}
+			System.out.println();
+		}
+	}
+}
+
+Student Array 
+-------------
+class Student
+{
+	int age;
+	String name;
+}
+
+public class StudentClassArray {
+
+	public static void main(String[] args) {
+		
+		Scanner sc=new Scanner(System.in);
+		
+		Student []s=new Student[3];
+		
+		
+        for(int i=0;i<s.length;i++)
+        {
+        	s[i]=new Student();
+        	System.out.println("Enter age");
+        	s[i].age=sc.nextInt();
+        	System.out.println("Enter name");
+        	s[i].name=sc.next();
+        }
+        
+        for(int i=0;i<s.length;i++)
+        {
+        	System.out.println("Age is: "+s[i].age);
+        	System.out.println("Name is: "+s[i].name);
+        	System.out.println("Address is: "+s[i]);
+  
+        }  
+
+        for(Student st:s)
+        {
+        	System.out.println(st.age);
+        	System.out.println(st.name);
+        	System.out.println(st);
+        } 
+        
+	}
+
+}
+
+Arrays Class
+------------
+int []arr= {2,1,4,22,0};
+        Arrays.sort(arr);
+        for(int i:arr)
+        {
+        	System.out.println(i);
+        }
+
+Array Declaration ways
+---------------------
+String []s=new String[4];
+String []s={"","","",""};
+String []s=new String[]{"","",""};
+****************************************************************************************************************************************************
+STRING
+=======
+->Anything within ""/Is an Object
+Ex: "","Appu","123","A"
+->Mutable and Immutable
+StringBuffer and String Builder ->Mutable[Change in Same object]
+String->Immutable[No Change in Same Object]
+->Heap:Duplicates allowed
+->String Constant Pool:Present inside heap and Duplicates not allowed
+
+->Example:
+String str="Appu"; [Inside SCP]
+String s=new String("Appu"); [Indise SCP and Heap[s points to Heap not to SCP]
+
+->== ref value comparision
+  equals value comparison
+
+->When we create a string using literal, its created in SCP, ref will be pointing to SCP and no Duplicates allowed in SCP.
+  When we create a string using new, it created in heap and SCP. ref will be pointing to heap. duplicates allowed inside heap.
+->GCP cant collect object from SCP.Only when JVM shuts, memory will be de allocated from SCP.
+
+Methods
+---------
+1)str1.compareTo(str2);
+  0:Equals Str1>Str2:Positive Str2>Str1:Negative
+
+2)str1.equalIgnorecase(str2);
+
+3)str1.equals(str2);
+
+4)concat()
+str1="raj"; //raj is stored in scp and str1 will be pointing to it.
+str1.concat("appu"); //new obj will be created in heap and scp and value will be stored in both [rajappu], but no ref var pointing to it..str1 will be pointing to raj present in scp
+str2=str1.contact("appu") //new obj will be created in heap and scp and value will be stored in both [rajappu], str2 ref var pointing to it.str1 will be pointing to raj present in scp
+sop(str1) raj
+sop(str2) rajappu
+
+str1="raj"; //raj is stored in scp and str1 will be pointing to it.
+str1=str1.contact("appu") //new obj will be created in heap and scp and value will be stored in both [rajappu], str1 ref var pointing to it.str1 will no longer point to raj present in scp now.
+sop(str1) rajappu
+
+str1="appu"+"raj"; new obj appuraj will be cretae din scp
+
+str1="raj"; //raj is stored in scp and refered by str1
+str1=str1+"appu"; //new obj created in heap and scp and stores rajappu and str1 will point to heap ie rajappu
+
+Note: Anywhere ref var used in any of the operation then mem will be created in heap at runtime
+      any string operation is used then mem will be creeated in heap at runtime
+      direct value->SCP Use reference then Heap
+str="appu"+100+44; //appu10044
+
+final s="appu";
+s=s+"raj"; //CT Error
+
+Example
+-------
+public static void main(String[] args) {
+		String s1="Appu";  //Store in SCP
+		String s2="Appu";  //Store in SCP
+                //Both s1 and s2 refereing to same object
+
+		System.out.println(s1.equals(s2));//true
+		System.out.println(s1==s2);//true
+
+	}
+
+public static void main(String[] args) {
+		
+		String str1=new String("Appu"); //Stored in Heap and SCP, str1 points to Heap
+		String str2=new String("Appu"); //Stored in Heap and SCP, str1 points to Heap
+
+		System.out.println(str1.equals(str2));//true
+		System.out.println(str1==str2);//false
+
+	}
+
+public static void main(String[] args) {
+		
+		String s1="Appu"; //Created in SCP and s1 points to SCP
+		String s2=new String ("Appu"); //Created in SCP and Heap, s2 points to Heap
+		
+		System.out.println(s1==s2);
+		System.out.println(s1.equals(s2));
+		
+	}
+
+
+public static void main(String[] args) {
+		
+		String s1="Appu"; //Created in SCP and s1 points to SCP
+		String s2=new String ("Appu"); //Created in SCP and Heap, s2 points to Heap
+		
+		System.out.println(s1==s2); //false
+		System.out.println(s1.equals(s2)); //true
+		
+		String str1=new String("Appu"); //Created in SCP and Heap, s1 points to Heap
+		String str2=new String ("Appu"); //Created in SCP and Heap, s2 points to Heap
+		
+		System.out.println(str1==str2); //false
+		System.out.println(str1.equals(str2));//true
+
+	}
+
+STRINGBUFFER and STRING BUILDER
+--------------------------------
+Mutable tring Objects
+
+StringBuffer sb=new StringBuffer("appu");
+sop(sb); //appu
+sb.append("raj");
+sop(sb)//appuraj
+
+
+String s1=new String("appu");
+String s2=new String("appu");
+s1.equals(s2); //true [value comparision]
+
+
+StringBuffer sb1=new StringBuffer("appu");
+StringBuffer sb2=new StringBuffer("appu");
+sb1.equals(sb2); //false[ref value compariosion]
+
+final String s="appu";
+s=s+"raj"; //CT Error
+
+final StrinBuffer s="appu";
+s=s+"raj"; //appuraj
+
+Diffeence between StringBuffer and StringBuilder
+>Multithreading is possible in StringBuilder but not avl in StringBuffer
+
+****************************************************************************************************************************************************
+LAMBDA EXPRESSION and FUNCTIONAL INTERFACE
+=========================================
+
+Interface Types
+--------------
+Normal Interface
+SAM Interface[Functional Interface]-Single abstract interface[1 Abstract methods]
+Marker Interface-0 Abstract methods
+
+
+SAM Interface[Functional Interface]
+>Single abstract interface[1 Abstract methods]
+>Functional interface containes one abstract method and multiple default method [optional]
+>Lambda exp works only for SAM Interface[Functional Interface]
+>@FunctionalInterface
+>Not create seperate class file, but in anonymous inner calss it creates seperate class file.
+>Lambda expression is used to provide body for Functional interface abstract method.
+
+
+LambdaExp for Functional Interface
+-------------------------------
+
+interface Car
+{
+	void drive();
+}
+public class AnonymousInneClassWithLambdaExp1 {
+
+	public static void main(String[] args) {
+		
+		Car c=()->System.out.println("driving");
+		c.drive();
+
+	}
+
+}
+
+Example 2:
+interface Cal {
+	int add(int a, int b);
+}
+public class LE2 {
+
+	public static void main(String[] args) {
+
+//		Cal c=new Cal()
+//				{
+//			public int add(int a,int b)
+//			{
+//				return a+b;
+//			}
+//				};
+
+		Cal c = (a,b) -> a + b;
+		System.out.println(c.add(2, 4));
+	}
+}
+
+Example 3:
+interface Cal1 {
+	int mul(int a);
+}
+
+public class LE3 {
+
+	public static void main(String[] args) {
+		Cal1 c = a -> a*a;
+		System.out.println(c.mul(5));
+	}
+}
+
+Exmaple 4:
+Passing Lambda functiona as Argument
+
+@FunctionalInterface
+interface In
+{
+	int sub(int a,int b);
+}
+public class LE4 {
+
+	public static void doPerform(In i)
+	{
+		System.out.println(i.sub(33,22));
+	}
+	public static void main(String[] args) {
+		
+		//In i=(a,b)->a-b;
+		//LE4.doPerform(i);
+		
+		LE4.doPerform((a,b)->a-b);
+	}
+}
+
+
+Example 5: Functional Interface
+public class ArrayListDemo {
+	public static void main(String[] args) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		list.add(12);
+		list.add(22);
+		list.add(32);
+		list.add(42);
+
+		System.out.println(list); // [12, 22, 32, 42]
+
+		for (Integer i : list) {
+			System.out.println(i);
+		}
+		System.out.println("***************");
+		
+		//Functional Interface
+		list.forEach(i->System.out.println(i));
+	}
+}
+
+
+Example 6:Default method in Inetface
+
+interface Appu
+{
+	default void act()
+	{
+		System.out.println("Appu Acting");
+	}
+}
+
+interface Shivu
+{
+	default void act()
+	{
+		System.out.println("Shivu Acting");
+	}
+}
+
+class Raj implements Appu,Shivu
+{
+
+	@Override
+	public void act() {
+		//Appu.super.act(); //Appu Acting
+		Shivu.super.act(); //Shivu Acting
+		//System.out.println("Raj Acting");
+	}
+}
+
+public class FucntionalInterfaceWithDefaulutMethod {
+	public static void main(String[] args) {
+		Raj raj=new Raj();
+		raj.act();
+	}
+}
+
+****************************************************************************************************************************************************
+Logic:Service class
+Data:Model class [Pojo]
+***************************************************************************************************************************************************
+EXCEPTION HANDLING
+==================
+>Execution time mistakes/Occurs at Execution time or Runtime/Identified by JVM
+>Handling abnormal termination of the program during runtime is knows as Exception handling using try catch block.
+>What happens if exception occurs:
+Exception->No User Def Exp handler->Default Exp handler->Abrupt terminate program
+Exception->User Def Exp handler->Nomral terminate program
+>If Exp not handled explicityly then Default exception handler will handle it will not go to OS
+>One try 1 to N Catch 
+>Exception Oject creation flow:
+Exception occurs->Exception Object created and given to JVM with all related information of the exception ->JVM checks for user defined exception handler in same function->If not found->JVM checks in calling function->If not then Default Exception handler will be invked and Abrubt termination occurs.
+>Exception Object contains
+Name of exception
+Description of exception
+Stack trace of the exception
+e.getMessage() ->Description of exception
+e.toString() ->Name and Description of exception
+e.printStackTrace() ->Name, Description and Stack trace of the exception
+>If we use both throws and try cathc then it will be handled before by passing it.
+>After throw the statement below wont be executed.
+
+Exception handling cases
+------------------------
+>Handle exception [try catch]
+>Ducking the exception [throws][Bypass the exception from called method to calling method][Checked exception]
+>ReThrowing exception [Handle and throw to calling method][throw]
+
+
+Example:
+class Calc {
+	public void cal() {
+		System.out.println("Welcome Calc");
+		Scanner sc = new Scanner(System.in);
+		int num, den, res;
+		System.out.println("Enter Numerator");
+		num = sc.nextInt();
+		System.out.println("Enter Denominator");
+		den = sc.nextInt();
+		res=num/den;
+		System.out.println("End Calc");
+	}
+
+}
+
+public class ExceptionObjectFlow {
+	public static void main(String[] args) {
+		System.out.println("Welcome ExceptionObjectFlow");
+
+		try {
+			Calc c = new Calc();
+			c.cal();
+		}
+
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		System.out.println("End ExceptionObjectFlow");
+	}
+
+}
+
+Output:
+Welcome ExceptionObjectFlow
+Welcome Calc
+Enter Numerator
+22
+Enter Denominator
+0
+/ by zero
+java.lang.ArithmeticException: / by zero
+	at exceptionhandling.Calc.cal(ExceptionObjectFlow.java:20)
+	at exceptionhandling.ExceptionObjectFlow.main(ExceptionObjectFlow.java:33)
+End ExceptionObjectFlow
+
+
+Example 1:
+public class TryCatch1 {
+
+	public static void main(String[] args) {
+
+		System.out.println("Welcome");
+
+		Scanner sc = new Scanner(System.in);
+
+		int num, den, res;
+
+		System.out.println("Enter Numerator");
+		num = sc.nextInt();
+
+		System.out.println("Enter Numerator");
+		den = sc.nextInt();
+
+		try {
+			res = num / den;
+			System.out.println(res);
+		} catch (ArithmeticException e) {
+			System.out.println("Denominator value is wrong");
+		}
+
+		int size, element, position;
+
+		System.out.println("Enter Size");
+		size = sc.nextInt();
+		int[] a = new int[size];
+
+		System.out.println("Enter element");
+		element = sc.nextInt();
+
+		System.out.println("Enter position");
+		position = sc.nextInt();
+
+		try {
+			a[position] = element;
+			System.out.println(a[position]);
+
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("Boundry error");
+		} catch (NegativeArraySizeException e) {
+			System.out.println("Negative error");
+		}
+		catch (Exception e) {
+			System.out.println(e.getStackTrace());
+		}
+
+		System.out.println("Thanks You");
+	}
+
+}
+
+
+Categories of Exception
+------------------------
+>Checked/UnChecked/Partially  Checked Exception
+Checked Exception:Compiler identified exception/Can be Bypass using throws or handle using try catch.
+                  Ex: IO, Intrupted exception
+Un Checked exception:Need to check by prorammer and need to handle using try catch block, identified by JVM at run time.
+                  Ex: Runtime exception
+Partially  Checked Exception:Exception child of both Checked Exception and Un Checked Exception
+                  Ex:Throwable and Exception
+
+>Bypass the exception from called to calling fucntion, or to JVM without handling ->throws at method signature level [Not recomended]
+ handle the exception->try catch [Recomended]
+ Handle and throw the exception from called to calling function ->throw
+ Execute stm exp occur or not ->finnaly
+
+>StackOverflowError is Runtime Error not an exception
+
+Case 1: No Exception Handler in both Called and Calling function
+---------------------------------------------------------------
+Excep occurs in Called function>JVM checks exception handler in called function, then calling function then it handover to Default exp handler
+Abrubt termination of the program
+
+class Calc1 {
+
+	public void cal() {
+		System.out.println("Welcome Calc");
+
+		Scanner sc = new Scanner(System.in);
+
+		int num, den, res;
+
+		System.out.println("Enter Numerator");
+		num = sc.nextInt();
+
+		System.out.println("Enter Denominator");
+		den = sc.nextInt();
+
+		res = num / den;
+		System.out.println("End Calc");
+	}
+
+}
+
+public class HanldeAndThrowTheExceptionToCallingFunction {
+
+	public static void main(String[] args) {
+
+		System.out.println("Welcome Main");
+		Calc1 c = new Calc1();
+		c.cal();
+
+		System.out.println("End Main");
+	}
+
+}
+
+Output:
+Welcome Main
+Welcome Calc
+Enter Numerator
+22
+Enter Denominator
+0
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at exceptionhandling.Calc1.cal(HanldeAndThrowTheExceptionToCallingFunction.java:20)
+	at exceptionhandling.HanldeAndThrowTheExceptionToCallingFunction.main(HanldeAndThrowTheExceptionToCallingFunction.java:32)
+
+
+Case 2: Both Called and Calling function by pass exception using throws 
+-----------------------------------------------------------------------
+Excep occurs in Called function>JVM bypass to calling function> JVM bypass to Default exp handler
+Abrubt termination of the program
+
+class Calc1 {
+
+	public void cal() throws Exception{
+		System.out.println("Welcome Calc");
+
+		Scanner sc = new Scanner(System.in);
+
+		int num, den, res;
+
+		System.out.println("Enter Numerator");
+		num = sc.nextInt();
+
+		System.out.println("Enter Denominator");
+		den = sc.nextInt();
+
+		res = num / den;
+		System.out.println("End Calc");
+	}
+
+}
+
+public class HanldeAndThrowTheExceptionToCallingFunction {
+
+	public static void main(String[] args) throws Exception {
+
+		System.out.println("Welcome Main");
+		Calc1 c = new Calc1();
+		c.cal();
+
+		System.out.println("End Main");
+	}
+
+}
+
+Output:
+Welcome Main
+Welcome Calc
+Enter Numerator
+22
+Enter Denominator
+0
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at exceptionhandling.Calc1.cal(HanldeAndThrowTheExceptionToCallingFunction.java:20)
+	at exceptionhandling.HanldeAndThrowTheExceptionToCallingFunction.main(HanldeAndThrowTheExceptionToCallingFunction.java:32)
+
+Case 3:Calling function By Pass using throws >Called function handled usinh try catch
+-------------------------------------------------------------------------------------
+Exception occurs in Calling function, Calling function by pass to called function>Called function handled using try catch block=>Normal termination of program
+
+
+class Calc1 {
+
+	public void cal() throws Exception{
+		System.out.println("Welcome Calc");
+
+		Scanner sc = new Scanner(System.in);
+
+		int num, den, res;
+
+		System.out.println("Enter Numerator");
+		num = sc.nextInt();
+
+		System.out.println("Enter Denominator");
+		den = sc.nextInt();
+
+		res = num / den;
+		System.out.println("End Calc");
+	}
+
+}
+
+public class HanldeAndThrowTheExceptionToCallingFunction {
+
+	public static void main(String[] args)  {
+
+		System.out.println("Welcome Main");
+		Calc1 c = new Calc1();
+		try {
+			c.cal();
+		} catch (Exception e) {
+			System.out.println("Handled in main method");
+			e.printStackTrace();
+		}
+
+		System.out.println("End Main");
+	}
+
+}
+
+Output:
+Welcome Main
+Welcome Calc
+Enter Numerator
+22
+Enter Denominator
+0
+Handled in main method
+java.lang.ArithmeticException: / by zero
+	at exceptionhandling.Calc1.cal(HanldeAndThrowTheExceptionToCallingFunction.java:20)
+	at exceptionhandling.HanldeAndThrowTheExceptionToCallingFunction.main(HanldeAndThrowTheExceptionToCallingFunction.java:33)
+End Main
+
+Case 4:Exception occurs and handled in Calling function usin Try catch
+----------------------------------------------------------------------
+Exception occurs in calling function, handles in calling function using try catch=>Normal termination of program
+
+
+class Calc1 {
+
+	public void cal() {
+		System.out.println("Welcome Calc");
+
+		Scanner sc = new Scanner(System.in);
+
+		int num, den, res;
+
+		System.out.println("Enter Numerator");
+		num = sc.nextInt();
+
+		System.out.println("Enter Denominator");
+		den = sc.nextInt();
+
+		try {
+			res = num / den;
+			System.out.println("End Calc");
+		} catch (Exception e) {
+			System.out.println("Exception handled in Called function CalC");
+			e.printStackTrace();
+		}
+
+	}
+
+}
+
+public class HanldeAndThrowTheExceptionToCallingFunction {
+
+	public static void main(String[] args) {
+
+		System.out.println("Welcome Main");
+		Calc1 c = new Calc1();
+
+		c.cal();
+
+		System.out.println("End Main");
+	}
+
+}
+
+Output:
+Welcome Main
+Welcome Calc
+Enter Numerator
+22
+Enter Denominator
+0
+Exception handled in Called function CalC
+java.lang.ArithmeticException: / by zero
+	at exceptionhandling.Calc1.cal(HanldeAndThrowTheExceptionToCallingFunction.java:21)
+	at exceptionhandling.HanldeAndThrowTheExceptionToCallingFunction.main(HanldeAndThrowTheExceptionToCallingFunction.java:39)
+End Main
+
+
+Case 5:Exception handled in calling function and also re throw to calling function using throw keyword, not handled in Called function
+--------------------------------------------------------------------------------------------------------------------------------------
+Exception occurs in called function>handled in called function using try catch and also throw to calling function using throw>Exception not handled in called function>Exception move to Default exp handler=>Abrubt ter of the Program
+
+class Calc1 {
+
+	public void cal() {
+		System.out.println("Welcome Calc");
+
+		Scanner sc = new Scanner(System.in);
+
+		int num, den, res;
+
+		System.out.println("Enter Numerator");
+		num = sc.nextInt();
+
+		System.out.println("Enter Denominator");
+		den = sc.nextInt();
+
+		try {
+			res = num / den;
+			System.out.println("End Calc");
+		} catch (Exception e) {
+			System.out.println("Exception handled in Called function CalC");
+			e.printStackTrace();
+			throw e;
+		}
+
+	}
+
+}
+
+public class HanldeAndThrowTheExceptionToCallingFunction {
+
+	public static void main(String[] args) {
+
+		System.out.println("Welcome Main");
+		Calc1 c = new Calc1();
+
+		c.cal();
+
+		System.out.println("End Main");
+	}
+
+}
+
+Out put:
+Welcome Main
+Welcome Calc
+Enter Numerator
+22
+Enter Denominator
+0
+Exception handled in Called function CalC
+java.lang.ArithmeticException: / by zero
+	at exceptionhandling.Calc1.cal(HanldeAndThrowTheExceptionToCallingFunction.java:21)
+	at exceptionhandling.HanldeAndThrowTheExceptionToCallingFunction.main(HanldeAndThrowTheExceptionToCallingFunction.java:40)
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at exceptionhandling.Calc1.cal(HanldeAndThrowTheExceptionToCallingFunction.java:21)
+	at exceptionhandling.HanldeAndThrowTheExceptionToCallingFunction.main(HanldeAndThrowTheExceptionToCallingFunction.java:40)
+
+Case 6:Exception handled in calling function and also re throw to calling function using throw keyword, handled in Called function
+----------------------------------------------------------------------------------------------------------------------------------
+Exception occurs in called function>handled in called function using try catch and also throw to calling function using throw>Exception handled in called function using Try catch=>Normal ter of the Program
+
+class Calc1 {
+
+	public void cal()throws Exception{
+		System.out.println("Welcome Calc");
+
+		Scanner sc = new Scanner(System.in);
+
+		int num, den, res;
+
+		System.out.println("Enter Numerator");
+		num = sc.nextInt();
+
+		System.out.println("Enter Denominator");
+		den = sc.nextInt();
+
+		try {
+			res = num / den;
+			System.out.println("End Calc");
+		} catch (Exception e) {
+			System.out.println("Exception handled in Called function CalC");
+			e.printStackTrace();
+			throw e;
+		}
+
+		System.out.println("End Calc");
+	}
+
+}
+
+public class HanldeAndThrowTheExceptionToCallingFunction {
+
+	public static void main(String[] args) {
+
+		System.out.println("Welcome Main");
+		Calc1 c = new Calc1();
+
+		try
+		{
+			c.cal();	
+		}catch(Exception e)
+		{
+			System.out.println("Handled in Main function");
+		}
+		
+
+		System.out.println("End Main");
+	}
+
+}
+
+Note:After throw the statement below wont be executed.
+
+Out put:
+Welcome Main
+Welcome Calc
+Enter Numerator
+22
+Enter Denominator
+0
+Exception handled in Called function CalC
+java.lang.ArithmeticException: / by zero
+	at exceptionhandling.Calc1.cal(HanldeAndThrowTheExceptionToCallingFunction.java:21)
+	at exceptionhandling.HanldeAndThrowTheExceptionToCallingFunction.main(HanldeAndThrowTheExceptionToCallingFunction.java:42)
+Handled in Main function
+End Main
+
+
+Finally Block
+-----------
+>If we wont to execute specific statement wheter exp occur or not , handled or not then we need to add those statement in finally block.
+>Finnaly should follow try catch block
+>Rules
+try>catch>finally //exception occur and matching catch block found
+try>finally>def exp handler //exception occur and matching catch block not found
+try>finally //exception not occur 
+Exp occur or not, matching catch block found or not, after try finally will be executed
+>If exp occurs, not handled by catch then finally will be executed then abubt ter will happens[JVM before going to Def Exp handler it will exe finally block]
+>finally will dominates return statement also
+system.exit(0) ->Shut down JVM
+
+class Calc1 {
+
+	public void cal()throws Exception{
+		System.out.println("Welcome Calc");
+
+		Scanner sc = new Scanner(System.in);
+
+		int num, den, res;
+
+		System.out.println("Enter Numerator");
+		num = sc.nextInt();
+
+		System.out.println("Enter Denominator");
+		den = sc.nextInt();
+
+		try {
+			res = num / den;
+			System.out.println("End Calc");
+		} catch (Exception e) {
+			System.out.println("Exception handled in Called function CalC");
+			e.printStackTrace();
+			throw e;
+		}
+
+		System.out.println("End Calc");
+	}
+
+}
+
+public class HanldeAndThrowTheExceptionToCallingFunction {
+
+	public static void main(String[] args) {
+
+		System.out.println("Welcome Main");
+		Calc1 c = new Calc1();
+
+		try
+		{
+			c.cal();	
+		}catch(Exception e)
+		{
+			System.out.println("Handled in Main function");
+		}
+		
+
+		System.out.println("End Main");
+	}
+
+}
+
+Output:
+Welcome Main
+Welcome Calc
+Enter Numerator
+22
+Enter Denominator
+0
+Exception handled in Called function CalC
+java.lang.ArithmeticException: / by zero
+	at exceptionhandling.Calc1.cal(HanldeAndThrowTheExceptionToCallingFunction.java:21)
+	at exceptionhandling.HanldeAndThrowTheExceptionToCallingFunction.main(HanldeAndThrowTheExceptionToCallingFunction.java:42)
+Handled in Main function
+End Main
+
+
+System.out.println("End Calc");
+Not executing
+
+class Calc1 {
+
+	public void cal()throws Exception{
+		System.out.println("Welcome Calc");
+
+		Scanner sc = new Scanner(System.in);
+
+		int num, den, res;
+
+		System.out.println("Enter Numerator");
+		num = sc.nextInt();
+
+		System.out.println("Enter Denominator");
+		den = sc.nextInt();
+
+		try {
+			res = num / den;
+			System.out.println("End Calc");
+		} catch (Exception e) {
+			System.out.println("Exception handled in Called function CalC");
+			e.printStackTrace();
+			throw e;
+		}
+
+		finally {
+			System.out.println("End Calc");
+		}
+		
+	}
+
+}
+
+public class HanldeAndThrowTheExceptionToCallingFunction {
+
+	public static void main(String[] args) {
+
+		System.out.println("Welcome Main");
+		Calc1 c = new Calc1();
+
+		try
+		{
+			c.cal();	
+		}catch(Exception e)
+		{
+			System.out.println("Handled in Main function");
+		}
+		
+
+		System.out.println("End Main");
+	}
+
+}
+
+Output:
+Welcome Main
+Welcome Calc
+Enter Numerator
+22
+Enter Denominator
+0
+Exception handled in Called function CalC
+java.lang.ArithmeticException: / by zero
+	at exceptionhandling.Calc1.cal(HanldeAndThrowTheExceptionToCallingFunction.java:21)
+	at exceptionhandling.HanldeAndThrowTheExceptionToCallingFunction.main(HanldeAndThrowTheExceptionToCallingFunction.java:46)
+End Calc
+Handled in Main function
+End Main
+
+Case 1: No Finally
+try
+{
+open file
+read data //exception causing statement
+close file
+}
+catch
+{
+handle exception
+}
+
+Case 2: Finally
+try
+{
+open file
+read data //exception causing statement
+}
+catch
+{
+handle exception
+}
+finally
+{
+close file
+}
+
+
+>finally will dominates return statement also
+class Sample
+{
+	@SuppressWarnings("finally")
+	int alpha()
+	{
+		try
+		{
+			return 10;
+		}
+		finally
+		{
+			return 100;
+		}
+	}
+}
+public class FinallyVSReturn {
+
+	public static void main(String[] args) {
+		
+		Sample s=new Sample();
+		System.out.println(s.alpha());  //100
+
+	}
+
+}
+
+>system.exit(0) dominates finaly block
+class Samp
+{
+	
+	@SuppressWarnings("finally")
+	void alpha()
+	{
+		try
+		{
+			
+			System.out.println("TRY");
+			System.exit(0);
+			
+		}
+		finally
+		{
+			System.out.println("FINALLY");
+		}
+	}
+
+}
+public class SystemExitVsFinally {
+
+	public static void main(String[] args) {
+		
+		Samp s=new Samp();
+		s.alpha();
+
+	}
+
+}
+
+
+OUTPUT:
+TRY
+
+
+throw keyword
+-------------
+public class ThrowKeyword {
+	public static void main(String[] args) {
+		
+		throw new ArithmeticException("Divide By Zero");
+	}
+}
+
+Programmer->JVM->Def Exp handler =>Abnormal termination
+
+OUTPUT:
+Exception in thread "main" java.lang.ArithmeticException: Divide By Zero
+	at exceptionhandling.ThrowKeyword.main(ThrowKeyword.java:7)
+
+
+>Cant write statement after throw keyword
+public class ThrowKeyword {
+	public static void main(String[] args) {
+		
+		throw new ArithmeticException("Divide By Zero");
+                sop("hai");  //Unreachable Code CT Error
+	}
+}								
+								   
+>Any custom excepton should be child of Exception/Throwable class.
+throw new Appu(); //Error, Appu must be child of Exception/Throwable class
+
+class Appu
+{
+	public Appu()
+	{
+		System.out.println("I am Exception");
+	}
+}
+public class CustomException {
+	public static void main(String[] args) {
+		throw new Appu(); //ERROR
+	}
+}
+
+class Appu extends Exception
+{
+	public Appu()
+	{
+		System.out.println("I am Exception");
+	}
+}
+public class CustomException {
+	public static void main(String[] args) {
+		throw new Appu(); //Valid
+	}
+}
+
+OUTPUT:
+I am Exception
+Exception in thread "main" exceptionhandling.Appu
+	at exceptionhandling.CustomException.main(CustomException.java:14)
+
+
+CUSTOM EXCEPTION
+----------------
+Example 1:
+class Appu extends Exception
+{
+	public Appu(String str)
+	{
+		super(str);
+	}
+}
+public class CustomException {
+
+	public static void main(String[] args) throws Appu {
+		
+		Appu a=new Appu("Exception Occured in Main Class");
+		throw a;
+		//throw new Appu("Exception Occured in Main Class");
+
+	}
+
+}
+
+
+Example 2:
+class OverAge extends Exception
+{
+	public OverAge(String msg)
+	{
+		super(msg);
+	}
+}
+
+class UnderAge extends Exception
+{
+	public UnderAge(String msg)
+	{
+		super(msg);
+	}
+}
+
+class DataValidation
+{
+	Scanner sc=new Scanner(System.in);
+	int age;
+	
+	public void iput()
+	{
+		System.out.println("Enter Age");
+		age=sc.nextInt();
+	}
+	
+	public void verify() throws UnderAge, OverAge
+	{
+		if(age<18)
+		{
+			throw new UnderAge("Less then 18");
+		}
+		else if(age>65)
+		{
+			throw new OverAge("Greater then 65");
+		}
+		else
+		{
+			System.out.println("Application Submitted");
+		}
+	}
+}
+
+
+public class CustomExceptionDemo {
+
+	public static void main(String[] args) {
+		
+		System.out.println("Start of Application");
+		DataValidation d=new DataValidation();
+	    d.iput();
+	    try
+	    {
+	    	d.verify();
+	    }catch(UnderAge | OverAge e)
+	    {
+	    	System.out.println(e.getMessage());
+	    	e.printStackTrace();
+	    }
+	    
+
+	    System.out.println("End of Application");
+	}
+
+}
+
+Example 3:
+class OverAge extends Exception {
+	public OverAge(String msg) {
+		super(msg);
+	}
+}
+
+class UnderAge extends Exception {
+	public UnderAge(String msg) {
+		super(msg);
+	}
+}
+
+class DataValidation {
+	Scanner sc = new Scanner(System.in);
+	int age;
+
+	public void iput() {
+		System.out.println("Enter Age");
+		age = sc.nextInt();
+	}
+
+	public void verify() throws UnderAge, OverAge {
+		if (age < 18) {
+			throw new UnderAge("Less then 18");
+		} else if (age > 65) {
+			throw new OverAge("Greater then 65");
+		} else {
+			System.out.println("Application Submitted");
+		}
+	}
+}
+
+public class CustomExceptionDemo {
+
+	public static void main(String[] args) {
+
+		System.out.println("Start of Application");
+		DataValidation d = new DataValidation();
+		d.iput();
+		try {
+			d.verify();
+		} catch (UnderAge | OverAge e1) {
+			try {
+				d.iput();
+				d.verify();
+			} catch (UnderAge | OverAge e2) {
+				System.out.println("Second time als failed, Sorry bro");
+				System.out.println(e2.getMessage());
+				e2.printStackTrace();
+			}
+
+		}
+
+		System.out.println("End of Application");
+	}
+
+}
+
+try
+catch
+
+try 
+catch 
+finally
+
+try 
+catch
+catch
+
+Throw new keyword
+throw new exceptioname("message");
+
+By Pass
+void add() throws Exception
+{ }
+
+only try, only catch, only finally not possible
+tc/tcf/tccccf Allowed
+
+*****************************************************************************************************************************************************
+MULTITHREADING
+==============
+Basic Thread Properties
+-----------------------
+>We can get Thread details and also change its details using Thread class object
+>Thread scheduler manages entire thread execution
+>Only after start() method is called then only multi Thread exe will start
+
+Thread Creation Flow
+---------------------
+When main() is called, ThreadScheduler creates and start executing main thread. 
+main thread executes all other operation.
+Later when run() is called then New Thread will be created.[Extending Thread class or implementing and explicitly calling run()]
+Logic should be added in run()
+When start() method is called with that class object reference then that new thread will start executing.
+Creation, Execution overall thread will be maintained by Thread Scheduler.
+
+>When start() is called, Thread scheduler start executing the thred. If there is some idle of that thread then
+Thread scheduler start next thread execution without waiting for the other idle thread.
+Which thread to excute is controlled by TS.
+
+
+public class ThreadBasics {
+
+	public static void main(String[] args) {
+
+		Thread thread = Thread.currentThread();
+
+		System.out.println("BEFORE");
+		System.out.println("Name is: " + thread.getName());
+		System.out.println("Name is: " + thread.getPriority());
+		System.out.println("Name is: " + thread.getId());
+
+		thread.setName("Appu");
+		thread.setPriority(4);
+
+		System.out.println("AFTER");
+		System.out.println("Name is: " + thread.getName());
+		System.out.println("Name is: " + thread.getPriority());
+		System.out.println("Name is: " + thread.getId());
+
+	}
+
+}
+
+How to Create MUltiple Threads
+------------------------------
+>Two ways
+Extending Thread class
+Implemening Runnable Interface
+>Thread class implements Runnable , run() abstarct method.
+>Whever we call constructor of Thread class either by creating Object for Thread class or Extending Thread class and creating object for extended class
+then new Thread will be created.
+
+Method 1: Implementing Runnable Interface
+----------------------------------------
+Step 1:Create a class and implements Runnable interface
+Step 2:Create run() and add logic into it
+
+class MathsClass implements Runnable {
+	public void run() {
+		for (int i = 0; i < 10; i++) {
+			System.out.println(i);
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
+
+Step 3:Create an Object for the class  say obj
+MathsClass m = new MathsClass();
+
+Step 4:Create an Object for Thread class by passing obj as argument
+Thread t2 = new Thread(m);
+
+Step 5:Start the Thread
+t2.start();
+
+Example:
+class Banking implements Runnable {
+	Scanner sc = new Scanner(System.in);
+
+	public void run() {
+		int accNumber = 1234;
+		int password = 1111;
+		int a, p;
+		System.out.println("Banking Application Started");
+
+		System.out.println("Enter Acct Number");
+		a = sc.nextInt();
+		System.out.println("Enter Password");
+		p = sc.nextInt();
+		if (a == p) {
+			System.out.println("Valid Cred");
+		} else {
+			// throw new BankException("Invalid Credentials !");
+			System.out.println("Invalid Credentials !");
+		}
+		System.out.println("Banking Application Ended");
+
+	}
+}
+
+class MathsClass implements Runnable {
+	public void run() {
+		for (int i = 0; i < 10; i++) {
+			System.out.println(i);
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
+public class ThreadCreationV1 {
+
+	public static void main(String[] args) {
+
+		Banking b = new Banking();
+		MathsClass m = new MathsClass();
+
+		Thread t1 = new Thread(b);
+		Thread t2 = new Thread(m);
+
+		t1.start();
+		t2.start();
+
+	}
+
+}
+
+Method 2: Extending Thread class
+--------------------------------
+Step 1:Create a class and extends Thread class
+Step 2:Create run() and add logic into it
+
+class MathsClass1 extends Thread {
+	public void run() {
+		for (int i = 0; i < 10; i++) {
+			System.out.println(i);
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
+
+Step 3:Create an Object for the class  say obj
+MathsClass m = new MathsClass();
+
+Step 4:Start the Thread
+m.start();
+
+Example:
+class Banking1 extends Thread {
+	Scanner sc = new Scanner(System.in);
+
+	public void run() {
+		int accNumber = 1234;
+		int password = 1111;
+		int a, p;
+		System.out.println("Banking Application Started");
+
+		System.out.println("Enter Acct Number");
+		a = sc.nextInt();
+		System.out.println("Enter Password");
+		p = sc.nextInt();
+		if (a == p) {
+			System.out.println("Valid Cred");
+		} else {
+			// throw new BankException("Invalid Credentials !");
+			System.out.println("Invalid Credentials !");
+		}
+		System.out.println("Banking Application Ended");
+
+	}
+}
+
+class MathsClass1 extends Thread {
+	public void run() {
+		for (int i = 0; i < 10; i++) {
+			System.out.println(i);
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
+public class ThreadCreationExtendingThreadClass {
+
+	public static void main(String[] args) {
+		Banking1 b = new Banking1();
+		MathsClass1 m = new MathsClass1();
+
+		b.start();
+		m.start();
+
+	}
+
+}
+
+
+objref.isAlive()
+To check is thread started or not, return boolean value
+objref.join()
+Main thread wait for all other thread to exe and complete 
+
+
+Example:MultiplEthreadCallingSameRunMethodAndDoigDifferentTasks
+class Multiple implements Runnable {
+	Scanner sc = new Scanner(System.in);
+
+	public void run() {
+
+		String threadName = Thread.currentThread().getName();
+
+		if (threadName.equals("BANK")) {
+			bankLogic();
+		} else {
+			mathLogic();
+		}
+	}
+
+	public void bankLogic() {
+
+		System.out.println("Banking2 Thread Execution Starts");
+
+		int accNumber = 1234;
+		int password = 1111;
+		int a, p;
+		System.out.println("Banking Application Started");
+
+		System.out.println("Enter Acct Number");
+		a = sc.nextInt();
+		System.out.println("Enter Password");
+		p = sc.nextInt();
+		if (a == p) {
+			System.out.println("Valid Cred");
+		} else {
+			// throw new BankException("Invalid Credentials !");
+			System.out.println("Invalid Credentials !");
+		}
+		System.out.println("Banking2 Thread Execution Ends");
+
+	}
+
+	public void mathLogic() {
+
+		System.out.println("MathsClass2 Thread Execution Starts");
+
+		for (int i = 0; i < 10; i++) {
+			System.out.println(i);
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+		System.out.println("MathsClass2 Thread Execution Ends");
+	}
+}
+
+public class MultiplEthreadCallingSameRunMethodAndDoigDifferentTasks {
+
+	public static void main(String[] args) {
+
+		Multiple m = new Multiple();
+
+		Thread t1 = new Thread(m);
+		Thread t2 = new Thread(m);
+
+		t1.setName("BANK");
+		t2.setName("MATHS");
+
+		t1.start();
+		t2.start();
+
+	}
+
+}
+
+Example:MultipleThreadInvokingRunMethodAndPerformingtheSameTask 
+
+class Bathroom implements Runnable {
+
+	@Override
+	public void run() {
+
+		System.out.println(Thread.currentThread().getName() + " Start Using");
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(Thread.currentThread().getName() + " Using");
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println(Thread.currentThread().getName() + " End Using");
+
+	}
+
+}
+
+public class MultipleThreadInvokingRunMethodAndPerformingtheSameTask {
+
+	public static void main(String[] args) {
+
+		Bathroom b = new Bathroom();
+		Thread t1 = new Thread(b);
+		Thread t2 = new Thread(b);
+		Thread t3 = new Thread(b);
+
+		t1.setName("Boy");
+		t2.setName("Girl");
+		t3.setName("Trans");
+
+		t1.start();
+		t2.start();
+		t3.start();
+	}
+
+}
+
+
+OUTPUT:
+Trans Start Using
+Boy Start Using
+Girl Start Using
+Trans Using
+Girl Using
+Boy Using
+Trans End Using
+Boy End Using
+Girl End Using
+
+
+Example:MultipleThreadInvokingRunMethodAndPerformingtheSameTask -Using synchronized method
+
+Executing all the task inside run method in Synch manner [one thread at a time]->Using synchronized method
+
+class Bathroom implements Runnable {
+
+	@Override
+	public synchronized void run() {
+
+		System.out.println(Thread.currentThread().getName() + " Start Using");
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(Thread.currentThread().getName() + " Using");
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println(Thread.currentThread().getName() + " End Using");
+
+	}
+
+}
+
+public class MultipleThreadInvokingRunMethodAndPerformingtheSameTask {
+
+	public static void main(String[] args) {
+
+		Bathroom b = new Bathroom();
+		Thread t1 = new Thread(b);
+		Thread t2 = new Thread(b);
+		Thread t3 = new Thread(b);
+
+		t1.setName("Boy");
+		t2.setName("Girl");
+		t3.setName("Trans");
+
+		t1.start();
+		t2.start();
+		t3.start();
+	}
+
+}
+
+
+OUTPUT:
+Boy Start Using
+Boy Using
+Boy End Using
+Trans Start Using
+Trans Using
+Trans End Using
+Girl Start Using
+Girl Using
+Girl End Using
+
+Example:MultipleThreadInvokingRunMethodAndPerformingFewTaskInSynchronizedMannerAndFewInNonSyncManner
+
+executing few task inside run method in syn manner[one thread at a time]->using synchronized block
+
+class MultipleThread implements Runnable {
+
+	@Override
+	public void run() {
+
+		System.out.println(Thread.currentThread().getName() + " Task A - Non Synch Manner");
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		synchronized (this) {
+			System.out.println(Thread.currentThread().getName() + " Task B -  Synch Manner");
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			System.out.println(Thread.currentThread().getName() + " Task C -  Synch Manner");
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+}
+
+public class MultipleThreadInvokingRunMethodAndPerformingFewTaskInSynchronizedMannerAndFewInNonSyncManner {
+
+	public static void main(String[] args) {
+
+		MultipleThread m = new MultipleThread();
+
+		Thread t1 = new Thread(m);
+		Thread t2 = new Thread(m);
+		Thread t3 = new Thread(m);
+
+		t1.setName("Boy");
+		t2.setName("Girl");
+		t3.setName("Trans");
+
+		t1.start();
+		t2.start();
+		t3.start();
+
+	}
+
+}
+
+OUTPUT:
+Trans Task A - Non Synch Manner
+Girl Task A - Non Synch Manner
+Boy Task A - Non Synch Manner
+
+Girl Task B -  Synch Manner
+Girl Task C -  Synch Manner
+
+Boy Task B -  Synch Manner
+Boy Task C -  Synch Manner
+
+Trans Task B -  Synch Manner
+Trans Task C -  Synch Manner
+
+State of Thread
+---------------
+In Running state there will be only one thead at a time
+
+[new]->start->[runnable]->TS start exe->[running]->finished execution->[dead]
+[running]->if resource not avl->[block]->[runnable]->TS start exe->[running]->finished execution->[dead]
+[running]->if need to wait->[waiting]->[runnable]->TS start exe->[running]->finished execution->[dead]
+
+Daemon thread
+-------------
+Thread which depends on other thread execution
+obj.setDaemon(true);
+obj.setPriority(3);
+
+Multithreading
+--------------
+Multiple thread co ordinate with each other and execute in such fashion where cpu execution time is not wasted. If any one thread is idle for
+then thread scheduler pick any free thread and will execute. it will not make cpu idle at any point of time.
+But at any point only one thread will be executing.
+
+Assume there are three threads, t1 t2 
+t1 exe 5 min wait 1 min exe 5 min
+t2 exe 5 min wait 1 min exe 5 min
+
+Single thread:
+t1 exe 5 min wait 1 min exe again 5 min
+t2 exe 5 min wait 1 min exe again 5 min
+Untill t1 is exe and completed t2 will not execute.
+cpu is idle for 1 min 
+t2 should wait untill t1 exe and complete
+
+Multi thread:
+t1 exe 5 min wait 1 min
+Now in that free time TS will not make cpu to be idle, TS will pick free thread t2 and start executing.
+t2 exe 5 min wait 1 min
+t1 exe 5 min
+t2 exe 5 min
+in any point of time cpu is not idle
+If t1 is idle then t2 will be executing.
+
+Main aim of multi threading is to effective utilizaton of cpu without keeping idle.
+
+*************************************************************************************************************************************************
+COLLECTIONS
+===========
+API collectin of classes and interaffces used to store huge data.
+
+1)Array List
+>Stores both homo and hetero
+>Data is stored inform of objects
+>Implements list interface
+>Dynamic array data structure
+>Index based
+>Insertion takes more time
+>Insertion order preserved
+>new element added at rear end
+>duplictes allowed
+
+Example:
+	public static void main(String[] args) {
+
+		ArrayList list = new ArrayList();
+
+		list.add("appu");
+		list.add(100);
+		
+		System.out.println(list);
+	}
+OUTPUT:
+[appu, 100]
+
+	public static void main(String[] args) {
+
+		ArrayList list = new ArrayList();
+
+		list.add("appu");
+		list.add(100);
+		list.add(2,12.34);
+		list.add(2, 1111);
+		
+		System.out.println(list);
+	}
+OUTPUT:
+[appu, 100, 1111, 12.34]
+
+Collection Hierarchy
+--------------------
+Iterable->Collection->List->Array List/Linked List
+Iterable->Collection->Queue->DQueue[Array DQueue]/Priority Queue
+Iterable->Collection->Set->Sorted Set[Tree Set]/Hash Set[Linked Hash Set]
+
+2)Linked List
+-------------
+>Element are added at front and rear end
+>insertion order is preserved
+>pollfirst() return frst element and remove the obj from collection
+>duplictes allowed
+
+3)Array DQueue
+--------------
+>Insertion order preserved
+>Obj added at rear end
+>Dupliucate allowed
+
+4)Priority Queue
+-----------------
+>Insertion order preserved
+>Obj added at rear end
+>Dupliucate allowed
+
+5)Tree Set
+----------
+>Ascending sorted order 
+>Binary Search tree
+>No duplicates
+>No Index based
+
+6)HashSet
+---------
+>Insertion order not preserved
+>Implements Set interface
+>Duplicate not allowed
+>Not index based
+>Efficient for search operation
+
+
+
+7)Linked Hash Set
+-----------------
+>Insertion order preserved
+>Subclass of  Hash Set
+>Duplicate not allowed
+>Not index based
+>Efficient for search operation
+
+Iterator/List Iterator
+----------------------
+
+public class ArayListDemo {
+
+	public static void main(String[] args) {
+
+		ArrayList list = new ArrayList();
+
+		list.add("appu");
+		list.add(100);
+		list.add(2, 12.34);
+		list.add(2, 1111);
+		System.out.println(list.contains(10));
+
+		System.out.println(list);
+
+		Iterator it = list.iterator();
+
+		while (it.hasNext()) {
+			System.out.println(it.next());
+		}
+
+		ListIterator lis = list.listIterator();
+		while (lis.hasNext()) {
+			System.out.println(lis.next());
+		}
+
+		while (lis.hasPrevious()) {
+			System.out.println(lis.previous());
+
+		}
+	}
+
+}
+
+Collections Class
+------------------
+To perform many operation on the collection 
+Collections.sort(list);
+****************************************************************************************************************************************************
+STREAM API
+==========
+Filter:Filters the value present in the stream based on the condition.
+Take each value and check the given condition, if its true then it return the value and stored back into stream else it wont return the value.
+Retrun type:Stream Object
+
+Example:
+		List<Integer> list=Arrays.asList(12,2,33,555,10,1);
+		
+		Stream<Integer> s=list.stream().filter(x->x>10);
+		
+		s.forEach(x->System.out.println(x));
+
+OUTPUT:
+12
+33
+555
+
+
+
+Map:Take the value present in the stream and perform specified action on each element of the stream and stored back into the stream. 
+Retrun type:Stream Object
+Example:
+		
+		List<Integer> list = Arrays.asList(12, 2, 33, 555, 10, 1);
+
+		Stream<Object> s=list.stream().map(x->x*x);
+		
+		s.forEach(x->System.out.println(x));
+
+OUTPUT:
+144
+4
+1089
+308025
+100
+1
+
+Example:Filter and Stream
+
+	public static void main(String[] args) {
+		List<Integer> list = Arrays.asList(12, 2, 33, 555, 10, 1);
+		
+		list.stream().sorted().filter(x->x%2==0).map(x->x*x).forEach(x->System.out.println(x));
+
+	}
+OUTPUT:
+4
+100
+144
+
+
+
+
