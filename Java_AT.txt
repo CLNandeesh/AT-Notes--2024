@@ -618,6 +618,12 @@ Process and return the response
 To perform some operation and return the value
 Parameter type Return Type should be specified as Generics[LHS]
 
+
+Predicate VS Function
+Function: Take any type of input, Process and return any type of response
+Predicate: take any type of input, Check condition and return boolean response
+
+
 Ex:public class FunctionInterface1 {
     public static void main(String[] args) {
 
@@ -706,3 +712,19 @@ public class FunctionInterface2 {
 
     }
 }
+
+
+Ex: Combining two Function 
+andThen()
+compose() : Reverse order of andThen
+
+public class FunctionInterface3 {
+    public static void main(String[] args) {
+        Function<Integer,Integer> f1=i->i+i;
+        Function<Integer,Integer> f2=i->i*i;
+
+        System.out.println(f1.andThen(f2).apply(5)); //100
+        System.out.println(f1.compose(f2).apply(5)); //50
+    }
+}
+
