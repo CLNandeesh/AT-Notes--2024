@@ -738,3 +738,262 @@ public class FlatMapDemo1 {
 
 OUTPUT:
 [101, 102, 103, 104, 105, 106]
+
+Terminal/ Non terminal Function of Streams
+------------------------------------------
+Collection-->Stream--->map()/filter()/flatMap()/distinct()/limit()[Non Terminal Function]--->min()/max()/count()/forEach()/collect()/toArray()/reduce()/collect()[Terminal Function]
+
+Ex 1:FOREACH/DISTINCT/COUNT/LIMIT
+package streams2;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class TerminalStreamFunctionDemo1 {
+    public static void main(String[] args) {
+
+        List<String> list= Arrays.asList("bus","car","van","bus","van");
+
+        System.out.println("********FOREACH********");
+        list.stream().forEach(System.out::println);
+
+        System.out.println("********DISTINCT********");
+        list.stream().distinct().forEach(System.out::println);
+
+        System.out.println("******COUNT**********");
+        long c=list.stream().distinct().count();
+        System.out.println("Distinct Count is: "+c);
+
+        System.out.println("******LIMIT**********");
+        list.stream().limit(2).forEach(System.out::println);
+        List set=list.stream().limit(4).collect(Collectors.toList());
+        System.out.println("Size is: "+set.size());
+
+
+    }
+}
+
+OUTPUT:
+********FOREACH********
+bus
+car
+van
+bus
+van
+********DISTINCT********
+bus
+car
+van
+******COUNT**********
+Distinct Count is: 3
+******LIMIT**********
+bus
+car
+Size is: 4
+
+Ex 2:MIN and MAX
+To find min and max value avl in stream
+package streams2;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+public class CountMinMaxInStreamDemo2 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 0);
+
+        System.out.println("*****COUNT************");
+        long evenCount = list.stream().filter(x -> x % 2 == 0).count();
+        System.out.println("Even no count is: "+evenCount);
+
+        System.out.println("*****MIN************");
+        Optional<Integer> min = list.stream().min((val1, val2) ->
+        {
+            return val1.compareTo(val2);
+        });
+        System.out.println("Min value is: "+min.get());
+
+        System.out.println("*****MAX************");
+        Optional<Integer> max = list.stream().max((val1, val2) ->
+        {
+            return val1.compareTo(val2);
+        });
+        System.out.println("Max value is: "+max.get());
+    }
+}
+
+
+OUTPUT:
+*****COUNT************
+Even no count is: 5
+*****MIN************
+Min value is: 0
+*****MAX************
+Max value is: 8
+
+Ex 3:reduce
+Used to reduce list of value avl in Stream into single value by adding or concatenating
+input: 1 2 3 a b c
+output: 123abc
+
+public class reducedemo {
+    public static void main(String[] args) {
+        List<String> list= Arrays.asList("a","b","1","c","d","3");
+       Optional<String> reducedResult=list.stream().reduce((value, combinedvalue)->
+        {
+           return value+combinedvalue;
+        });
+
+        System.out.println("Final Combined Result is: "+reducedResult.get());
+    }
+}
+
+ex:
+public class reducedemo2 {
+    public static void main(String[] args) {
+
+        List<Integer> list= Arrays.asList(1,2,3,4,5,6);
+        Optional<Integer> reducedResult=list.stream().reduce((value, combinedvalue)->
+        {
+            return value+combinedvalue;
+        });
+
+        System.out.println("Final Combined Result is: "+reducedResult.get());
+    }
+    }
+
+OUTPUT:
+Final Combined Result is: 21
+
+Ex: Convert value present in the Stream to Array
+public class ToArrayWithStream {
+    public static void main(String[] args) {
+        List<String> list= Arrays.asList("a","b","1","c","d","3");
+        Object arr[]=list.stream().toArray();
+        System.out.println(arr);
+        System.out.println(arr.length);
+
+    }
+}
+
+OUTPUT:
+[Ljava.lang.Object;@7ba4f24f
+6
+
+Ex 4: sorted()
+Used to sort any type of elements inside the Stream in asc or desc order
+public class SortedInStreams {
+    public static void main(String[] args) {
+
+        System.out.println("****SORTED********");
+        List<String> list= Arrays.asList("a","b","1","c","d","3");
+        list.stream().sorted().forEach(System.out::println);
+        list.stream().sorted(Comparator.reverseOrder()).forEach(System.out::println);
+    }
+}
+
+OUTPUT:
+****SORTED********
+13abcd
+dcba31
+
+Ex 5: anyMatch()
+Checks whether specified data[condition] is matching with any one of the Stream data , if any one matches then it returns true else false. 
+Any match takes Predicate as arguement[condition] nd returns Boolean as output
+ex: 
+Stream has: one apple, one mango, two apple ,three mango
+
+Specified data: starts with one
+one apple, one mango both starts with one so it returns true
+
+Specified data: contains five
+none of the elements in stream contains five so it returns false
+
+boolean status=list.stream().anyMatch(s->s.contains("one"));
+
+Ex:
+public class AnyMatchDemo {
+    public static void main(String[] args) {
+        List<String> list= Arrays.asList("two mango","","one elephant","one orange","five apple");
+
+        boolean status=list.stream().anyMatch(s->s.startsWith("one"));
+        System.out.println("Result is: "+status);
+    }
+}
+
+OUTPUT:
+Result is: true
+
+public class AnyMatchDemo {
+    public static void main(String[] args) {
+        List<String> list= Arrays.asList("two mango","","one elephant","one orange","five apple");
+
+        //boolean status=list.stream().anyMatch(s->s.startsWith("one"));
+        boolean status=list.stream().anyMatch(s->s.endsWith("one"));
+        System.out.println("Result is: "+status);
+    }
+}
+
+OUTPUT:
+Result is: false
+
+Ex 6: allMatch()/noneMatch()
+All elements should match the condition
+None of the elements should match the condition
+
+
+Ex 7:findAny()/findFirst()
+Takes nothing as arguement
+Returns Optional class object as output
+
+Find any matching element
+Find first matching element
+
+Apply Filter and fetch first matching or any matching of the filtered result
+
+Usage Ex:returns first match string which length is greater than 10
+Check in list of Strings names, find any string or first matching string of specific length
+
+public class FindAnyFindFirstDemo {
+    public static void main(String[] args) {
+        List<String> list= Arrays.asList("two mango","","one elephant","one orange","five apple");
+        System.out.println(list.stream().filter(s->s.length()>10).findFirst().get());
+    }
+}
+
+OUTPUT:
+one elephant
+
+public class FindAnyFindFirstDemo {
+    public static void main(String[] args) {
+        List<String> list= Arrays.asList("two mango","","one elephant","one orange","five apple");
+        System.out.println(list.stream().filter(s->s.length()>10).findAny().get());
+    }
+}
+
+OUTPUT:
+one elephant
+
+
+
+
+OVERVIEW:
+=========
+Collection->Stream->Non Terminal Function[Processing]->Terminal Function
+
+Non Terminal Function:filter/map/flatmap/distinct/limit
+Terminal Function: min/max/reduce/toArray/forEach/count/collect
+
+Terminal opearation can be applied directly to stream or after applying non terminal operation w can apply terminal opearation on it
+
+Collection->Stream->Non Terminal Function[Processing]->Terminal Function
+OR
+Collection->Stream->Terminal Function
+
+To be Known:
+filter/map/flatmap/distinct
+count/collect/foreach
+
