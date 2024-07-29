@@ -1,2 +1,24 @@
 Java Content
 ============
+Variables and Data Types
+
+
+
+
+Variables and Data Types
+========================
+->To Store data we use variables and to specify what type of data we are storing in the variables then we need to use Data types. 
+->It is used for memory allocation. 
+
+Types:
+Primitive Data types
+byte
+short
+char
+int
+long
+float
+double
+Boolean
+
+
