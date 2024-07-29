@@ -1,6 +1,7 @@
 Java Content
 ============
 Variables and Data Types
+Identifiers
 
 
 
@@ -10,15 +11,73 @@ Variables and Data Types
 ->To Store data we use variables and to specify what type of data we are storing in the variables then we need to use Data types. 
 ->It is used for memory allocation. 
 
-Types:
-Primitive Data types
+Primitive Data type
+-------------------
+->-2^(n-1) to 2^(n-1) -1
+->If exceeds the range then Compiler will throw an error.
+->Default data type for whole number, Java consider is int, If we are performing any operation on 2 or more numbers then the result data is by default is int data type.
+->Default data type for float number, Java consider is double, If we are performing any operation on 2 or more numbers then the result data is by default is double data type.
+->Bases on UTF, Unicode representation above memory representation.
+
 byte
+1 byte of memory is allocated
+Default Value: 0
+Ex:
+byte b=22;
+
 short
+2 byte of memory is allocated
+Default Value: 0
+Ex:
+short s=33;
+
 char
+2 bytes of memory is allocated
+Ex: 
+char c='A'; //A
+char c=65; //A
+
 int
+4 bytes of memory is allocated
+Default Value: 0
+Ex:
+int i=345;
+
 long
+8 bytes of memory is allocated
+Default Value: 0
+Ex: 
+long l=3456l;
+long l=12345L;
+
 float
+4 bytes of memory is allocated
+Default Value: 0.0
+7 digit precession
+Ex:
+float f=12.3f;
+float f=23.44F;
+
 double
+8 bytes of memory is allocated
+Default Value: 0.0
+14 digit precession
+Ex:
+double f=12.3;
+double f=23.44;
+
+Boolean
+1 bit of memory is allocated
+Default Value: false
+Ex:
 Boolean
 
+Identifiers
+===========
+->Start with letters, _ and $
+->Can contains letters, digits. _ and $
+->No use of Keyword or Reserve words
+->Give meaningful names
 
+
+ 
