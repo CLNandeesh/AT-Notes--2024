@@ -978,6 +978,21 @@ OUTPUT:
 one elephant
 
 
+ex 8:concat()
+Used to concat two streams into single stream
+
+public class StreamConcatDemo {
+    public static void main(String[] args) {
+        List<String> list1= Arrays.asList("two mango","","one elephant","one orange","five apple");
+        List<String> list2= Arrays.asList("a","b","1","c","d","3");
+        Stream<String> s1=list1.stream();
+        Stream<String> s2=list2.stream();
+
+        Stream<String> s3=Stream.concat(s1,s2);
+        s3.forEach(s-> System.out.print(s+" "));
+    }
+}
+
 
 
 OVERVIEW:
