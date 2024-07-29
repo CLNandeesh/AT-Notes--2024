@@ -8,14 +8,34 @@ Conditional Statements
 Iterative Statements
 Switch Statement
 Number system
+Naming Convention
+Class and Object
+JVM Memory
+Methods
 
-
-
+*****************************************************************************************************************************************************
 Variables and Data Types
 ========================
 ->To Store data we use variables and to specify what type of data we are storing in the variables then we need to use Data types. 
 ->It is used for memory allocation. 
 
+Types of Variables
+------------------
+Instance variable
+->Declared outside method, block, constructor and inside the class.
+->Has default value
+->Can be accessed using reference variable
+
+Local variable
+->Declared inside method, block, constructor, loop.
+->Not have default value, should be initialized before use.
+
+Static variable
+->Declared outside method, block, constructor and inside the class with keyword static.
+->Has default value
+->Can be accessed using reference variable and class name
+
+*****************************************************************************************************************************************************
 Primitive Data type
 -------------------
 ->-2^(n-1) to 2^(n-1) -1
@@ -77,6 +97,7 @@ Default Value: false
 Ex:
 Boolean
 
+*****************************************************************************************************************************************************
 Identifiers
 ===========
 ->Start with letters, _ and $
@@ -84,6 +105,7 @@ Identifiers
 ->No use of Keyword or Reserve words
 ->Give meaningful names
 
+*****************************************************************************************************************************************************
 Type Casting
 ============
 ->Converting data of one type to another type.
@@ -106,6 +128,7 @@ byte->short->int->long->float->double
              ^
             char
 
+*****************************************************************************************************************************************************
 Operator
 ========
 ->Increment/Decrement operator
@@ -133,6 +156,7 @@ Logical Operator: && || !
 
 Shortcut Operator: & |
 
+*****************************************************************************************************************************************************
 Conditional Statements
 ======================
 ->if/if-else/if else-if else/ternary operator
@@ -165,6 +189,7 @@ sop(a+" is big");
 
 ->exp can be another ternary operator
 
+*****************************************************************************************************************************************************
 Iterative Statements
 ====================
 ->for loop/while loop/do while loop
@@ -188,7 +213,7 @@ do
 increment or decrement
 }while(condition);
 
-
+*****************************************************************************************************************************************************
 Switch Statement
 ================
 Syntax:
@@ -235,6 +260,7 @@ public class SwitchDemo {
     }
 }
 
+*****************************************************************************************************************************************************
 Number system
 =============
 ->Always output will be in decimal number format
@@ -262,6 +288,71 @@ Allowed: 0,1
 Ex:
 int a=OB0100101;
 sop(a); //37
+
+*****************************************************************************************************************************************************
+Naming Convention
+=================
+->Class, Interface, Enum names should start with uppercase and subsequent letter should starts with uppercase
+->Package name should be lowercase
+->Variables and Method names should be in Camel case.[start with small and subsequent letter should be in uppercase]
+->Constant should be all in uppercase.
+->No space allowed, can use _
+
+*****************************************************************************************************************************************************
+Class and Object
+================
+->Class is a Blueprint 
+->Object is the instance of the Class
+->reference variable contains reference value of the object and points to the created object.
+->Creation of object is knows as Instantiation 
+
+Class creation:
+class className
+{
+constructors();
+instance/static variables;
+instance methods();
+}
+
+Object Creation:
+className refVarName=new className();
+
+
+->Exe flow
+.java->COMPILER-->.class file-->JVM--->Output
+
+Compile: Compiler during Compilation time
+Execute: JVM during Runtime inside JRE
+
+*****************************************************************************************************************************************************
+JVM Memory
+==========
+->JVM exe inside JRE environment
+->Method area/Stack area/Heap area/PC Register/Nature stack
+
+
+new className();
+->New memory will be created inside Heap area based on instance variable.
+->Assign new value known as reference value for the object.
+->Store Instance variable data, if not default value will be assigned.
+
+Stack Area:
+->When any method start to execute, stack trace for it will be created in stack area.
+->Reference and Local variable will be stored in Stack area.
+
+Heap Area:
+->Memory for the Object will be allocated from heap area and it contains Instance and Static variable data.
+
+*****************************************************************************************************************************************************
+Methods
+=======
+
+accessModifiers returnType methodName(parameters)
+{
+..........
+return value;
+}
+
 
 
 
