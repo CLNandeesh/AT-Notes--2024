@@ -12,6 +12,11 @@ Naming Convention
 Class and Object
 JVM Memory
 Methods
+this keyword
+Scanner Class
+OO Programming Features
+
+
 
 *****************************************************************************************************************************************************
 Variables and Data Types
@@ -337,25 +342,205 @@ new className();
 ->Store Instance variable data, if not default value will be assigned.
 
 Stack Area:
-->When any method start to execute, stack trace for it will be created in stack area.
+->When any method start to execute, stack trace for it will be created in stack area. Once it got executed, stack trace will be removed.
 ->Reference and Local variable will be stored in Stack area.
+->Once stack trace is removed, local and reference variable will be removed.
 
 Heap Area:
 ->Memory for the Object will be allocated from heap area and it contains Instance and Static variable data.
+->When object do not have any reference variable then GC will remove it from the heap memory.
 
 *****************************************************************************************************************************************************
 Methods
 =======
+->Can be accessed by reference variable, class name or directly.
 
-accessModifiers returnType methodName(parameters)
+[accessModifiers] returnType methodName([parameters])
 {
 ..........
-return value;
+[return value];
 }
 
+Note: When same method call itself finally we get StackOverflowError exception
 
+*****************************************************************************************************************************************************
+this keyword
+============
+->Used to refer current class instance member
 
+*****************************************************************************************************************************************************
+Scanner Class
+=============
+Scanner scanner=new Scanner(System.in);
+String name=scanner.next();
 
+*****************************************************************************************************************************************************
+Object Oriented Programming Features
+====================================
+Class/Object/Encapsulation/Data hiding/Abstraction/Inheritance/Polymorphism
 
+Polymorphism
+------------
+->Method overloading and Method overriding
 
- 
+Method overloading
+->2 or more methods in the class having same name and different parameter list[type or count].
+->Which method to be called is decided at compile time itself. It is also knows as Compile time polymorphism.
+
+Ex:
+    int add(int a, int b) {
+        return a + b;
+    }
+
+    int add(int a, int b, int c) {
+        return a + b + c;
+    }
+
+->It is not possible to create 2 method with same name and parameter list even if return type is different.
+
+Ex: Not allowed
+    float add(int a, int b)
+    {
+        return a+b;
+    }
+
+    int add(int a, int b)
+    {
+        return a+b;
+    }
+
+Encapsulation
+-------------
+->Make variable in the class as private and method as public.
+->Binding variables and method together as single unit.
+->Access variables through methods for increasing security.
+->getter() used to get the value and setter() is used to set the value for the instance variables.
+
+Ex:
+class Demo1 {
+    private int age;
+    private String name;
+    
+    int displayAge() {
+        return age;
+    }
+    String displayName() {
+        return name;
+    }
+    void setAge(int age) {
+        this.age = age;
+    }
+    void setName(String name) {
+        this.name = name;
+    }
+}
+
+*****************************************************************************************************************************************************
+Constructor
+===========
+->Special method having name same as Class name, No return type, Invoke when object is created, Used to initialize the instance var data.
+->Can have Access modifiers.
+->On each Object creation Constructor is invoked.
+->Constructor can be overloaded but cannot able to overrided.
+->Works similar as setter(), can also do many task similar to methods.
+->If dev has not added any constructor then by default , Compiler will add default 0 argument constructor.
+->Types: Default[0 Argument] / User defined [0 argument and parameterized constructor] 
+->Can add default, public, protected and private access modifiers
+->First statement of the constructor is super([parameter list]);
+which will invoke parent class constructor.
+If we add this([parameter list]); manually then it wont be there.
+->First statement can be either this or super not both.
+
+Ex:
+class Demo2
+{
+    int age;
+    String name;
+    Demo2(String name,int age)
+    {
+        if(age>18)
+        {
+            this.age=age;
+        }
+        else {
+            System.out.println("Invalid Age");
+        }
+        this.name=name;
+
+    }
+}
+public class ConstructorDemo1 {
+    public static void main(String[] args) {
+        Demo2 d1=new Demo2("Appu",23);
+        System.out.println(d1.age+" "+d1.name);
+        Demo2 d2=new Demo2("Sivu",15);
+        System.out.println(d2.age+" "+d2.name);
+    }
+}
+
+OUTPUT:
+23 Appu
+Invalid Age
+0 Sivu
+
+Constructor chaining
+----------------------
+One Constructor calls other Constructor
+Case 1: 
+>Within the class using this keyword.
+should be in first line inside the constructor.
+this([parameter list])
+
+>To call parent class constructor from child class constructor
+>should be in first line inside the constructor.
+super([parameter list])
+
+Ex:
+package basicstelusko;
+
+class Demo3 {
+    Demo3()
+    {
+        System.out.println("Demo3 Zero Arg Const");
+    }
+
+    Demo3(int a,int b,int c)
+    {
+        System.out.println("Demo3 three Arg Const");
+    }
+}
+class Demo4 extends Demo3
+{
+
+    Demo4(int a)
+    {
+        System.out.println("Demo4 One Arg Const");
+    }
+
+    Demo4()
+    {
+        //this(10);
+        super(1,2,3);
+        System.out.println("Demo4 Zero Arg Const");
+    }
+
+    Demo4(int a,int b,int c)
+    {
+        System.out.println("Demo4 three Arg Const");
+    }
+}
+public class ConstructorChaining {
+    public static void main(String[] args) {
+        Demo4 d=new Demo4();
+
+    }
+}
+
+OUTPUT:
+Demo3 three Arg Const
+Demo4 Zero Arg Const
+
+->Execution flow
+instance var/block
+constructor for each object creation
+
