@@ -2,7 +2,12 @@ Java Content
 ============
 Variables and Data Types
 Identifiers
-
+Type Casting
+Operator
+Conditional Statements
+Iterative Statements
+Switch Statement
+Number system
 
 
 
@@ -78,6 +83,188 @@ Identifiers
 ->Can contains letters, digits. _ and $
 ->No use of Keyword or Reserve words
 ->Give meaningful names
+
+Type Casting
+============
+->Converting data of one type to another type.
+->Types
+Implicit: Lower to Higher implicitly by JVM
+Ex:
+byte b=10;
+int i=b;
+
+Explicit: Higher to Lower explicitly by developer using cast operator
+Ex:
+int i=10;
+byte b=(byte) i;
+
+->Type checking: Compiler
+  Type Casting: JVM
+
+Type casting chart
+byte->short->int->long->float->double
+             ^
+            char
+
+Operator
+========
+->Increment/Decrement operator
+int a=5;
+a=a+1;
+OR
+a=a++;
+
+->a++: assign and increment 
+  ++a: increment and assign
+
+->Types of Operator
+Arithmetic Operator:+ - * / %
+Ex: 
+-20%7=-6
+10%30=10
+10%-3=1
+
+Relational Operator:> < >= <= == !=
+ results Boolean value
+
+Logical Operator: && || !
+ Combines two or more relational operators
+
+
+Shortcut Operator: & |
+
+Conditional Statements
+======================
+->if/if-else/if else-if else/ternary operator
+->Condition can be simple relational operator or combination of Logical and relational operator
+->Nested conditional are supported
+
+if(condition)
+{....}
+
+if(condition)
+{.....}
+else
+{.....}
+
+if(condition)
+{.....}
+else if(condition)
+{.....}
+else
+{......}
+
+->Ternary operator
+Syntax:
+var = condition ? exp1 : exp2;
+condition true, var=exp1 else var=exp2
+
+Ex:
+int a=(10>20)?10:20;
+sop(a+" is big");
+
+->exp can be another ternary operator
+
+Iterative Statements
+====================
+->for loop/while loop/do while loop
+
+for(initialization; condition; increment or decrement)
+{........}
+
+
+initialization
+while(condition)
+{
+......
+increment or decrement
+}
+
+
+initialization
+do
+{
+......
+increment or decrement
+}while(condition);
+
+
+Switch Statement
+================
+Syntax:
+switch(exp)
+{
+case exp1:
+statement;
+break;
+
+case exp1:
+statement;
+break;
+
+default:
+statement;
+
+}
+
+->exp can contains: byte, short, int, String
+->exp1,2,3,.. should be constant or literals
+->If we not add break then all below cases after satisfying condition will be executed.
+
+Ex:
+public class SwitchDemo {
+    public static void main(String[] args) {
+        int a = 40;
+
+        switch (a) {
+            case 10:
+                System.out.println("Appu");
+                break;
+
+            case 20:
+                System.out.println("Raghu");
+                break;
+
+            case 30:
+                System.out.println("Shivu");
+                break;
+
+            default:
+                System.out.println("Sharukh");
+        }
+    }
+}
+
+Number system
+=============
+->Always output will be in decimal number format
+
+->Octal
+Prefix: O or o
+Allowed: 0,1,...7
+
+Ex:
+int a=O45;
+sop(a); //37
+
+->Hexadecimal
+Prefix: OX or ox
+Allowed: 0,1,...9,A,B,C,D,E
+
+Ex:
+int a=OX45;
+sop(a); //69
+
+->Binary
+Prefix: OB or ob
+Allowed: 0,1
+
+Ex:
+int a=OB0100101;
+sop(a); //37
+
+
+
 
 
  
