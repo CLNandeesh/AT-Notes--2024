@@ -21,7 +21,7 @@ Constructor
 Static keyword
 Inheritance
 Polymorphism[Overriding]
-
+Access Modifiers
 
 
 *****************************************************************************************************************************************************
@@ -704,8 +704,16 @@ child class extends parent class
 {
 }
 
-Types
------
+->Private property[var and method], constructor not participate in inheritance.
+
+Types of methods in Inheritance
+---------------------------------
+Inherited methods: Method available in parent class and used without any modification in child class.
+Overridden methods: Parent class method with new body in child class.
+Specialized methods: Child class methods with its own body
+
+Inheritance Types
+-----------------
 Single/Multi level/Multiple/Hierarchal
 C extends A,B ->Not allowed due to Ambiguity issue
 
@@ -816,6 +824,9 @@ public class MethodOverridingDemo {
 
 }
 
+OUTPUT:
+Calling from iPhone
+
 ->
 Allowed:
 superclass reference =child class object();
@@ -825,10 +836,21 @@ sub class reference = super class object();
 
 Rules for Method overriding
 -----------------------------
-Method prototype[heading] should be same
-@Override annotation should be used
-private method cannot be overrided
-Static method cannot not be override-method hiding
+->Cannot reduce Access modifiers power
+->Method prototype[heading] should be same
+->@Override annotation should be used
+->private method cannot be overrided
+->we cannot change return type for primitive data type, but if it has non primitive data type we can change but there should be parent child relationship between the return type of parent class return type and child class return type.
+
+Co variant return type
+parent class return type display()
+{....}
+child class return type display()
+{...}
+
+->Cannot change argument list
+
+->Static method cannot not be override-method hiding[we get parent method body only not child]
 
 Ex:
 class Phone1
@@ -857,3 +879,18 @@ public class MethodHiding {
 
 OUTPUT:
 Calling
+
+*****************************************************************************************************************************************************
+Access Modifiers
+================
+->default/public/protected/private
+->Can be applied to variable, constructor and methods
+
+public: anywhere inside the project
+Protected: within package and outside package with is-a relation
+default: within package
+private: within class
+
+public>protected>default>private
+
+*****************************************************************************************************************************************************
