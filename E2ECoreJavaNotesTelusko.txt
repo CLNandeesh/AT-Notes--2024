@@ -15,9 +15,13 @@ Methods
 this keyword
 Scanner Class
 OO Programming Features
-   Polymorphism
+   Polymorphism[Overloading]
    Encapsulation
 Constructor
+Static keyword
+Inheritance
+Polymorphism[Overriding]
+
 
 
 *****************************************************************************************************************************************************
@@ -381,8 +385,8 @@ Object Oriented Programming Features
 ====================================
 Class/Object/Encapsulation/Data hiding/Abstraction/Inheritance/Polymorphism
 
-Polymorphism
-------------
+Polymorphism[Overloading]
+-------------------------
 ->Method overloading and Method overriding
 
 Method overloading
@@ -481,69 +485,119 @@ OUTPUT:
 Invalid Age
 0 Sivu
 
-->First statement of the constructor is super([parameter list]);
-which will invoke parent class constructor.
-If we add this([parameter list]); manually then it wont be there.
+->First statement of the constructor is super()
+which will invoke parent class 0 argument constructor 
+If we add this([parameter list]); manually then super() will not be there.
 ->First statement can be either this or super not both.
-->Parent and Child should have same argument constructor 
+->Always parent class should have user defined or compiler defined 0 argument constructor, if all child class constructor don't have this() or super(param list)
 
-Ex 1: Valid Both child and parent have matching argument constructor 
-parent
+
+Ex 1: Valid since parent have 0 argument constructor
+class A
 {
-parent()
-{...}
-child extends parent
-{
-child()
-{....}
+    A()
+    {
+        System.out.println("A 0 Arg Const");
+    }
+
+    A(int a)
+    {
+        System.out.println("A 1 Arg Const");
+    }
 }
 
-main()
+class B extends A
 {
-child c =new child();
+    B()
+    {
+        System.out.println("B 0 Arg Const");
+    }
+
+    B(int a)
+    {
+        System.out.println("B 1 Arg Const");
+    }
+}
+public class ConstructorSuper {
+    public static void main(String[] args) {
+        B b=new B(10);
+    }
 }
 
-Flow: child 0 argument constructor>super() of child 0 argument constructor >parent 0 argument constructor>child 0 argument constructor 
-since object creation for 0 argument constructor , child and parent should have 0 argument constructor 
+OUTPUT:
+A 0 Arg Const
+B 1 Arg Const
+Flow: child 1 argument constructor>super() of child 1 argument constructor >parent 0 argument constructor>child 1 argument constructor 
 
-Ex 2: In Valid, child and parent do not have matching argument constructor 
-parent
+
+Ex 2: In Valid, parent do not have 0 argument constructor 
+class A
 {
-parent(int a)
-{...}
-child extends parent
-{
-child()
-{....}
+    A(int a)
+    {
+        System.out.println("A 1 Arg Const");
+    }
 }
 
-main()
+class B extends A
 {
-child c =new child();
+    B()
+    {
+        System.out.println("B 0 Arg Const");
+    }
+
+    B(int a)
+    {
+        System.out.println("B 1 Arg Const");
+    }
+}
+public class ConstructorSuper {
+    public static void main(String[] args) {
+        B b=new B(10);
+    }
 }
 
-child have 0 argument constructor, and it searches same 0 argument constructor in parent class.
+OUTPUT:
+ERROR
+Flow: child 1 argument constructor>super() of child 1 argument constructor >parent 0 argument constructor but its not available
 
-Ex 3: Valid Both child and parent have matching argument constructor 
-parent
-{
-parent()
-{...}
+->If any child class have constructor then parent must have 0 argument constructor else we need to add super(paramlist) in all child class constructor to avoid parent 0 argument constructor call from child class
 
-parent(int a)
-{...}
-}
-child extends parent
-{
-child()
-{....}
-}
+Ex 3: Valid, Since we added manually super(param list) in all child class constructor
+package basicstelusko;
 
-main()
-{
-child c =new child();
+class A {
+    A() {
+        System.out.println("A 0 Arg Const");
+    }
+
+    A(int a) {
+        System.out.println("A 1 Arg Const");
+    }
 }
 
+class B extends A {
+    B() {
+        super(10);
+        System.out.println("B 0 Arg Const");
+    }
+
+    B(int a) {
+        super(10);
+        System.out.println("B 1 Arg Const");
+    }
+}
+
+public class ConstructorSuper {
+    public static void main(String[] args) {
+        B b = new B(10);
+    }
+}
+
+
+OUTPUT:
+A 1 Arg Const
+B 1 Arg Const
 
 Constructor chaining
 ----------------------
@@ -608,3 +662,198 @@ Instance var/block
 Child class constructor 
 
 *****************************************************************************************************************************************************
+Main method
+===========
+->We can overload main method but JVM consider the standard syntax main method for execution.
+public class Demo {
+    public static void main(String[] args) {
+            }
+}
+
+
+*****************************************************************************************************************************************************
+static keyword
+==============
+->Can be used with variables, block or to method
+->Exe flow without parent class
+static block or static variable
+instance block or instance variable
+constructor
+instance block or instance variable
+constructor
+
+static block
+------------
+->
+static 
+{
+....
+}
+
+*****************************************************************************************************************************************************
+Inheritance
+===========
+->IS-A relation
+->Re using exiting members[methods and variables] of the class instead of creating again.
+->Parent Child relationship
+->
+parent/super/base
+child/sub/derived
+
+child class extends parent class
+{
+}
+
+Types
+-----
+Single/Multi level/Multiple/Hierarchal
+C extends A,B ->Not allowed due to Ambiguity issue
+
+Constructor flow
+----------------
+object creation for child class>child class cons>super()>parent class 0 argument constructor>child class constructor
+
+Always parent class 0 argument constructor will be invoked
+
+this() vs super()
+-----------------
+To call constructor of same class we use this() and to call constructor of super class we use super()
+Both should be inside first line of constructor only
+
+Variable/method preference
+--------------------------
+local, class, super class
+
+this vs super
+-------------
+this.varname: calls instance variable
+super.varname: calls super class variable
+
+When not to use Inheritance[HAS-A vs IS-A]
+------------------------------------------
+IS-A: Inheritance, if there exist is-a relation then use extends.
+ 
+HAS-A: Composition, If there not exist is-a relation then else use has-a relation
+       Create Object of that class and call those methods.
+
+Ex 1: HAS-A relation
+class Phone 
+{
+call(){...};
+}
+
+class Human
+{
+}
+
+Human needs call() but not exist is-a relation so create Object and use
+
+Solution:
+class Human
+{
+Phone obj=new Phone();
+obj.call();
+}
+
+Ex 2: HAS-A relation
+class Bathtub
+{
+bath(){...};
+}
+
+class Home 
+{
+Bathtub obj=new Bathtub();
+obj.bath(); //Since there not exist is-a relation we use has-a relation to access method
+}
+
+Ex 3: iPhone 14 extends iPhone 13
+It has is-a relation so we can use extends
+
+class iPhone13
+{
+playSong(){...};
+}
+
+class iPhone14 extends iPhone13
+{
+playSong(); //There exist is-a relation so use extends 
+}
+
+*****************************************************************************************************************************************************
+Polymorphism[Overriding]
+------------------------
+->Same thing with different behaviour
+->We can create super class reference and sub class Object
+Parent p=new Child();
+->Method of sub class overrides method of super class
+Giving new functionality for the method of super class in child class
+Runtime Polymorphism, In compile time compiler not aware of which method will be called either super or sub class method.
+Create object for child class and reference for parent class, call the method.
+
+Ex:
+class Phone
+{
+    void call()
+    {
+        System.out.println("Calling");
+    }
+}
+
+class Iphone extends  Phone
+{
+    void call()
+    {
+        System.out.println("Calling from Iphone");
+    }
+}
+public class MethodOverridingDemo {
+
+    public static void main(String[] args) {
+        Phone obj=new Iphone();
+        obj.call();
+    }
+
+}
+
+->
+Allowed:
+superclass reference =child class object();
+
+Not Allowed:
+sub class reference = super class object();
+
+Rules for Method overriding
+-----------------------------
+Method prototype[heading] should be same
+@Override annotation should be used
+private method cannot be overrided
+Static method cannot not be override-method hiding
+
+Ex:
+class Phone1
+{
+    static void call()
+    {
+        System.out.println("Calling");
+    }
+}
+
+class Iphone1 extends  Phone1
+{
+    static void call()
+    {
+        System.out.println("Calling from Iphone");
+    }
+}
+
+public class MethodHiding {
+
+    public static void main(String[] args) {
+        Phone1 obj=new Iphone1();
+        obj.call();
+    }
+}
+
+OUTPUT:
+Calling
