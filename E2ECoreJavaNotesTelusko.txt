@@ -15,7 +15,9 @@ Methods
 this keyword
 Scanner Class
 OO Programming Features
-
+   Polymorphism
+   Encapsulation
+Constructor
 
 
 *****************************************************************************************************************************************************
@@ -446,10 +448,6 @@ Constructor
 ->If dev has not added any constructor then by default , Compiler will add default 0 argument constructor.
 ->Types: Default[0 Argument] / User defined [0 argument and parameterized constructor] 
 ->Can add default, public, protected and private access modifiers
-->First statement of the constructor is super([parameter list]);
-which will invoke parent class constructor.
-If we add this([parameter list]); manually then it wont be there.
-->First statement can be either this or super not both.
 
 Ex:
 class Demo2
@@ -483,11 +481,75 @@ OUTPUT:
 Invalid Age
 0 Sivu
 
+->First statement of the constructor is super([parameter list]);
+which will invoke parent class constructor.
+If we add this([parameter list]); manually then it wont be there.
+->First statement can be either this or super not both.
+->Parent and Child should have same argument constructor 
+
+Ex 1: Valid Both child and parent have matching argument constructor 
+parent
+{
+parent()
+{...}
+child extends parent
+{
+child()
+{....}
+}
+
+main()
+{
+child c =new child();
+}
+
+Flow: child 0 argument constructor>super() of child 0 argument constructor >parent 0 argument constructor>child 0 argument constructor 
+since object creation for 0 argument constructor , child and parent should have 0 argument constructor 
+
+Ex 2: In Valid, child and parent do not have matching argument constructor 
+parent
+{
+parent(int a)
+{...}
+child extends parent
+{
+child()
+{....}
+}
+
+main()
+{
+child c =new child();
+}
+
+child have 0 argument constructor, and it searches same 0 argument constructor in parent class.
+
+Ex 3: Valid Both child and parent have matching argument constructor 
+parent
+{
+parent()
+{...}
+
+parent(int a)
+{...}
+}
+child extends parent
+{
+child()
+{....}
+}
+
+main()
+{
+child c =new child();
+}
+
+
 Constructor chaining
 ----------------------
-One Constructor calls other Constructor
+One Constructor calls other Constructor of same class.
 Case 1: 
->Within the class using this keyword.
+>Within the class using this keyword
 should be in first line inside the constructor.
 this([parameter list])
 
@@ -541,6 +603,8 @@ Demo3 three Arg Const
 Demo4 Zero Arg Const
 
 ->Execution flow
-instance var/block
-constructor for each object creation
+Parent class constructor
+Instance var/block
+Child class constructor 
 
+*****************************************************************************************************************************************************
