@@ -25,7 +25,9 @@ Polymorphism[Overriding]
 Access Modifiers
 Abstraction
 Final keyword
-
+Java Program Execution
+Static keyword
+Interface
 
 
 
@@ -1085,5 +1087,62 @@ Final Keyword
 ->Final class cannot eb inherited
 ->Final method cannot be overrided, do get inherited in child class.
 ->Final variable cannot be re initialized, need to be initialized, acts like constants.
+->Abstract method and abstract class cannot be final
 
+*****************************************************************************************************************************************************
+Static Keyword
+==============
+->Static context: static variables/static block/static methods
+->Instance context: instance variables/instance block/instance methods
+->Static members are not object dependant but instance members are object dependant.
 
+Flow of execution
+-----------------
+static block or variable[class loading once per execution]
+instance block or variable[object creation/for each object creation]
+constructor[object creation/for each object creation]
+instance block or variable[object creation/for each object creation]
+constructor[object creation/for each object creation]
+
+Static variable
+-----------------
+->Static variables can be accessed inside sm, sb,im,ib.
+But instance variables can be accesses only inside ib and im.
+->If any data has to be shared among all the object of the class we need to make those variable as static variables.
+->Memory allocated once during class loading in Heap area
+->can be accessed using class name or object reference variable
+
+Static method
+-------------
+->Can be accessed using Class name or reference variable.
+
+Static Block
+-------------
+->Executed once while loading .class file to memory.
+
+*****************************************************************************************************************************************************
+Java Program Execution
+======================
+->Compiler compiles and generates .class file for each class, Enum, interface, abstract class.
+->JVM executes Java program in JRE.
+->JVM make use of Class loaders/JVM Data Areas/Execution engine
+
+Class loaders
+JVM loads the .class file to method area using Class loaders, allocates memory for static variables in heap memory and also provide default values.[executes static context during class loading]
+
+JVM Data Areas
+Method area: complete .class file will be loaded here.
+Stack area: Reference variable, Local variable, Stack frame for each method execution.
+Heap area: static variables, instance variables
+PC register: Address of each instruction.
+Native stack: 3rd party 
+
+Execution engine
+Executes the program using Interpreter, JIT compiler and GC.
+
+*****************************************************************************************************************************************************
+Interface
+=========
+
+ 
+ 
