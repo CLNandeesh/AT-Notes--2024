@@ -20,8 +20,13 @@ OO Programming Features
 Constructor
 Static keyword
 Inheritance
+Upcasting and Down casting
 Polymorphism[Overriding]
 Access Modifiers
+Abstraction
+Final keyword
+
+
 
 
 *****************************************************************************************************************************************************
@@ -712,6 +717,88 @@ Inherited methods: Method available in parent class and used without any modific
 Overridden methods: Parent class method with new body in child class.
 Specialized methods: Child class methods with its own body
 
+Accessing methods in Inheritance
+---------------------------------
+Parent obj=new Child(); //Upcasting
+obj-> can access inherited methods[parent class methods], overrided method[but we get body of child class].
+Cannot able to access specialized methods, if need to access need to do type casting[Down casting].
+
+Parent obj=new Parent();
+obj->can access inherited methods.
+Cannot able to access specialized methods, if need to access need to do type casting.
+
+Child obj=new Child();
+obj->can access inherited method, overrided method and specialized methods.
+
+Ex:
+Ex:
+class X {
+    void add() {
+        System.out.println("parent add");
+    }
+
+    void sub() {
+        System.out.println("parent sub");
+    }
+}
+
+class Y extends X {
+    void add() {
+        System.out.println("child add");
+    }
+
+    void mul() {
+        System.out.println("child mul");
+    }
+}
+
+public class UpcastingDowncasting {
+    public static void main(String[] args) {
+        System.out.println("****NORMAL*****");
+        X x = new X();
+        x.add(); //Inherited method
+        x.sub(); //Inherited method
+
+        System.out.println("****NORMAL*****");
+        Y y = new Y();
+        y.add(); //Overridden method
+        y.mul(); //Specialized method
+        y.sub(); //Inherited method
+
+        System.out.println("****UPCASTING*****");
+        X xy = new Y();
+        xy.add(); //Overridden method
+        xy.sub(); //Inherited method
+
+
+        System.out.println("****DOWNCASTING*****");
+        //Y yx=new X(); //ERROR
+        Y yx = (Y) new X();
+        yx.add(); //Overridden method
+        yx.sub(); //Inherited method
+        yx.mul(); //Specialized method
+        System.out.println("*********");
+
+    }
+}
+
+
+OUTPUT:
+****NORMAL*****
+parent add
+parent sub
+****NORMAL*****
+child add
+child mul
+parent sub
+****UPCASTING*****
+child add
+parent sub
+****DOWNCASTING*****
+Exception in thread "main" java.lang.ClassCastException: class oopstelusko.X cannot be cast to class oopstelusko.Y (oopstelusko.X and oopstelusko.Y are in unnamed module of loader 'app')
+	at oopstelusko.UpcastingDowncasting.main(UpcastingDowncasting.java:44)
+
+
 Inheritance Types
 -----------------
 Single/Multi level/Multiple/Hierarchal
@@ -789,6 +876,80 @@ playSong(); //There exist is-a relation so use extends
 }
 
 *****************************************************************************************************************************************************
+Upcasting and Down casting
+==========================
+Parent p=new Child(); //Upcasting and its allowed , used to achieve Polymorphism
+
+Child c=(Child)new Parent(); //Down casting and it throws ClassCastException exception
+
+Ex:
+class X {
+    void add() {
+        System.out.println("parent add");
+    }
+
+    void sub() {
+        System.out.println("parent sub");
+    }
+}
+
+class Y extends X {
+    void add() {
+        System.out.println("child add");
+    }
+
+    void mul() {
+        System.out.println("child mul");
+    }
+}
+
+public class UpcastingDowncasting {
+    public static void main(String[] args) {
+        System.out.println("****NORMAL*****");
+        X x = new X();
+        x.add(); //Inherited method
+        x.sub(); //Inherited method
+
+        System.out.println("****NORMAL*****");
+        Y y = new Y();
+        y.add(); //Overridden method
+        y.mul(); //Specialized method
+        y.sub(); //Inherited method
+
+        System.out.println("****UPCASTING*****");
+        X xy = new Y();
+        xy.add(); //Overridden method
+        xy.sub(); //Inherited method
+
+
+        System.out.println("****DOWNCASTING*****");
+        //Y yx=new X(); //ERROR
+        Y yx = (Y) new X();
+        yx.add(); //Overridden method
+        yx.sub(); //Inherited method
+        yx.mul(); //Specialized method
+        System.out.println("*********");
+
+    }
+}
+
+
+OUTPUT:
+****NORMAL*****
+parent add
+parent sub
+****NORMAL*****
+child add
+child mul
+parent sub
+****UPCASTING*****
+child add
+parent sub
+****DOWNCASTING*****
+Exception in thread "main" java.lang.ClassCastException: class oopstelusko.X cannot be cast to class oopstelusko.Y (oopstelusko.X and oopstelusko.Y are in unnamed module of loader 'app')
+	at oopstelusko.UpcastingDowncasting.main(UpcastingDowncasting.java:44)
+
+*****************************************************************************************************************************************************
 Polymorphism[Overriding]
 ------------------------
 ->Same thing with different behaviour
@@ -849,7 +1010,6 @@ child class return type display()
 {...}
 
 ->Cannot change argument list
-
 ->Static method cannot not be override-method hiding[we get parent method body only not child]
 
 Ex:
@@ -880,6 +1040,8 @@ public class MethodHiding {
 OUTPUT:
 Calling
 
+
+
 *****************************************************************************************************************************************************
 Access Modifiers
 ================
@@ -894,3 +1056,34 @@ private: within class
 public>protected>default>private
 
 *****************************************************************************************************************************************************
+Abstraction
+===========
+->Hiding implementation from user.
+->Just declare methods without body then its an abstraction.
+->Can be achieved using abstract keyword and interface.
+->If the body of the method is not used by any of the child class then we can make those method as abstract methods. In child class we can provide required implementation.
+
+Abstract Method
+---------------
+->Method with only signature and no body/ Declared using keyword abstract/Present inside abstract class and Interface.
+->Common implementation for all the child class make it as concrete method, different implementation for different child class then make it as abstract method.
+
+Abstract class
+----------------
+->Class with 0 to N abstract methods and/or 0 to N concrete methods.
+->Any class contains abstract methods then that class should be abstract class. 
+->There should be a class providing implementation for it using extends keyword.
+->Cannot create object for abstract class
+->Abstract class can contain constructor, constructor cannot be abstract.
+->Incomplete class
+->Class that extends abstract class should provide body for all the abstract methods then we can create object for the implementation class else that class should also be abstract class.
+
+*****************************************************************************************************************************************************
+Final Keyword
+=============
+->Final keyword can be applied to variable/method/class
+->Final class cannot eb inherited
+->Final method cannot be overrided, do get inherited in child class.
+->Final variable cannot be re initialized, need to be initialized, acts like constants.
+
+
