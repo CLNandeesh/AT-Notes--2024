@@ -1,0 +1,10 @@
+WebDriver
+
+
+Selenium WebDriver
+==================
+->Interface, API, one of the component in Selenium suit.
+-.Used to automate Web browser actions.
+
+RemoteWebDriver is a class implements WebDriver Interface. ChromeDriver, FirefoxDriver, EdgeDriver class extends RemoteWebDriver Interface.
+
