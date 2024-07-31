@@ -1590,6 +1590,40 @@ contains(String str)
 index("string str") //first occurrence
 lastIdexOf("string str") //last occurrence
 length()
+startsWith("String str")
+endsWith("String str")
+toCharArray()
+split("String str")
+toString()
+
+String Buffer and String Builder
+--------------------------------
+->Mutable version of the String object
+->Any modification will be done in same object.
+
+StringBuffer sb=new StringBuffer("appu");
+sop(sb); //appu
+sb.append("raj");
+sop(sb); //appuraj
+
+->String Buffer: synchronized methods[not supports multithreading]
+  String Builder: non synchronized methods[supports multithreading]
+
+
+->
+StringBuffer sb1=new StringBuffer("appu");
+StringBuffer sb2=new StringBuffer("appu");
+sop(sb1.equals(sb2)); //false , equals method of object class will be called and it will do reference value comparison not content comparison.
+but in String class equals() of Object class is overridden so it do content comparison
+sop(sb1.compareTo(sb2));
+
+->final StringBuffer sb=new StringBuffer("appu");
+sb.append("raj");
+sop(sb); //appuraj
+
+->final dont have any impact on mutability of String buffer object. It impact only reference value not the content.
+
+*****************************************************************************************************************************************************
 
 
 
