@@ -31,6 +31,7 @@ Interface
 Anonymous Inner Class
 Arrays
 String Class
+Interface and Lambda Expression
 
 *****************************************************************************************************************************************************
 Variables and Data Types
@@ -1635,11 +1636,12 @@ Marker Interface: Has 0 abstract method
 
 SAM or Functional Interface
 ---------------------------
-->Interface having single abstract method
+->Interface having single abstract method , can have any number of default, static, private methods.
 
 Lambda Expression
 -----------------
 ->Used to provide body for abstract method of SAM interface.
+->Not create extra class files
 
 Rules:
 argument within () if there are two or more, else we can remove ()
@@ -1720,7 +1722,440 @@ public class Lambda3 {
     }
 }
 
+->Lambda exp for forEach method of List interface
+
+Ex:
+public class ForEachDemo {
+    public static void main(String[] args) {
+        List<Integer> list=new ArrayList<Integer>();
+        list.add(10);
+        list.add(20);
+        list.add(30);
+        list.forEach(n-> System.out.println(n));
+    }
+}
+
+Default method
+--------------
+->Method with body inside Interface
+
+*****************************************************************************************************************************************************
+Exception handling
+==================
+->Exception is an mistake occurs at run time that may cause abnormal termination of the application.
+->Handling such a exception is knows as Exception handling
+
+Case 1:
+Exception occurs in main method 
+Exception Object is created and throws to JVM
+JVM checks if there is as Exception handler created by developer ie respective catch block in main method
+If Yes
+  JVM throws to User defined exception handler created by developer ie catch block to handle the exception
+  Smooth termination of the program, continues from where it stopped.
+If No
+  JVM throws it to Default exception handler 
+  Abrupt termination of the program where exception occurred.
+
+Ex: Without exception handler
+public class Exceptionhandler1 {
+    public static void main(String[] args) {
+        System.out.println("Connection Started");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Numerator and Denominator");
+        int num = sc.nextInt();
+        int den = sc.nextInt();
+        int result = num / den;
+        System.out.println("Result is: " + result);
+        System.out.println("Connection Ended");
+    }
+}
+
+OUTPUT:
+Enter Numerator and Denominator
+22
+0
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at exceptionhandlingtelusko.Exceptionhandler1.main(Exceptionhandler1.java:14)
+
+Handling Exception Steps
+------------------------
+Identify risky code where exception may occur and put in to try block
+In catch block handle it
+Whenever exception occurs in try block statement, control comes to catch block and execute it.
+The statement below the exception occurred statement will not be executed.
+
+Solution: With Exception handler
+public class Exceptionhandler1 {
+    public static void main(String[] args) {
+        System.out.println("Connection Started");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Numerator and Denominator");
+        int num = sc.nextInt();
+        int den = sc.nextInt();
+
+        try {
+            int result = num / den;
+            System.out.println("Result is: " + result);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        System.out.println("Connection Ended");
+    }
+}
+
+OUTPUT:
+Enter Numerator and Denominator
+22
+0
+java.lang.ArithmeticException: / by zero
+Connection Ended
+
+Points
+------
+->Exception can be handled by try and catch block. Keep exception causing statements in try block and exception handling code in catch block.
+Ex:
+try {
+            int result = num / den;
+            System.out.println("Result is: " + result);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+->One try can have 0 or more catch block
+Which type of exception is thrown by try block its respective catch block will be executed.
+Ex:
+try 
+{
+int result = num / den;
+}
+catch(ArithmeticException e)
+{
+sop("Please enter valid data");
+}
+catch(NegativeArraySizeException e)
+{
+sop("Please enter valid data");
+}
+catch(ArrayIndexOutOfBoundException e)
+{
+sop("Please enter valid data");
+}
+catch(Exception e)
+{
+sop("Please enter valid data");
+}
+
+->Generic exception should be in last catch block.
+
+->One try must follow with at least one catch or finally block.
+
+->If exception occurs, then statement below try block will not be executed.
+
+->Nested try catch block is allowed
 
 
+Case 2:
+Main method calls alpha()
+Exception occurs in alpha()  
+Exception Object is created and throws to JVM
+JVM checks if there is as Exception handler created by developer ie respective catch block in alpha() 
+If Yes
+  JVM throws to User defined exception handler created by developer ie catch block in alpha() to handle the exception
+  Smooth termination of the program, continues from where it stopped.
+If No
+  JVM Checks if there is as Exception handler created by developer ie respective catch block in main() 
+  If Yes
+       JVM throws to User defined exception handler created by developer ie catch block in main() to handle the exception
+       Smooth termination of the program, continues from main().
+       Statement after exception causing statement inside alpha() will not be executed , only statement present inside main() after calling alpha() will be executed.
+  If No
+       JVM throws it to Default exception handler 
+       Abrupt termination of the program where exception occurred. All the statements after exception causing statement inside alpha() will not be executed and all the statement after calling alpha() inside main() will not be executed.
+
+Ex: Without exception handler in both main() and alpha()
+package exceptionhandlingtelusko;
+
+import java.util.Scanner;
+
+class Sample {
+    void alpha() {
+        System.out.println("Alpha Started");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Numerator and Denominator");
+        int num = sc.nextInt();
+        int den = sc.nextInt();
+        int result = num / den;
+        System.out.println("Result is: " + result);
+        System.out.println("Alpha Ended");
+    }
+}
+
+public class CallingAndCalledmethodExceptionhandling {
+    public static void main(String[] args) {
+        System.out.println("Main Started");
+        Sample s = new Sample();
+        s.alpha();
+        System.out.println("Main Ended");
+    }
+}
+
+
+OUTPUT:
+Main Started
+Alpha Started
+Enter Numerator and Denominator
+22
+0
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at exceptionhandlingtelusko.Sample.alpha(CallingAndCalledmethodExceptionhandling.java:12)
+	at exceptionhandlingtelusko.CallingAndCalledmethodExceptionhandling.main(CallingAndCalledmethodExceptionhandling.java:22)
+
+Ex: Exception handler inside main()
+package exceptionhandlingtelusko;
+
+import java.util.Scanner;
+
+class Sample {
+    void alpha() {
+        System.out.println("Alpha Started");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Numerator and Denominator");
+        int num = sc.nextInt();
+        int den = sc.nextInt();
+        int result = num / den;
+        System.out.println("Result is: " + result);
+        System.out.println("Alpha Ended");
+    }
+}
+
+public class CallingAndCalledmethodExceptionhandling {
+    public static void main(String[] args) {
+        System.out.println("Main Started");
+        Sample s = new Sample();
+        try
+        {
+            s.alpha();
+        }
+        catch (Exception e)
+        {
+            System.out.println("Invalid Input");
+        }
+
+        System.out.println("Main Ended");
+    }
+}
+
+
+OUTPUT:
+Main Started
+Alpha Started
+Enter Numerator and Denominator
+22
+0
+Invalid Input
+Main Ended
+
+Ex: Exception handler inside alpha()
+package exceptionhandlingtelusko;
+
+import java.util.Scanner;
+
+class Sample {
+    void alpha() {
+        System.out.println("Alpha Started");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Numerator and Denominator");
+        int num = sc.nextInt();
+        int den = sc.nextInt();
+        try {
+            int result = num / den;
+            System.out.println("Result is: " + result);
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+        }
+        System.out.println("Alpha Ended");
+    }
+}
+
+public class CallingAndCalledmethodExceptionhandling {
+    public static void main(String[] args) {
+        System.out.println("Main Started");
+        Sample s = new Sample();
+        s.alpha();
+        System.out.println("Main Ended");
+    }
+}
+
+
+OUTPUT:
+Main Started
+Alpha Started
+Enter Numerator and Denominator
+22
+0
+Invalid Input
+Alpha Ended
+Main Ended
+
+Ex: Exception handler in both main() and  alpha() 
+package exceptionhandlingtelusko;
+
+import java.util.Scanner;
+
+class Sample {
+    void alpha() {
+        System.out.println("Alpha Started");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Numerator and Denominator");
+        int num = sc.nextInt();
+        int den = sc.nextInt();
+        try {
+            int result = num / den;
+            System.out.println("Result is: " + result);
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+        }
+        System.out.println("Alpha Ended");
+    }
+}
+
+public class CallingAndCalledmethodExceptionhandling {
+    public static void main(String[] args) {
+        System.out.println("Main Started");
+        Sample s = new Sample();
+        try
+        {
+            s.alpha();
+        }catch (Exception e) {
+            System.out.println("Invalid Input");
+        }
+
+        System.out.println("Main Ended");
+    }
+}
+
+
+OUTPUT:
+Main Started
+Alpha Started
+Enter Numerator and Denominator
+22
+0
+Invalid Input
+Alpha Ended
+Main Ended
+
+Exception Information
+---------------------
+->
+e.getMessage(): Prints the description of the exception
+Ex: /by zero
+
+e.toString(): Prints name and description of the exception
+Ex: Arithmetic Exception:/by zero
+
+e.printStackTrace(): Prints the name and the description of the Exception along with stack trace
+
+Exception handling cases
+-------------------------
+->Whenever exception generated we can do three things
+  case 1: handle exception using try and catch
+  case 2: ducking[bypass] the exception using throws keyword
+  case 3: rethrowing the exception using throw,throws,try,catch,finally
+
+case 2:  ducking[bypass] the exception from called to caller using throws keyword
+
+If the exception occurring method cannot able to handle the exception then it can inform the caller method to handle it using throws keyword.
+
+Ex: called->caller Ex: alpha()->main()
+main() handles it
+
+class Sample1 {
+    void alpha() throws Exception{
+        System.out.println("Alpha Started");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Numerator and Denominator");
+        int num = sc.nextInt();
+        int den = sc.nextInt();
+        int result = num / den;
+        System.out.println("Result is: " + result);
+        System.out.println("Alpha Ended");
+    }
+}
+
+
+public class ThrowsDemo {
+    public static void main(String[] args) {
+        System.out.println("Main Started");
+        Sample1 s = new Sample1();
+        try {
+            s.alpha();
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+        }
+
+        System.out.println("Main Ended");
+    }
+}
+
+OUTPUT:
+Main Started
+Alpha Started
+Enter Numerator and Denominator
+22
+0
+Invalid Inputo JVM to han
+Main Ended
+
+Ex:
+called->caller Ex: alpha()->main()
+called->JVM Ex: main()->JVM
+
+Both alpha and main() by pass the exception and it finally reaches the JVM Default exception handler to handles it
+
+package exceptionhandlingtelusko;
+
+import java.util.Scanner;
+
+class Sample1 {
+    void alpha() throws Exception {
+        System.out.println("Alpha Started");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Numerator and Denominator");
+        int num = sc.nextInt();
+        int den = sc.nextInt();
+        int result = num / den;
+        System.out.println("Result is: " + result);
+        System.out.println("Alpha Ended");
+    }
+}
+
+
+public class ThrowsDemo {
+    public static void main(String[] args) throws Exception{
+        System.out.println("Main Started");
+        Sample1 s = new Sample1();
+        s.alpha();
+        System.out.println("Main Ended");
+    }
+}
+
+
+OUTPUT:
+Main Started
+Alpha Started
+Enter Numerator and Denominator
+22
+0
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at exceptionhandlingtelusko.Sample1.alpha(ThrowsDemo.java:12)
+	at exceptionhandlingtelusko.ThrowsDemo.main(ThrowsDemo.java:23)
+
+Types of Exception
+-----------------
+->Checked and Un Checked Exception
+Checked Exception: Exception identified at compilation time.
+Un Checked Exception: Exception identified by JVM
 
 
