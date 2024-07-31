@@ -1,10 +1,40 @@
 WebDriver
+Invoking Browser
+
+
 
 
 Selenium WebDriver
 ==================
-->Interface, API, one of the component in Selenium suit.
--.Used to automate Web browser actions.
+->Interface, API, Component in Selenium suit.
+->Used to automate Web browser actions.
 
-RemoteWebDriver is a class implements WebDriver Interface. ChromeDriver, FirefoxDriver, EdgeDriver class extends RemoteWebDriver Interface.
+Java->WebDriver<->Browser
+
+WebDriver Hierarchy
+-------------------
+                           WebDriver[I]
+          
+                        RemoteWebDriver[C]
+
+       ChromiumDriver[C]                   FirefoxDriver() ....
+ChromeDriver[C] EdgeDriver[C]
+
+
+Invoking Browser
+================
+Ex:
+public class BrowserOperation1 {
+    public static void main(String[] args) {
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://demo.opencart.com/");
+        String title = driver.getTitle();
+        System.out.println("Title is: " + title);
+        driver.quit();
+
+    }
+}
+
+ 
 
