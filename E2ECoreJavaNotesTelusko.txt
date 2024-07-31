@@ -2158,4 +2158,7 @@ Types of Exception
 Checked Exception: Exception identified at compilation time.
 Un Checked Exception: Exception identified by JVM
 
+throw keyword
+--------------
+->Used handle and re throw the exception
 
