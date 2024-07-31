@@ -29,7 +29,8 @@ Java Program Execution
 Static keyword
 Interface
 Anonymous Inner Class
-
+Arrays
+String Class
 
 *****************************************************************************************************************************************************
 Variables and Data Types
@@ -1317,6 +1318,12 @@ Arrays
 ->Index based data structure to store large volume of homogeneous(similar) type of data
 ->Gives size of an array a.length()
 ->Data type can be primitive or Object type
+->To get the class name: a.getClass().getName()
+
+->Other syntax
+String s[]=new String[4];
+String []s=new String[]{"appu","shivu"};
+int [][]a={{1,2,3},{4,5,6}};
 
 Syntax:
 datatype [] refVar=new datatype[size];
@@ -1439,5 +1446,158 @@ OUTPUT:
 10 20 30 
 10 20 30 40 
 10 20 30 40 50 
+
+Ex: Object type Array
+
+package oopstelusko;
+
+class Student {
+    String name;
+    int age;
+
+    public Student(String name, int age) {
+        this.age = age;
+        this.name = name;
+    }
+
+    public void display() {
+        System.out.println(name + " age is " + age);
+    }
+}
+
+public class StudentClassArray {
+
+    public static void main(String[] args) {
+        Student st[] = new Student[3];
+        Student s1 = new Student("appu1", 22);
+        Student s2 = new Student("appu2", 12);
+        Student s3 = new Student("appu3", 32);
+
+
+        st[0] = s1;
+        st[1] = s2;
+        st[2] = s3;
+
+        for (Student s : st) {
+            s.display();
+            System.out.println("********");
+        }
+
+    }
+
+
+}
+
+OUTPUT:
+appu1 age is 22
+********
+appu2 age is 12
+********
+appu3 age is 32
+********
+
+Limitation
+----------
+->Size is fixed and need continuous memory location.
+->Can store only same type of data
+->No direct class is there to work with data or array elements.
+
+Arrays Class
+------------
+int a[]={2,1,3,4,2}'
+Arrays.sort(a); //changes in mutable way, modify in original content
+
+*****************************************************************************************************************************************************
+String Class
+===========
+->Anything inside " " is a String object.
+Ex: "123" "a" " " "appu"
+
+Types
+-----
+Mutable: Changable Ex: StringBuffer and StringBuilder 
+Immutable: Non Changable Ex: String class objects
+
+String
+------
+->Heap[Allow duplicates]/SCP[Present inside Heap and not allow duplicates]
+->If we use new keyword to create string data, then data will be created inside heap and scp. Reference variable will point to heap area. JVM internal reference will points to SCP
+->If we not use new keyword to create string data, then data will be created inside SCP. Reference variable will point to SCP.
+
+->
+String str1="appu";
+Created inside SCP
+
+String str1=new String("appu");
+Created in heap and scp
+
+->
+== : reference value comparison
+equals(): content comparison
+
+->Ex:
+Case 1:
+String s1="appu";
+String s2="appu";
+
+s1 100
+   appu [SCP] 
+s2 100
+both s1 and s2 reference variable points to same object inside SCP with same reference value 100
+
+Case 2:
+String s1=new String("appu");
+String s2=new String("appu");
+
+s1 100 appu[Heap1] and [SCP]
+s2 200 appu[Heap2] and [SCP]
+
+s1 points to Heap1 object and having 100 as reference value 
+s2 points to heap2 and having 200 as reference value
+one copy is also created inside SCP and JVM implicitly points to it.[not ref variable]
+
+->GC cannot delete data inside SCP, it will be cleared once JVM is shutdown
+
+
+String concatenation
+--------------------
+->Using concat() or using + operator
+->Combining two string and store new string in new object 
+->But when we concat, new object will be created and new modified content will be stored there and original data will not be modified in original object.
+
+Strig s1=new String("appu");
+s1.concat("raj");
+sop(s1); //appu
+String s1=s1.concat("raj");
+sop(s1); //appu raj
+
+Ex:
+String s="appu"+100+33; //appu10033
+String s=12+2+"appu"; //14appu
+
+In Built Methods
+----------------
+equals()
+equalIgnoreCase()
+toLowerCase()
+toUpperCase()
+charAt(int index)
+substring(int startIndex,int endingIndex)
+substring(int startIndex)
+compareTo()
+concat()
+contains(String str)
+index("string str") //first occurrence
+lastIdexOf("string str") //last occurrence
+length()
+
+
+
+
+
+
+
+
+
 
 
