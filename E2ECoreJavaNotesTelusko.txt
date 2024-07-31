@@ -1624,12 +1624,101 @@ sop(sb); //appuraj
 ->final dont have any impact on mutability of String buffer object. It impact only reference value not the content.
 
 *****************************************************************************************************************************************************
+Interface and Lambda Expression
+===============================
+Interface Types
+---------------
+Normal Interface
+SAM/Functional Interface: Has single abstract method Ex: Runnable Interface
+Marker Interface: Has 0 abstract method
+                  Ex: Serializable Interface
+
+SAM or Functional Interface
+---------------------------
+->Interface having single abstract method
+
+Lambda Expression
+-----------------
+->Used to provide body for abstract method of SAM interface.
+
+Rules:
+argument within () if there are two or more, else we can remove ()
+need to add ->
+single statement no need of {}
+return needs { }
+end ;
+
+Ex:
+ I2 i = (a, b) ->
+        {
+            return a + b;
+        };
 
 
+Ex 1:
+interface I1 {
+    void show();
+}
+
+public class Lambda1 {
+    public static void main(String[] args) {
+
+//Anonymous Inner Class implementation for Interface
+//        I1 i=new I1()
+//        {
+//            @Override
+//            public void show() {
+//                System.out.println("in I1 show");
+//            }
+//        };
+
+//Lambda implementation for Interface
+        I1 i = () ->
+        {
+            System.out.println("in I1 show");
+        };
+
+        i.show();
+    }
+}
+
+OUTPUT:
+in I1 show
 
 
+Ex 2:
+interface I2 {
+    int add(int a, int b);
+}
+
+public class Lambda2 {
+    public static void main(String[] args) {
+        I2 i = (a, b) ->
+        {
+            return a + b;
+        };
+        System.out.println("Sum is: " + i.add(10, 23));
+    }
+}
 
 
+Ex 3:
+interface I3 {
+    int findLength(String str);
+}
+
+public class Lambda3 {
+    public static void main(String[] args) {
+        I3 i = (str) ->
+        {
+            int len = str.length();
+            System.out.println("String is: " + str);
+            return len;
+        };
+
+        System.out.println("Length of the String is: " + i.findLength("appu is our boss god is idiot"));
+    }
+}
 
 
 
