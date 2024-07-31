@@ -28,7 +28,7 @@ Final keyword
 Java Program Execution
 Static keyword
 Interface
-
+Anonymous Inner Class
 
 
 *****************************************************************************************************************************************************
@@ -1143,6 +1143,301 @@ Executes the program using Interpreter, JIT compiler and GC.
 *****************************************************************************************************************************************************
 Interface
 =========
+->All methods are public abstract 
+->Implementation class should provide implementation for all the abstract method of the interface else that class should also be abstract class
+->All variable are public static final
+->Cannot create object for interface, can able to create reference variable
+->One implementation class can implements any number of interface
+->One interface can extends other interface
+->Interface not contains Constructor
+->One class can implements any number of interfaces.
+->One class can extends one class and implements n number of interfaces.
+->An interface can have any number of implementations.
 
- 
- 
+
+Ex:
+interface Car {
+    String name = "Car";
+    void start();
+    void stop();
+}
+
+class Maruti implements Car {
+    @Override
+    public void start() {
+        System.out.println("Starting Car");
+    }
+    @Override
+    public void stop() {
+        System.out.println("Stopping Car");
+    }
+}
+
+public class InterfaceImplementationbasics1 {
+    public static void main(String[] args) {
+        Car car=new Maruti();
+        car.start();
+        car.stop();
+    }
+}
+
+OUTPUT:
+Starting Car
+Stopping Car
+
+
+Marker Interface
+----------------
+->Interface with 0 methods.
+Ex:
+interface I
+{...}
+
+Default method
+--------------
+->From Java 8, Interface can have method with body.
+->We can override Default method
+
+Ex: default void disp()
+{......}
+
+Static method in interface
+--------------------------
+->Interface can have static method with body. 
+->Static method cannot be overrided, if we override then it will be consider as specialized method not overridden method.
+->Static method can be called using Interface name or implementing class name.
+->Static method should have body else it throws error.
+
+Ex:
+interface Car {
+    default void display()
+    {
+        System.out.println("Default method");
+    }
+
+    public static void staticmethod()
+    {
+        System.out.println("Static method of Interface");
+    }
+
+    public static void staticmethod2(); //ERROR
+}
+
+class Maruti implements Car, Bike {
+    public static void staticmethod()
+    {
+        System.out.println("Static method of Implementing class");
+    }
+
+}
+
+public class InterfaceImplementationbasics1 {
+    public static void main(String[] args) {
+        Maruti.staticmethod();
+        Car.staticmethod();
+
+    }
+}
+
+OUTPUT:
+Static method of Implementing class
+Static method of Interface
+
+*****************************************************************************************************************************************************
+Anonymous Inner Class
+---------------------
+->Can be used to provide body for abstract methods of interface or abstract class
+
+Ex:
+class Vehicle {
+    void driver() {
+        System.out.println("driving");
+    }
+}
+
+public class AnonymonousInnerClassDemo {
+    public static void main(String[] args) {
+
+        Vehicle v = new Vehicle() { //Anonymous Inner class
+            @Override
+            void driver() {
+                System.out.println(" car driving");
+            }
+        };
+
+        v.driver();
+
+
+    }
+}
+
+OUTPUT:
+car driving
+
+->AIC can be used to provide body for all abstract methods of abstract class and interface while creating object itself.
+
+Ex:
+
+interface I {
+    void add();
+    void sub();
+}
+
+public class AnonymousInnerClass2 {
+    public static void main(String[] args) {
+        I i = new I() {
+
+            @Override
+            public void add() {
+                System.out.println("adding");
+            }
+
+            @Override
+            public void sub() {
+                System.out.println("subtracting");
+            }
+        };
+
+        i.add();
+        i.sub();
+    }
+}
+
+
+OUTPUT:
+adding
+subtracting
+
+*****************************************************************************************************************************************************
+Arrays
+======
+->Object used to store collection of elements.
+->Memory will be allocated in heap area
+->Can store primitive type of data and also object type of data[ref values of class]
+->Index based data structure to store large volume of homogeneous(similar) type of data
+->Gives size of an array a.length()
+->Data type can be primitive or Object type
+
+Syntax:
+datatype [] refVar=new datatype[size];
+Ex:
+int a[]=new int[5];
+a[0]=10;
+a[2]=20;
+
+sop(a[1]); //0 default value
+
+a->[10,0,20,0,0,0]
+
+Ex: int[] a={1,2,3,4};
+
+public class OneDArray {
+    public static void main(String[] args) {
+        int a[]=new int[5];
+        Scanner sc=new Scanner(System.in);
+        for (int i=0;i<a.length;i++)
+        {
+            System.out.println("Enter input");
+            a[i]=sc.nextInt();
+        }
+
+        System.out.println("Size is: "+a.length);
+
+        for(int i:a)
+        {
+            System.out.print("Value is: "+i+" ");
+        }
+    }
+}
+
+
+2D Array
+--------
+5 students in 3 different classroom
+
+class 0  s0 s1 s2 s3 s4
+class 1  s0 s1 s2 s3 s4
+class 2  s0 s1 s2 s3 s4
+
+int [][]a=new int[3][5];
+
+Ex:
+public class TwoDArray {
+    public static void main(String[] args) {
+        int[][] a = new int[3][5];
+
+        Scanner sc = new Scanner(System.in);
+        for (int i = 0; i < a.length; i++) {
+            System.out.println("Enter input");
+            for (int j = 0; j < a[i].length; j++) {
+                a[i][j] = sc.nextInt();
+            }
+        }
+        System.out.println("Size is: " + a[1].length);
+        
+        for (int i[] : a) {
+            for (int j : i) {
+                System.out.print(j + " ");
+            }
+            System.out.println();
+        }
+
+    }
+}
+
+OUTPUT:
+Size is: 5
+1 22 2 33 3 
+44 5 66 7 77 
+6 55 44 4 33 
+
+Jagged Array
+------------
+2D Jagged Array
+class 0  s0 s1 s2 
+class 1  s0 s1 s2 s3 
+class 2  s0 s1 s2 s3 s4
+
+Ex:
+package oopstelusko;
+
+public class JaggedArray {
+    public static void main(String[] args) {
+        int [][] a=new int[3][];
+        a[0]=new int[3];
+        a[1]=new int[4];
+        a[2]=new int[5];
+
+        a[0][0]=10;
+        a[0][1]=20;
+        a[0][2]=30;
+
+        a[1][0]=10;
+        a[1][1]=20;
+        a[1][2]=30;
+        a[1][3]=40;
+
+        a[2][0]=10;
+        a[2][1]=20;
+        a[2][2]=30;
+        a[2][3]=40;
+        a[2][4]=50;
+
+        for(int i=0;i<a.length;i++)
+        {
+            for (int j=0;j<a[i].length;j++)
+            {
+                System.out.print(a[i][j]+" ");
+            }
+            System.out.println();
+        }
+
+    }
+}
+
+OUTPUT:
+10 20 30 
+10 20 30 40 
+10 20 30 40 50 
+
+
