@@ -1,7 +1,6 @@
 WebDriver
 Invoking Browser
-
-
+Locators
 
 
 Selenium WebDriver
@@ -13,6 +12,8 @@ Java->WebDriver<->Browser
 
 WebDriver Hierarchy
 -------------------
+                          SearchContext[I]
+
                            WebDriver[I]
           
                         RemoteWebDriver[C]
@@ -36,5 +37,7 @@ public class BrowserOperation1 {
     }
 }
 
- 
+Locators
+========
+
 

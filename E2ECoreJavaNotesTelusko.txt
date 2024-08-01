@@ -35,6 +35,8 @@ Interface and Lambda Expression
 Exception handling
 Packages
 Collection
+Generics
+Map
 
 *****************************************************************************************************************************************************
 Variables and Data Types
@@ -2744,4 +2746,71 @@ OUTPUT:
 0 5 23 66 122 
 
 *****************************************************************************************************************************************************
+Generics
+========
+->To bring type safety
+->Used to avoid ClassCast exception
+->Generics can be same type or parent type.
+->If class is declared as generics <T> type then it can accept any type of data.
 
+
+List<Integer> list=new ArrayList<Integer>();
+//Used to store only integer type of data
+
+List<Object> list=new ArrayList<Object>(); //Can be used to store  Integer type data, Object is parent of Integer
+
+*****************************************************************************************************************************************************
+Map
+===
+->Stores data in form of key value pair
+->Value can be duplicate, Key must be unique
+->Type of data[key or value] can be anything
+key value ->entry
+
+Map[I]
+   HashTable  
+   HashMap
+      LinkHashMap
+   SortedMap[I]
+      NavigableMap[I]
+        TreeMap
+
+LinkedHashMap: preserves insertion order
+TreeMap: Sorted order based on key
+HashTable: null is not allowed in key  and supports multithreading
+
+
+HashMap
+-------
+->Key: Unique[If duplicate then it will be overrided with new value], One null allowed, Homo or Heto 
+
+value: Duplicate allowed, null allowed, Homo or Heto
+
+->Not Maintains insertion order, if needs insertion order then go for LinkedHashMap if need sorted order based on key then go for TreeMap
+
+Ex:
+public class HashMapDemo1 {
+    public static void main(String[] args) {
+        Map map=new HashMap();
+        map.put(1,"appu");
+        map.put('a',22);
+        map.put(2,"appu");
+        System.out.println(map);
+    }
+}
+
+OUTPUT:
+{1=appu, a=22, 2=appu}
+
+Linked HashMap
+--------------
+->Same as HashMap but it maintains insertion order.
+
+TreeMap
+-------
+->Same as HashMap, but maintains sorted order based on key.
+->Key should be of same type, else ClassCast exception
+->Null not allowed
+
+
+   
