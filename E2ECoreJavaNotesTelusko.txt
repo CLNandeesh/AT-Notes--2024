@@ -2531,8 +2531,8 @@ Queue[I]
   PriorityQueue
 
 Set[I]
-  SortedSet
-  TreeSet
+  SortedSet[I]
+    TreeSet
   HashSet
      LinkedHashSet
  
@@ -2604,3 +2604,144 @@ Null values: No
 Type of data: Homo
 Items added: Only rear end 
 Suitable for: Rear and Front end operation
+
+TreeSet
+-------
+Implements: SortedSet interface
+DS: Binary Search tree
+Insertion order: No
+Sorting order: Yes
+Index based: No
+Duplicates: No, If added it will remove inetrnally
+Null values: No
+Type of data: Homo [classcast exception if added]
+Items added:  
+Suitable for: Search operation
+
+HashSet
+-------
+Implements: Set interface
+DS: Hashing algo
+Insertion order: No
+Sorting order: No
+Index based: No
+Duplicates: No, If added it will remove inetrnally
+Null values: Yes
+Type of data: Homo and heto
+Items added:  
+Suitable for: Search operation
+
+LinkedHashSet: Same as HashSet, sub class of hashSet. Order of insertion is preserved.
+
+Downcasting in Collection
+------------------------
+->Storing Object type data into Integer type variable
+
+public class DowncastingInCollection {
+    public static void main(String[] args) {
+        List list = new ArrayList();
+        list = Arrays.asList(12, 23, 45, 66);
+
+        Object obj=list.get(2);
+        System.out.println(obj);
+
+        Integer in=(Integer)list.get(2); //Downcasting
+        System.out.println(in);
+
+    }
+}
+
+For VS For Each VS Iterator
+---------------------------
+package collection;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+public class IteratorDemo {
+    public static void main(String[] args) {
+        List list = new ArrayList();
+        list = Arrays.asList(12, 23, 45, 66);
+
+        for (int i = 0; i < list.size(); i++) {
+            System.out.print(list.get(i) + " ");
+        }
+
+        for (Object obj : list) {
+            System.out.print(obj + " ");
+        }
+
+        Iterator it = list.iterator();
+        while (it.hasNext()) {
+            System.out.print(it.next() + " ");
+        }
+    }
+}
+
+OUTPUT:
+***FOR LOOP RETRIEVE*******
+Data is: 
+12 23 45 66 
+***FOR EACH LOOP RETRIEVE*******
+Data is: 
+12 23 45 66 
+***ITERATOR RETRIEVE*******
+Data is: 
+12 23 45 66 
+
+List Iterator
+-------------
+->To iterate in both front and reverse direction
+
+Ex:
+public class ListIteratorDemo {
+    public static void main(String[] args) {
+        List list = new ArrayList();
+        list = Arrays.asList(12, 23, 45, 66);
+
+        ListIterator lit = list.listIterator(list.size());
+
+        while (lit.hasPrevious()) {
+            System.out.print(lit.previous() + " ");
+        }
+
+        while (lit.hasNext()) {
+            System.out.print(lit.next() + " ");
+        }
+    }
+}
+
+OUTPUT:
+66 45 23 12 
+12 23 45 66 
+
+
+Collections Class
+-----------------
+->Class contains static utility methods used to perform different operation on Collection objects
+->Mutable way, original content will be modified
+->Other methods: shuffle(), binarySearch(),sort(), ....
+
+
+Ex:
+public class ListIteratorDemo {
+    public static void main(String[] args) {
+        List list = new ArrayList();
+        list = Arrays.asList(122, 23, 5, 66,0);
+
+        Collections.sort(list);
+        for(Object obj:list)
+        {
+            System.out.print(obj+" ");
+        }
+
+    }
+}
+
+OUTPUT:
+0 5 23 66 122 
+
+*****************************************************************************************************************************************************
+
