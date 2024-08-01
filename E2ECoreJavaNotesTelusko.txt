@@ -32,6 +32,9 @@ Anonymous Inner Class
 Arrays
 String Class
 Interface and Lambda Expression
+Exception handling
+Packages
+Collection
 
 *****************************************************************************************************************************************************
 Variables and Data Types
@@ -2482,3 +2485,122 @@ only try or catch or finally not allowed
 catch or finally should follow try
 
 *****************************************************************************************************************************************************
+Packages
+========
+->Folder contains classes of similar types.
+->Collection of .class files
+->Used for modularity
+->User defined/Pre defined Ex: java.util.*
+->One package can contains another sub package
+->Compiler check package exist, JVM includes required classes of the package during runtime.
+->If the classes present in same package then we can use directly else we need to import it before use.
+
+import java.util.Scanner;
+import java.util.*;
+*****************************************************************************************************************************************************
+Collection
+==========
+->Interface to store homogeneous and heterogeneous type of data as single unit
+->Interface used to store Objects of different classes
+->If we want to store primitive type of data then we need to convert to object type using wrapper class and store it into collection.
+
+methods
+-------
+add()
+contains()
+clear()
+indexof()
+size()
+
+Collection Hierarchy
+--------------------
+Iterable
+  Collection[I]
+    List[I]
+    Queue[I]
+    Set[I]
+
+List[I]
+  ArrayList
+  LinkedList
+  
+Queue[I]
+  DeQueue[I]
+    LinkedList
+    ArrayDeQueue
+  PriorityQueue
+
+Set[I]
+  SortedSet
+  TreeSet
+  HashSet
+     LinkedHashSet
+ 
+ArrayList
+---------
+Implements: List Interface
+DS: Doubly linked list
+Insertion order: Yes
+Sorting order: No
+Index based: Yes
+Duplicates: Yes
+Null values: Yes
+Type of data: Homo and Heto
+Items added: Only rear end 
+Suitable for: Insertion operation
+
+Ex:
+public class ArrayListDemo {
+    public static void main(String[] args) {
+        List<Integer> list=new ArrayList<Integer>();
+
+        list.add(10);
+        list.add(20);
+        list.add(10);
+        list.add(null);
+
+        for(Integer i:list)
+        {
+            System.out.println("Data: "+i);
+        }
+    }
+}
+
+LinkedList
+----------
+Implements: List Interface and DQueue Interface
+DS: Doubly linked list
+Insertion order: Yes
+Sorting order: No
+Index based: Yes
+Duplicates: Yes
+Null values: Yes
+Type of data: Homo and Heto
+Items added: Both Rear and front end 
+Suitable for:insertion operation
+
+ArrayDQueue
+-----------
+Implements: DQueue interface
+DS: Double ended Q
+Insertion order: Yes
+Sorting order: No
+Index based: No
+Duplicates: Yes
+Null values: No
+Type of data: Homo and Heto
+Items added:Only rear end 
+Suitable for: Rear and Front end operation
+
+PriorityQueue
+-------------
+Implements: Queue interface
+DS: Minimum heap
+Insertion order: No
+Sorting order: No
+Index based: No
+Duplicates: Yes
+Null values: No
+Type of data: Homo
+Items added: Only rear end 
+Suitable for: Rear and Front end operation
