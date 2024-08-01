@@ -2160,65 +2160,6 @@ Ex:IOException, InterruptedException, SQLException
 Un Checked Exception: Exception identified by JVM
 Ex:RuntimeException, ArithmeticException, ClassCastException
 
-throw keyword
---------------
-->Used to handle and re throw the exception
-
-try
-{..}
-catch(Excption e)
-{
-..... //handled
-throw e; //Throws an exception after handling to caller method
-}
-
-Ex:
-package exceptionhandlingtelusko;
-
-import java.util.Scanner;
-
-class Sample2 {
-    void alpha() {
-        System.out.println("Alpha Started");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter Numerator and Denominator");
-        int num = sc.nextInt();
-        int den = sc.nextInt();
-        try {
-            int result = num / den;
-            System.out.println("Result is: " + result);
-        } catch (Exception e) {
-            System.out.println("Invalid Input");
-            throw e;
-        }
-        System.out.println("Alpha Ended");
-    }
-}
-
-public class ThrowKeyword1 {
-    public static void main(String[] args) {
-        System.out.println("Main Started");
-        Sample2 s = new Sample2();
-        try {
-            s.alpha();
-        } catch (Exception e) {
-            System.out.println("Hey something went wrong");
-        }
-        System.out.println("Main Ended");
-    }
-}
-
-OUTPUT:
-Main Started
-Alpha Started
-Enter Numerator and Denominator
-22
-0
-Invalid Input
-Hey something went wrong
-Main Ended
-
-->To throw the exception manually we use throw keyword
 
 Finally block
 -------------
@@ -2387,4 +2328,157 @@ Method calling itself. Ex: StackOverflowError
 LinkageError
 AssertionError
 
- 
+throw keyword
+--------------
+->Used to handle and re throw the exception
+
+try
+{..}
+catch(Excption e)
+{
+..... //handled
+throw e; //Throws an exception after handling to caller method
+}
+
+Ex:
+package exceptionhandlingtelusko;
+
+import java.util.Scanner;
+
+class Sample2 {
+    void alpha() {
+        System.out.println("Alpha Started");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Numerator and Denominator");
+        int num = sc.nextInt();
+        int den = sc.nextInt();
+        try {
+            int result = num / den;
+            System.out.println("Result is: " + result);
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            throw e;
+        }
+        System.out.println("Alpha Ended");
+    }
+}
+
+public class ThrowKeyword1 {
+    public static void main(String[] args) {
+        System.out.println("Main Started");
+        Sample2 s = new Sample2();
+        try {
+            s.alpha();
+        } catch (Exception e) {
+            System.out.println("Hey something went wrong");
+        }
+        System.out.println("Main Ended");
+    }
+}
+
+OUTPUT:
+Main Started
+Alpha Started
+Enter Numerator and Denominator
+22
+0
+Invalid Input
+Hey something went wrong
+Main Ended
+
+->To throw the exception manually we use throw keyword
+
+Ex: throw manually system defined exception
+class Launch
+{
+main()
+{
+throw new ArithmeticException("/ by zero");
+}
+
+Ex:
+
+public class Throw2 {
+    public static void main(String[] args) {
+        System.out.println("Start");
+        try
+        {
+            throw new ArithmeticException("/ by zero");
+        }
+        finally
+        {
+            System.out.println("End");
+        }
+    }
+}
+
+OUTPUT:
+Start
+End
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at exceptionhandlingtelusko.Throw2.main(Throw2.java:8)
+
+Custom Exception
+-----------------
+Ex:
+class AccountBlocked extends Exception
+{
+    AccountBlocked(String str)
+    {
+        super(str);
+    }
+}
+
+class Bank{
+    int pin=1234;
+
+    void validatePin() throws AccountBlocked {
+        System.out.println("Enter Pin");
+        Scanner sc=new Scanner(System.in);
+        int enteredPin=sc.nextInt();
+        if(pin==enteredPin)
+        {
+            System.out.println("Take Amount");
+        }
+        else
+        {
+            throw new AccountBlocked("Kalla");
+        }
+    }
+}
+public class BankApp {
+    public static void main(String[] args) throws AccountBlocked {
+        Bank b=new Bank();
+        try
+        {
+            b.validatePin();
+        }
+        catch(AccountBlocked a)
+        {
+            System.out.println("Due to invalid PIN your account is blocked");
+            System.out.println(a);
+        }
+
+    }
+}
+
+OUTPUT:
+Enter Pin
+123
+Due to invalid PIN your account is blocked
+exceptionhandlingtelusko.AccountBlocked: Kalla
+
+Multiple Catch Block
+-------------------
+->One try can have multiple catch block.
+try
+{...}
+catch(XXX|XXX|XXX e)
+{....}
+
+Possible cases
+--------------
+only try or catch or finally not allowed
+catch or finally should follow try
+
+*****************************************************************************************************************************************************
