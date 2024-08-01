@@ -17,7 +17,7 @@ WebDriver Hierarchy
           
                         RemoteWebDriver[C]
 
-       ChromiumDriver[C]                   FirefoxDriver() ....
+       ChromiumDriver[C]                   FirefoxDriver[C] ....
 ChromeDriver[C] EdgeDriver[C]
 
 

@@ -2156,9 +2156,235 @@ Types of Exception
 -----------------
 ->Checked and Un Checked Exception
 Checked Exception: Exception identified at compilation time.
+Ex:IOException, InterruptedException, SQLException
 Un Checked Exception: Exception identified by JVM
+Ex:RuntimeException, ArithmeticException, ClassCastException
 
 throw keyword
 --------------
-->Used handle and re throw the exception
+->Used to handle and re throw the exception
 
+try
+{..}
+catch(Excption e)
+{
+..... //handled
+throw e; //Throws an exception after handling to caller method
+}
+
+Ex:
+package exceptionhandlingtelusko;
+
+import java.util.Scanner;
+
+class Sample2 {
+    void alpha() {
+        System.out.println("Alpha Started");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Numerator and Denominator");
+        int num = sc.nextInt();
+        int den = sc.nextInt();
+        try {
+            int result = num / den;
+            System.out.println("Result is: " + result);
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            throw e;
+        }
+        System.out.println("Alpha Ended");
+    }
+}
+
+public class ThrowKeyword1 {
+    public static void main(String[] args) {
+        System.out.println("Main Started");
+        Sample2 s = new Sample2();
+        try {
+            s.alpha();
+        } catch (Exception e) {
+            System.out.println("Hey something went wrong");
+        }
+        System.out.println("Main Ended");
+    }
+}
+
+OUTPUT:
+Main Started
+Alpha Started
+Enter Numerator and Denominator
+22
+0
+Invalid Input
+Hey something went wrong
+Main Ended
+
+->To throw the exception manually we use throw keyword
+
+Finally block
+-------------
+->Follows try or catch block, whether exception occur or not finally block will be executed.
+->For clean up resource we can use it along with try and catch
+->try or catch execute or not, finally will be executed.
+->finally can also contain try catch inside it
+->Exception occurs, Handled then smooth termination, else abnormal termination. But in either case finally will be executed.
+->System.exit(0) dominates finally block.
+
+Ex: 
+try
+{
+open file
+read data[chances of exception]
+close file
+}
+catch()
+{
+...
+}
+
+If exception occurs close file statements wont be executed. 
+
+Solution:
+try
+{
+open file
+read data[chances of exception]
+}
+catch()
+{
+...
+}
+finally
+{
+close file
+}
+
+
+
+Ex:
+class Sample2 {
+    void alpha() {
+        System.out.println("Alpha Started");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Numerator and Denominator");
+        int num = sc.nextInt();
+        int den = sc.nextInt();
+        try {
+            int result = num / den;
+            System.out.println("Result is: " + result);
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            throw e; //control moves to main()
+        } finally {
+            System.out.println("Alpha Ended");
+        }
+    }
+}
+
+public class ThrowKeyword1 {
+    public static void main(String[] args) {
+        System.out.println("Main Started");
+        Sample2 s = new Sample2();
+        try {
+            s.alpha();
+        } catch (Exception e) {
+            System.out.println("IHey something went wrong");
+        }
+        System.out.println("Main Ended");
+    }
+}
+
+
+OUTPUT:
+Main Started
+Alpha Started
+Enter Numerator and Denominator
+22
+0
+Invalid Input
+Alpha Ended
+IHey something went wrong
+Main Ended
+
+
+->finally vs return: finally will dominate return statement.
+
+Ex:
+class Calc {
+    int add() {
+        try {
+            return 100;
+        } catch (Exception e) {
+            return 200;
+        } finally {
+            return 300;
+        }
+    }
+}
+
+public class FinallyVSReturn {
+    public static void main(String[] args) {
+        Calc c = new Calc();
+        System.out.println(c.add());
+    }
+}
+
+
+OUTPUT:
+300
+
+Overview
+---------
+try
+To keep risky code
+
+catch
+to handle exception
+
+finally
+to keep cleanup code
+
+throw
+to rethrow the exception manually
+
+throws
+to by pass the exception from called to caller method
+
+Exception Hierarchy
+-------------------
+Object
+  Throwable
+     Error
+     Exception
+
+Error
+   VirtualMachineError 
+     OutOfMemoryError
+      StackOverflowError
+   LinkageError
+   AssertionError
+
+Exception
+   RuntimeException 
+   IOException 
+   InterruptedException
+   SQLException
+
+RuntimeException
+  ArithmeticException
+  NullPointerException
+  ClassCastException
+  IndexOutOfBoundException [ArrayIdexOutOfBound/StringIndexOutOfBoundException]
+  NegativeArraySizeException
+
+IOException 
+   EOFException 
+   FileNotFoundException 
+   RemoteException 
+
+Runtime Error
+-------------
+Method calling itself. Ex: StackOverflowError
+LinkageError
+AssertionError
+
+ 
