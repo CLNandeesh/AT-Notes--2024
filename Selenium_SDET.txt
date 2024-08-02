@@ -1,3 +1,4 @@
+Selenium Content - SDET
 WebDriver
 Invoking Browser
 Locators
@@ -39,5 +40,13 @@ public class BrowserOperation1 {
 
 Locators
 ========
+->Used to identify elements
+->Static method present in By class
+
+Basic: id()/name()/linkText()/className()/tagName()
+Customized: cssSelector()/xpath()
+
+Ex: driver.findElement(By.id("")).sendKeys();
+
 
 
