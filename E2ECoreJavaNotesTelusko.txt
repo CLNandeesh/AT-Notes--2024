@@ -37,6 +37,8 @@ Packages
 Collection
 Generics
 Map
+ForEach
+Stream API
 
 *****************************************************************************************************************************************************
 Variables and Data Types
@@ -2762,11 +2764,18 @@ List<Object> list=new ArrayList<Object>(); //Can be used to store  Integer type 
 *****************************************************************************************************************************************************
 Map
 ===
-->Stores data in form of key value pair
-->Value can be duplicate, Key must be unique
-->Type of data[key or value] can be anything
-key value ->entry
+->Interface used to store data in form of key value pair
 
+Key     Value  -> Entry
+Object  Object 
+Unique  Can be duplicate
+
+->Key must be unique and Value can be duplicate 
+->Type of data[key or value] can be anything
+->key value pair is known as entry
+
+Hierarchy
+---------
 Map[I]
    HashTable  
    HashMap
@@ -2775,32 +2784,133 @@ Map[I]
       NavigableMap[I]
         TreeMap
 
-LinkedHashMap: preserves insertion order
+LinkedHashMap: Preserves insertion order
 TreeMap: Sorted order based on key
-HashTable: null is not allowed in key  and supports multithreading
-
+HashTable: null is not allowed in key  and not supports multithreading
+WeakHashMap: similar to HashMap, but GC dominates WeakHashMap while doing GC
 
 HashMap
 -------
-->Key: Unique[If duplicate then it will be overrided with new value], One null allowed, Homo or Heto 
-
-value: Duplicate allowed, null allowed, Homo or Heto
-
+->Key: Unique[If duplicate then it will be override with new value]/One null allowed/Homo or Heto 
+value: Duplicate allowed/null allowed/Homo or Heto
 ->Not Maintains insertion order, if needs insertion order then go for LinkedHashMap if need sorted order based on key then go for TreeMap
+->Supports multithreading
 
 Ex:
 public class HashMapDemo1 {
     public static void main(String[] args) {
-        Map map=new HashMap();
-        map.put(1,"appu");
-        map.put('a',22);
-        map.put(2,"appu");
+        Map<Object, Object> map = new HashMap<>();
+        map.put(1, "appu");
+        map.put('a', 22);
+        map.put(null, "shivu");
+
+        System.out.println(map.size());
         System.out.println(map);
+
+        Set set = map.keySet();
+        for (Object obj : set) {
+            System.out.println("Key is: " + obj);
+        }
+
+        Collection c = map.values();
+        for (Object obj : c) {
+            System.out.println("Value is: " + obj);
+        }
+
+        Set s = map.entrySet();
+        for (Object obj : s) {
+            System.out.println("Key value is: " + obj);
+        }
+
+        Set s1 = map.entrySet();
+        Iterator it = s1.iterator();
+        while (it.hasNext()) {
+            Map.Entry pair =(Map.Entry) it.next();
+            System.out.println(pair.getKey()+" value is "+pair.getValue()) ;
+        }
     }
 }
 
+
 OUTPUT:
-{1=appu, a=22, 2=appu}
+3
+
+{null=shivu, 1=appu, a=22}
+
+Key is: null
+Key is: 1
+Key is: a
+
+Value is: shivu
+Value is: appu
+Value is: 22
+
+Key value is: null=shivu
+Key value is: 1=appu
+Key value is: a=22
+
+null value is shivu
+1 value is appu
+a value is 22
+
+
+
+Map contains Key Value pair 
+Key can be of any type, Value can be of any type
+Combination of Key and Value is known as Entry , this combination is of Type Map.Entry [Entry is an interface present inside Map interface]
+Suppose Map contains 5 KeY Value pair then it contains Set of 5 Entry which is of type Map.Entry
+
+Set set=map.entrySet(); //Each element in the set is one Map.Entry
+
+Ex:
+package collection;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+class Employee {
+    String name;
+    double salary;
+
+    public Employee(String name, double salary) {
+        this.name = name;
+        this.salary = salary;
+    }
+
+    public String toString() {
+        return name + " " + salary;
+    }
+}
+
+public class HashMapDemo {
+    public static void main(String[] args) {
+        Employee e1 = new Employee("appu", 1234);
+        Employee e2 = new Employee("appu", 1234);
+        Employee e3 = new Employee("appu", 1234);
+
+        Map map = new HashMap();
+        map.put(1, e1);
+        map.put(2, e2);
+        map.put(3, e3);
+
+        Set<Map.Entry> set = map.entrySet();
+
+        Iterator it = set.iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            System.out.println(pair.getKey() + ":" + pair.getValue());
+        }
+
+    }
+}
+
+
+OUTPUT:
+1:appu 1234.0
+2:appu 1234.0
+3:appu 1234.0
 
 Linked HashMap
 --------------
@@ -2813,4 +2923,212 @@ TreeMap
 ->Null not allowed
 
 
-   
+finalize()
+----------
+->GC Before doing cleaning up of any Object it will execute finalize()
+
+class Dummy {
+    @Override
+    public void finalize() {
+        System.out.println("I am Finalize");
+    }
+}
+
+public class FinalizeMethod {
+    public static void main(String[] args) {
+        Dummy d = new Dummy();
+        d = null;
+        System.gc();
+
+    }
+}
+
+*****************************************************************************************************************************************************
+ForEach
+-------
+->Predefined function for List interface to print the value
+Ex:
+public class ForEachDemo {
+    public static void main(String[] args) {
+        List list = new ArrayList();
+
+        list = Arrays.asList(12, 32, 44, 1, 2, 5, 6666);
+        list.forEach(n -> System.out.println(n));
+    }
+}
+
+*****************************************************************************************************************************************************
+Stream API
+----------
+->Used to process the data present in the collection.
+->When we do any modification on old stream [filter or map] then existing stream will go away and new stream will be created.
+
+Ex: Convert List into Stream and print its value
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<>();
+        list = Arrays.asList(23, 11, 2, 0, 89, 6);
+        Stream s1 = list.stream();
+        s1.forEach(x -> System.out.println(x));
+    }
+
+->Once we perform any operation then its end we cant re use same again. Need to store into new Stream and use it.
+
+Filter: To filter the data present inside the collection based on some condition
+Map: To process data present inside the collection based on some logic.
+Reduce: To merge the data
+
+Collection->Streams : Bring data present in the collection into Streams
+Apply operation[Filter/Map/Reduce] on the data present in the Streams.
+
+stream() : Default method
+
+->Once operation is performed the stream will be expired.
+
+Map()
+-----
+->Used to modify the data present in the Stream.
+->Take each element from stream and perform the operation[calls Function apply()] and update new data into the same or new stream.
+->Takes Function as a argument and return Stream as output
+
+Function: 
+->Takes 2 argument 
+Input: any type
+Return value: any type. 
+Output: It returns any type modified value based on logic.
+
+Ex: Function takes Integer as input and return Integer as output.
+       
+      input type return type
+Function<Integer,Integer> f=new Function<Integer,Integer>()
+{
+
+public Integer apply(Integer x) //apply is a method inside Function interface which accepts arg and return value
+{
+//any logic
+return x*x;
+}
+
+Ex:
+public class Map1 {
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<>();
+        list = Arrays.asList(23, 11, 2, 0, 89, 6);
+        Stream s1 = list.stream();
+
+        //Need to double the value
+        Function<Integer,Integer> function=new Function<Integer, Integer>() {
+            @Override
+            public Integer apply(Integer integer) {
+                return integer*integer;
+            }
+        };
+
+        //Map accepting function as arguement
+        s1.map(function).forEach(x-> System.out.print(x+" "));
+    }
+}
+
+OR Using lambda with Function
+
+public class MapWithLambda {
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<>();
+        list = Arrays.asList(23, 11, 2, 0, 89, 6);
+        Stream s1 = list.stream();
+
+        //Need to double the value
+        Function<Integer, Integer> function = integer -> {
+            return integer * integer;
+        };
+        //Map accepting function as arguement
+        s1.map(function).forEach(x -> System.out.print(x + " "));
+    }
+}
+
+
+OR Using Lambda directly
+
+public class MapWithLambda {
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<Integer>();
+        list = Arrays.asList(23, 11, 2, 0, 89, 6);
+        Stream<Integer> s1 = list.stream();
+        s1.map(n -> n * n).forEach(x -> System.out.print(x + " "));
+    }
+}
+
+OUTPUT:
+529 121 4 0 7921 36 
+
+Filter
+-----
+->Used to filter data present in the stream based on some condition. Take each element from Stream and check the condition[Calls Predicate test()] and matching condition data will be put back to Stream.
+->Takes Predicate as Input and return Stream as Output
+
+Predicate:
+Input: any type data
+Return value: boolean
+Output: It returns true or false based on condition
+
+Ex:
+Predicate<Integer> p=new Predicate<Integer>() {
+            @Override
+            public boolean test(Integer integer) {
+                return integer>20;
+            }
+        };
+
+
+Ex: Filter with Predicate
+public class FilterWithPredicate {
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<Integer>();
+        list = Arrays.asList(23, 11, 2, 0, 89, 6);
+        Stream<Integer> s1 = list.stream();
+
+        Predicate<Integer> p=new Predicate<Integer>() {
+            @Override
+            public boolean test(Integer integer) {
+                return integer>20;
+            }
+        };
+
+        s1.filter(p).forEach(x-> System.out.print(x+" "));
+    }
+}
+
+
+OR
+ 
+Ex: Filter with Predicate Lambda 
+public class FilterDemo1 {
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<Integer>();
+        list = Arrays.asList(23, 11, 2, 0, 89, 6);
+        Stream<Integer> s1 = list.stream();
+        s1.filter(x->x>20).forEach(x-> System.out.print(x+" "));
+    }
+}
+
+OUTPUT:
+23,89
+
+Ex: Combining Map and Filter
+public class MapWithFilterDemo {
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<Integer>();
+        list = Arrays.asList(23, 11, 2,21,20,0, 89, 6);
+        Stream<Integer> s1 = list.stream();
+        s1.sorted().filter(x -> x >= 20).map(x -> x * x).forEach(x -> System.out.print(x + " "));
+    }
+}
+
+OUTPUT:
+400 441 529 7921 
+
+Overview:
+Collection->Streams
+Filter-->Predicate-->Streams
+Map-->Function-->Streams
+
+*****************************************************************************************************************************************************
