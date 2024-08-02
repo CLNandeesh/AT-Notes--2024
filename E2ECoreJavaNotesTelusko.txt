@@ -1,5 +1,5 @@
-Java Content
-============
+Java Content -TELUSKO
+======================
 Variables and Data Types
 Identifiers
 Type Casting
@@ -39,7 +39,9 @@ Generics
 Map
 ForEach
 Stream API
-
+Java 8 and + features
+IO
+Multithreading
 *****************************************************************************************************************************************************
 Variables and Data Types
 ========================
@@ -2959,9 +2961,24 @@ public class ForEachDemo {
 
 *****************************************************************************************************************************************************
 Stream API
-----------
+==========
 ->Used to process the data present in the collection.
 ->When we do any modification on old stream [filter or map] then existing stream will go away and new stream will be created.
+->Once used then its finished cant use again, it throws exception
+
+Ex:
+List<Integer> list = new ArrayList<Integer>();
+list = Arrays.asList(23, 11, 2,21,20,0, 89, 6);
+Stream<Integer> s1 = list.stream();
+
+s1.forEach(s-> System.out.print(s+" ")); //used once
+s1.count(); //exception because s1 already once used java.lang.IllegalStateException
+
+Solution: combine both and use or create new stream and use
+s1.forEach(s-> System.out.print(s+" ")); 
+s2.count();
+
+
 
 Ex: Convert List into Stream and print its value
     public static void main(String[] args) {
@@ -3126,9 +3143,304 @@ public class MapWithFilterDemo {
 OUTPUT:
 400 441 529 7921 
 
+
+Reduce
+------
+->Merge all the elements
+->Take all the elements from streams and combine it based on specified logic and return single result.
+Input: BinaryOperator class object
+Output: Optional class object
+
+Ex:
+public class ReduceDemo {
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<Integer>();
+        list = Arrays.asList(23, 11, 2,21,20,0, 89, 6);
+        Stream<Integer> s1 = list.stream();
+
+        BinaryOperator<Integer> b=new BinaryOperator<Integer>() {
+            @Override
+            public Integer apply(Integer integer, Integer integer2) {
+                return integer+integer2;
+            }
+        };
+
+        Optional o=s1.reduce(b);
+        System.out.println(o.get());
+    }
+}
+
+OUTPUT:
+172
+
+Terminal Function
+------------------
+->Any function which not returns stream are terminal fucntions.
+
+foreach() : Iterate stream
+Ex:
+public class TerminalFunctionDemo {
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<Integer>();
+        list = Arrays.asList(23, 11, 2,21,20,0, 89, 6);
+        Stream<Integer> s1 = list.stream();
+
+        s1.forEach(s-> System.out.print(s+" "));
+    }
+}
+
+
+count() : count no of elements in the stream
+          return long
+
+Ex:
+public class TerminalFunctionDemo {
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<Integer>();
+        list = Arrays.asList(23, 11, 2,21,20,0, 89, 6);
+        Stream<Integer> s1 = list.stream();
+
+        long l=s1.count();
+        System.out.println(l);
+    }
+}
+
+ 
+findFirst(): return first element from the stream
+             return Optional class object
+             use get() to get the value
+
+Ex:
+public class TerminalFunctionDemo {
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<Integer>();
+        list = Arrays.asList(23, 11, 2,21,20,0, 89, 6);
+        Stream<Integer> s1 = list.stream();
+
+        Optional o=s1.findFirst();
+        System.out.println(o.get());
+    }
+}
+
+Ex:
+public class TerminalFunctionDemo {
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<Integer>();
+        list = Arrays.asList(23, 11, 2,21,20,0, 89, 6);
+        Stream<Integer> s1 = list.stream();
+
+        Optional o=s1.findFirst();
+        if(o.isPresent())
+        {
+            System.out.println(o.get());
+        }
+
+
+    }
+}
+
+Ex:
+public class TerminalFunctionDemo {
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<Integer>();
+        list = Arrays.asList(23, 11, 2,21,20,0, 89, 6);
+        Stream<Integer> s1 = list.stream();
+
+        Integer i=s1.findFirst().orElse(0);
+        System.out.println(i);
+
+
+    }
+}
+
+Similarly findAny()
+
+
+
 Overview:
 Collection->Streams
 Filter-->Predicate-->Streams
 Map-->Function-->Streams
+
+Terminal functions: 
+reduce/count/foreach/min/max/findany/findfirst
+
+*****************************************************************************************************************************************************
+Java 8 Other features
+=====================
+Date
+----
+date d=new Date();
+sop(d); 
+
+var
+---
+->No need to specify data type
+->need to assign value during declaration only
+->only for local variables
+
+Ex:
+var c="appu";
+System.out.println(c);
+
+var i=12;
+sop(i);
+
+var a=new int[2];
+
+textblock
+---------
+to add line space
+String str="""
+             <html>
+              ,head>
+           """;
+
+Output:
+<html>
+<head>
+
+Sealed
+------
+->To restrict the extending of class to specific class
+
+Ex:
+sealed class A permits B{}
+
+non-sealed class B extends A{}
+
+class D extends  A{} //Error D cant extend sealed class A
+
+public class SealedExtendDemo {
+}
+
+
+Switch
+------
+Ex:
+Ex: Lambda and removing break
+
+public class SwitchDemo1 {
+    public static void main(String[] args) {
+        String day = "fri";
+        int alaramTime;
+        switch (day) {
+            case "mon", "tue" -> alaramTime = 5;
+            case "wed", "thur" -> alaramTime = 6;
+            case "fri" -> alaramTime = 7;
+            default -> alaramTime = 9;
+        }
+
+        System.out.println(alaramTime);
+    }
+}
+
+
+->Case can have multiple values
+->Lambda in switch, we can remove break
+->Common variable can be used switch as expression
+
+Normal:
+public class SwitchDemo1 {
+    public static void main(String[] args) {
+        String day = "mon";
+        int alaramTime;
+        switch (day) {
+            case "mon":
+                alaramTime = 5;
+                break;
+            case "tue":
+                alaramTime = 6;
+                break;
+            case "wed":
+                alaramTime = 5;
+                break;
+
+            case "thur":
+                alaramTime = 5;
+                break;
+
+            default:
+                alaramTime = 9;
+
+        }
+
+        System.out.println(alaramTime);
+    }
+}
+
+Ex: Combining Case values
+public class SwitchDemo1 {
+    public static void main(String[] args) {
+        String day = "fri";
+        int alaramTime;
+        switch (day) {
+            case "mon", "tue":
+                alaramTime = 5;
+                break;
+
+            case "wed", "thur":
+                alaramTime = 6;
+                break;
+
+            case "fri":
+                alaramTime = 7;
+                break;
+
+            default:
+                alaramTime = 9;
+        }
+
+        System.out.println(alaramTime);
+    }
+}
+
+Ex: Lambda and removing break
+
+public class SwitchDemo1 {
+    public static void main(String[] args) {
+        String day = "fri";
+        int alaramTime;
+        switch (day) {
+            case "mon", "tue" -> alaramTime = 5;
+            case "wed", "thur" -> alaramTime = 6;
+            case "fri" -> alaramTime = 7;
+            default -> alaramTime = 9;
+        }
+
+        System.out.println(alaramTime);
+    }
+}
+
+Ex: using switch as expression, removing common variable and make it as single
+
+public class SwitchDemo1 {
+    public static void main(String[] args) {
+        String day = "fri";
+        int alaramTime;
+        alaramTime = switch (day) {
+            case "mon", "tue" -> 5;
+            case "wed", "thur" -> 6;
+            case "fri" -> 7;
+            default -> 9;
+        };
+        System.out.println(alaramTime);
+    }
+}
+
+Ex: Remove -> and use yield
+public class SwitchDemo1 {
+    public static void main(String[] args) {
+        String day = "fri";
+        int alaramTime;
+        alaramTime = switch (day) {
+            case "mon", "tue" : yield 5;
+            case "wed", "thur" : yield 6;
+            case "fri" : yield 7;
+            default : yield 9;
+        };
+        System.out.println(alaramTime);
+    }
+}
 
 *****************************************************************************************************************************************************
