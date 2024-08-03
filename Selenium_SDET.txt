@@ -2,6 +2,9 @@ Selenium Content - SDET
 WebDriver
 Invoking Browser
 Locators
+Conditional Methods
+Basic Actions
+FindElement vs FindElements
 
 
 Selenium WebDriver
@@ -42,11 +45,211 @@ Locators
 ========
 ->Used to identify elements
 ->Static method present in By class
+->To get group of Webelements, then we can use className() and tagName()
 
-Basic: id()/name()/linkText()/className()/tagName()
-Customized: cssSelector()/xpath()
+Basic Locators 
+id()/name()/class()/linkText()/className()/tagName()/partialLinkText()
 
-Ex: driver.findElement(By.id("")).sendKeys();
+Customized Locators
+cssSelector()/xpath()
+
+Ex: 
+WebElement element=driver.findElement(By.name("search")).sendKeys("Mobile");
+List<WebElement> elements=driver.findElements(By.className("search")).sendKeys("Mobile");
+
+Ex:
+public class LocatorsDemo1 {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://demo.opencart.com/");
+        driver.manage().window().maximize();
+
+        WebElement ele=driver.findElement(By.name("search"));
+        ele.sendKeys("Mobile");
+
+        List<WebElement> elements=driver.findElements(By.className("nav-item"));
+        elements.forEach(x-> System.out.println(x.getText()));
+
+    }
+}
+
+Ex: To get all images src attribute value
+public class LocatorsDemo1 {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://demo.opencart.com/");
+        driver.manage().window().maximize();
+
+        List<WebElement> images = driver.findElements(By.tagName("img"));
+        images.stream().map(x -> x.getAttribute("src")).forEach(x -> System.out.println(x));
+
+    }
+}
+
+Css Selector
+------------
+Ex: driver.findElement(By.cssSelector(""));
+
+tagName#idName
+tagName.className
+tagName[attName='attValue']
+tagName.className[attName='attValue']
+
+->tagName is optional
+#idName
+
+->Compound class name
+Ex:classnmae1 classname2
+can use any one class name or classname1.classname2
+tagName.classname1
+tagName.classname2
+.classname1
+
+
+XPath
+-----
+Ex: driver.findElement(By.xpath(""));
+
+/ current child hierarchy
+// all child hierarchy
+
+Types
+-----
+->Absolute: 
+Starts with html 
+Starts with/
+Do not use attributes
+Not stable
+
+->Relative: 
+Direct to element
+Starts with //
+Uses attributes
+Stable
+
+//tagName[@attName='attvalue']
+
+//tagName[@attName='attvalue'][@attName='attvalue']
+
+//*[@attName='attvalue']
+
+//tagName[@attName='attvalue' and @attName='attvalue']
+
+//tagName[@attName='attvalue' or @attName='attvalue']
+
+//tagName[text()='anyInnerText']
+
+//tagName[starts-with(@attName,'partialAttValue')]
+
+//tagName[ends-with(@attName,'partialAttValue')]
+
+//tagName[contains(@attName,'partialAttValue')]
+
+//tagName[contains(text(),'partialInnerTextValue')]
+
+Chained Xpath
+-------------
+->No attributes or inner text for an element then need to come from parent
+->Go to parent and come to child
+parent
+ child1
+  child2 
+
+parentXpathwithAttribute/child1tagName/child2TagName
+
+Xpath Axes
+----------
+parent and grand parent
+ancestor::
+
+child, grand child
+descendant::
+//
+
+Immediate brother, same parent other children
+preceding-sibling::
+following-sibling::
+
+brothers, same or different parents other children [same hierarchy] 
+following::
+preceding::
+
+child::
+parent::
+
+
+Syntax:
+xpathOfSelf/parent::parentXpath or tagname
+
+
+Ex 1: Grand Children [descendant]
+form
+  div
+  div
+    input
+    span
+
+Identify span from form
+formXpath/div[2]/span
+formXpath/*/span
+formXpath/descendant::span
+formXpath//span
+
+Ex 2: Grand Children [descendant]
+a1
+a2
+a3
+  a31
+  a32
+  a33
+
+Need to go to a33 from a1
+a1//a33
+
+
+Ex: Ancestor 
+form
+  div
+  div
+    input
+    span
+
+span/ancestor::form //form will be identified
+span/ancestor::*  //div will be identified since its first ancestor
+
+Either one Xpath
+-----------------
+xpath1|xpath2|xpath3
+
+first()/last()
+--------------
+->Used as index
+->To find first or last of all current identified elements
+xpath/following::input[2]
+xpath/following::input[last()]
+xpath/following::input[first()]
+
+FindElement vs FindElements
+===========================
+WebElement element=driver.findElement(By.name("search")).sendKeys("Mobile");
+List<WebElement> elements=driver.findElements(By.className("search")).sendKeys("Mobile");
+
+If a Locator not matching any of the Webelement
+FindElement: returns NoSuchElement exception
+FindElements: returns 0 elements, empty list will be created
+
+Conditional Methods
+===================
+boolean status=WebElement.isDisplayed();
+
+
+Basic Actions
+=============
+WebElement.sendKeys(""); //void
+WebElement.click(); //void
+WebElement.clear(); //void
+WebElement.gettext(); //String
 
 
 
+ 
