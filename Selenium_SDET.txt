@@ -2,10 +2,26 @@ Selenium Content - SDET
 WebDriver
 Invoking Browser
 Locators
-Conditional Methods
-Basic Actions
 FindElement vs FindElements
+Get methods
+Conditional Methods
+Synchronization Methods
 
+
+
+Exceptions
+==========
+->NoSuchElementException
+Cause: Element not present in the page when automation script try to perform operation, Sync issue
+
+->ElementNotFoundException
+Cause: Locator is incorrect
+
+->ElementClickInterceptedException
+Cause: Cannot able to perform specified action on given element
+
+->InvalidSelectorException
+Cause: Wrong locator syntax
 
 Selenium WebDriver
 ==================
@@ -238,18 +254,244 @@ If a Locator not matching any of the Webelement
 FindElement: returns NoSuchElement exception
 FindElements: returns 0 elements, empty list will be created
 
+
+Get Methods
+===========
+->Access through Webdriver instance
+get(url)
+Opens browser URL
+
+getTitle() 
+returns title of the page
+
+getCurrentUrl() 
+returns URL of the page
+
+getPageSource() 
+returns source code of the page
+
+getWindowHandle() 
+returns ID of the  single browser window [String]
+
+getWindowHandles() 
+returns ID's of all multiple browser windows [Set<String>]
+
+Ex: Get Methods
+public class GetMethodsDemo {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        String title = driver.getTitle();
+        System.out.println("Title is: " + title);
+
+        String currentURL = driver.getCurrentUrl();
+        System.out.println("URL is: " + currentURL);
+
+        String handle = driver.getWindowHandle();
+        System.out.println("Window Handle is: " + handle);
+
+        WebElement linkElement = driver.findElement(By.linkText("OrangeHRM, Inc"));
+        linkElement.click();
+
+        Set<String> handles = driver.getWindowHandles();
+        handles.forEach(h -> System.out.println("Handle value is: " + h));
+
+        driver.quit();
+    }
+}
+
+OUTPUT:
+Title is: OrangeHRM
+URL is: https://opensource-demo.orangehrmlive.com/web/index.php/auth/login
+Window Handle is: F431D21FBD60E8B854525E57234673D0
+Handle value is: F431D21FBD60E8B854525E57234673D0
+Handle value is: 8B3E86149CD1643FB5CBA091103BA335
+
+Scenario: Switch to different browsers and get their titles using streams
+=========================================================================
+public class WindowHandlesAndSwitchToWIndow {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        WebElement linkElement = driver.findElement(By.linkText("OrangeHRM, Inc"));
+        linkElement.click();
+
+        Set<String> handles = driver.getWindowHandles();
+        handles.stream().map(x -> driver.switchTo().window(x).getTitle()).forEach(s -> System.out.println(s));
+
+        driver.quit();
+    }
+}
+
+OUTPUT:
+OrangeHRM
+Human Resources Management Software | OrangeHRM
+
+Browser metjods: Close and Quit
+================================
+->close(): driver focus window will be closed
+->quit(): To close all opened browsers opened by driver instance
+
+
+Scenario: Close specific browser based on title
+===============================================
+Problem:
+->Click on any link it opens 5 tabs
+->Need to close the tab with specific title "OrangeHRM, Inc"
+Solution: 
+Click on the link
+Get window handles of all 5 opened tabs
+Switch to each tab, get title and check with expected title and then close that specific tab 
+
+
+public class WindowHandlesAndSwitchToWIndow {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        WebElement linkElement = driver.findElement(By.linkText("OrangeHRM, Inc"));
+        linkElement.click();
+
+        Set<String> handles = driver.getWindowHandles();
+
+        for (String s : handles) {
+            if (driver.switchTo().window(s).getTitle().equals("OrangeHRM")) {
+                driver.close();
+            }
+        }
+    }
+}
+
 Conditional Methods
 ===================
-boolean status=WebElement.isDisplayed();
+->Works on WebElements
+->Returns Boolean value
+
+isDisplayed()
+To check is the element is displayed on screen or not
+Ex: Logo is displayed or not
+
+isEnabled
+To check is the element is enabled or not to perform some actions
+Ex: Text box is enabled or not to enter text
+
+isSelected
+To check is check box, radio button is selected or not
+
+->To check total number of checkbox in the page
+  driver.findElements(By.xpath("//*[@type='checkbox']")).size();
 
 
-Basic Actions
-=============
-WebElement.sendKeys(""); //void
-WebElement.click(); //void
-WebElement.clear(); //void
-WebElement.gettext(); //String
+Ex:
+public class ConditionalMethodsDemo {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://demo.opencart.com/en-gb?route=account/register");
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        WebElement firstNameTextbox = driver.findElement(By.id("input-firstname"));
+        boolean firstNameTextboxStatus = firstNameTextbox.isEnabled();
+        System.out.println("Text box is Enabled ? " + firstNameTextboxStatus);
+
+        WebElement logo = driver.findElement(By.xpath("//img[@title='Your Store']"));
+        boolean logoStatus = logo.isDisplayed();
+        System.out.println("Logo is Displayed ? " + logoStatus);
+
+        WebElement subscribeCheckbox = driver.findElement(By.xpath("//input[@id='input-newsletter']"));
+        boolean subscribeCheckboxStatus = firstNameTextbox.isSelected();
+        System.out.println("Subscribe Checkbox Selected - Before ? " + subscribeCheckboxStatus);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        subscribeCheckbox.click();
+        System.out.println("Subscribe Checkbox Selected - After ? " + subscribeCheckboxStatus);
+
+        driver.quit();
+    }
+}
 
 
+Synchronization Methods
+=======================
+->If execution of automation script is faster than response of the application 
+->To keep same sync between application response and execution of automation script we use Synchronization methods.
+
+Implicitly Wait
+---------------
+->Apply wait for all the elements
+-.If it takes more than specified time then it throws exception.
+->Cant apply different time for different elements.
+
+
+driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+Explicit Wait
+-------------
+->Apply wait for specific element for specific condition for specific time
+->If condition satisfied within that time then it returns the Webelement else it throws exception No Such Element
+->If there is any Sync issue for any element then go for it else no need.
+->Most used
+visibilityOfELementLocated()
+
+
+Accepts: WebElement/ By Class reference
+Returns: WebElement after if satisfy condition based on specified time else it throws exception
+
+->Types of methods in ExpectedConditions class
+
+//passing By class reference
+wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
+
+//Passing WebElement
+WebElement loginButton = driver.findElement(By.tagName("button"));
+wait.until(ExpectedConditions.elementToBeClickable(loginButton));
+
+alertisPreset()
+elementSelectionStateToBe(
+elementToBeClickable()
+elementToBeSelected()
+presenceOfElementLocatedBy()
+presenceOfElementLocated()
+visibilityOfELementLocated()
+invisibilityOfELementLocated()
+....
+
+Ex:
+public class SynchronizationDemo {
+    public static void main(String[] args) throws InterruptedException {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        driver.manage().window().maximize();
+
+        //Implicit Wait
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        //Explicit Wait
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement userNmeTextBox = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
+        userNmeTextBox.sendKeys("Admin");
+
+        WebElement passwordTextBox = driver.findElement(By.name("password"));
+        passwordTextBox.sendKeys("admin123");
+
+        WebElement loginButton = driver.findElement(By.tagName("button"));
+        loginButton.click();
+
+        Thread.sleep(3000);
+        driver.quit();
+
+    }
+}
 
  
