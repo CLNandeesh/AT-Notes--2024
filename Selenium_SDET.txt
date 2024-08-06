@@ -1,0 +1,888 @@
+Selenium Content - SDET
+WebDriver
+Invoking Browser
+Locators
+FindElement vs FindElements
+Get methods
+Conditional Methods
+Synchronization Methods
+Navigate Methods
+Checkbox and Radiobuttons
+Alerts or Popup
+Frames
+Switching methods
+
+
+
+Exceptions
+==========
+->NoSuchElementException
+Cause: Element not present in the page when automation script try to perform operation, Sync issue
+
+->ElementNotFoundException
+Cause: Locator is incorrect
+
+->ElementClickInterceptedException
+Cause: Cannot able to perform specified action on given element
+
+->InvalidSelectorException
+Cause: Wrong locator syntax
+
+Selenium WebDriver
+==================
+->Interface, API, Component in Selenium suit.
+->Used to automate Web browser actions.
+
+Java->WebDriver<->Browser
+
+WebDriver Hierarchy
+-------------------
+                          SearchContext[I]
+
+                           WebDriver[I]
+          
+                        RemoteWebDriver[C]
+
+       ChromiumDriver[C]                   FirefoxDriver[C] ....
+ChromeDriver[C] EdgeDriver[C]
+
+
+Invoking Browser
+================
+->Methods
+WebDriver driver = new ChromeDriver();
+driver.manage().window().maximize();
+driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+driver.get("https://testautomationpractice.blogspot.com/");
+       
+Ex:
+public class BrowserOperation1 {
+    public static void main(String[] args) {
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://demo.opencart.com/");
+        String title = driver.getTitle();
+        System.out.println("Title is: " + title);
+        driver.quit();
+
+    }
+}
+
+Locators
+========
+->Used to identify elements
+->Static method present in By class
+->To get group of Webelements, then we can use className() and tagName()
+
+Basic Locators 
+id()/name()/class()/linkText()/className()/tagName()/partialLinkText()
+
+Customized Locators
+cssSelector()/xpath()
+
+Ex: 
+WebElement element=driver.findElement(By.name("search")).sendKeys("Mobile");
+List<WebElement> elements=driver.findElements(By.className("search")).sendKeys("Mobile");
+
+Ex:
+public class LocatorsDemo1 {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://demo.opencart.com/");
+        driver.manage().window().maximize();
+
+        WebElement ele=driver.findElement(By.name("search"));
+        ele.sendKeys("Mobile");
+
+        List<WebElement> elements=driver.findElements(By.className("nav-item"));
+        elements.forEach(x-> System.out.println(x.getText()));
+
+    }
+}
+
+Ex: To get all images src attribute value
+public class LocatorsDemo1 {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://demo.opencart.com/");
+        driver.manage().window().maximize();
+
+        List<WebElement> images = driver.findElements(By.tagName("img"));
+        images.stream().map(x -> x.getAttribute("src")).forEach(x -> System.out.println(x));
+
+    }
+}
+
+Css Selector
+------------
+Ex: driver.findElement(By.cssSelector(""));
+
+tagName#idName
+tagName.className
+tagName[attName='attValue']
+tagName.className[attName='attValue']
+
+->tagName is optional
+#idName
+
+->Compound class name
+Ex:classnmae1 classname2
+can use any one class name or classname1.classname2
+tagName.classname1
+tagName.classname2
+.classname1
+
+
+XPath
+-----
+Ex: driver.findElement(By.xpath(""));
+
+/ current child hierarchy
+// all child hierarchy
+
+Types
+-----
+->Absolute: 
+Starts with html 
+Starts with/
+Do not use attributes
+Not stable
+
+->Relative: 
+Direct to element
+Starts with //
+Uses attributes
+Stable
+
+//tagName[@attName='attvalue']
+
+//tagName[@attName='attvalue'][@attName='attvalue']
+
+//*[@attName='attvalue']
+
+//tagName[@attName='attvalue' and @attName='attvalue']
+
+//tagName[@attName='attvalue' or @attName='attvalue']
+
+//tagName[text()='anyInnerText']
+
+//tagName[starts-with(@attName,'partialAttValue')]
+
+//tagName[ends-with(@attName,'partialAttValue')]
+
+//tagName[contains(@attName,'partialAttValue')]
+
+//tagName[contains(text(),'partialInnerTextValue')]
+
+Chained Xpath
+-------------
+->No attributes or inner text for an element then need to come from parent
+->Go to parent and come to child
+parent
+ child1
+  child2 
+
+parentXpathwithAttribute/child1tagName/child2TagName
+
+Xpath Axes
+----------
+parent and grand parent
+ancestor::
+
+child, grand child
+descendant::
+//
+
+Immediate brother, same parent other children
+preceding-sibling::
+following-sibling::
+
+brothers, same or different parents other children [same hierarchy] 
+following::
+preceding::
+
+child::
+parent::
+
+
+Syntax:
+xpathOfSelf/parent::parentXpath or tagname
+
+
+Ex 1: Grand Children [descendant]
+form
+  div
+  div
+    input
+    span
+
+Identify span from form
+formXpath/div[2]/span
+formXpath/*/span
+formXpath/descendant::span
+formXpath//span
+
+Ex 2: Grand Children [descendant]
+a1
+a2
+a3
+  a31
+  a32
+  a33
+
+Need to go to a33 from a1
+a1//a33
+
+
+Ex: Ancestor 
+form
+  div
+  div
+    input
+    span
+
+span/ancestor::form //form will be identified
+span/ancestor::*  //div will be identified since its first ancestor
+
+Either one Xpath
+-----------------
+xpath1|xpath2|xpath3
+
+first()/last()
+--------------
+->Used as index
+->To find first or last of all current identified elements
+xpath/following::input[2]
+xpath/following::input[last()]
+xpath/following::input[first()]
+
+FindElement vs FindElements
+===========================
+WebElement element=driver.findElement(By.name("search")).sendKeys("Mobile");
+List<WebElement> elements=driver.findElements(By.className("search")).sendKeys("Mobile");
+
+If a Locator not matching any of the Webelement
+FindElement: returns NoSuchElement exception
+FindElements: returns 0 elements, empty list will be created
+
+
+Get Methods
+===========
+->Methods
+driver.get(url)
+driver.getTitle()
+driver.getCurrentUrl() 
+driver.getPageSource()
+driver.getWindowHandle() 
+driver.getWindowHandles()
+
+->Access through Webdriver instance
+driver.get(url)
+Opens browser URL
+
+driver.getTitle() 
+returns title of the page
+
+driver.getCurrentUrl() 
+returns URL of the page
+
+driver.getPageSource() 
+returns source code of the page
+
+driver.getWindowHandle() 
+returns ID of the  single browser window [String]
+
+driver.getWindowHandles() 
+returns ID's of all multiple browser windows [Set<String>]
+
+Ex: Get Methods
+public class GetMethodsDemo {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        String title = driver.getTitle();
+        System.out.println("Title is: " + title);
+
+        String currentURL = driver.getCurrentUrl();
+        System.out.println("URL is: " + currentURL);
+
+        String handle = driver.getWindowHandle();
+        System.out.println("Window Handle is: " + handle);
+
+        WebElement linkElement = driver.findElement(By.linkText("OrangeHRM, Inc"));
+        linkElement.click();
+
+        Set<String> handles = driver.getWindowHandles();
+        handles.forEach(h -> System.out.println("Handle value is: " + h));
+
+        driver.quit();
+    }
+}
+
+OUTPUT:
+Title is: OrangeHRM
+URL is: https://opensource-demo.orangehrmlive.com/web/index.php/auth/login
+Window Handle is: F431D21FBD60E8B854525E57234673D0
+Handle value is: F431D21FBD60E8B854525E57234673D0
+Handle value is: 8B3E86149CD1643FB5CBA091103BA335
+
+Scenario: Switch to different browsers and get their titles using streams
+=========================================================================
+public class WindowHandlesAndSwitchToWIndow {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        WebElement linkElement = driver.findElement(By.linkText("OrangeHRM, Inc"));
+        linkElement.click();
+
+        Set<String> handles = driver.getWindowHandles();
+        handles.stream().map(x -> driver.switchTo().window(x).getTitle()).forEach(s -> System.out.println(s));
+
+        driver.quit();
+    }
+}
+
+OUTPUT:
+OrangeHRM
+Human Resources Management Software | OrangeHRM
+
+Browser methods: Close and Quit
+================================
+->close(): driver focus window will be closed
+->quit(): To close all opened browsers opened by driver instance
+
+
+Scenario: Close specific browser based on title
+===============================================
+Problem:
+->Click on any link it opens 5 tabs
+->Need to close the tab with specific title "OrangeHRM, Inc"
+Solution: 
+Click on the link
+Get window handles of all 5 opened tabs
+Switch to each tab, get title and check with expected title and then close that specific tab 
+
+
+public class WindowHandlesAndSwitchToWIndow {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        WebElement linkElement = driver.findElement(By.linkText("OrangeHRM, Inc"));
+        linkElement.click();
+
+        Set<String> handles = driver.getWindowHandles();
+
+        for (String s : handles) {
+            if (driver.switchTo().window(s).getTitle().equals("OrangeHRM")) {
+                driver.close();
+            }
+        }
+    }
+}
+
+Conditional Methods
+===================
+->Methods
+element.isDisplayed()
+element.isEnabled()
+element.isSelected()
+
+->Works on WebElements
+->Returns Boolean value
+
+isDisplayed()
+To check is the element is displayed on screen or not
+Ex: Logo is displayed or not
+
+isEnabled
+To check is the element is enabled or not to perform some actions
+Ex: Text box is enabled or not to enter text
+
+isSelected
+To check is check box, radio button is selected or not
+
+->To check total number of checkbox in the page
+  driver.findElements(By.xpath("//*[@type='checkbox']")).size();
+
+
+Ex:
+public class ConditionalMethodsDemo {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://demo.opencart.com/en-gb?route=account/register");
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        WebElement firstNameTextbox = driver.findElement(By.id("input-firstname"));
+        boolean firstNameTextboxStatus = firstNameTextbox.isEnabled();
+        System.out.println("Text box is Enabled ? " + firstNameTextboxStatus);
+
+        WebElement logo = driver.findElement(By.xpath("//img[@title='Your Store']"));
+        boolean logoStatus = logo.isDisplayed();
+        System.out.println("Logo is Displayed ? " + logoStatus);
+
+        WebElement subscribeCheckbox = driver.findElement(By.xpath("//input[@id='input-newsletter']"));
+        boolean subscribeCheckboxStatus = firstNameTextbox.isSelected();
+        System.out.println("Subscribe Checkbox Selected - Before ? " + subscribeCheckboxStatus);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        subscribeCheckbox.click();
+        System.out.println("Subscribe Checkbox Selected - After ? " + subscribeCheckboxStatus);
+
+        driver.quit();
+    }
+}
+
+
+Synchronization Methods
+=======================
+->If execution of automation script is faster than response of the application 
+->To keep same sync between application response and execution of automation script we use Synchronization methods.
+
+Implicitly Wait
+---------------
+->Apply wait for all the elements
+-.If it takes more than specified time then it throws exception.
+->Cant apply different time for different elements.
+
+
+driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+Explicit Wait
+-------------
+->Apply wait for specific element for specific condition for specific time
+->If condition satisfied within that time then it returns the Webelement else it throws exception No Such Element
+->If there is any Sync issue for any element then go for it else no need.
+->Most used
+visibilityOfELementLocated()
+
+
+Accepts: WebElement/ By Class reference
+Returns: WebElement after if satisfy condition based on specified time else it throws exception
+
+->Types of methods in ExpectedConditions class
+
+//passing By class reference
+wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
+
+//Passing WebElement
+WebElement loginButton = driver.findElement(By.tagName("button"));
+wait.until(ExpectedConditions.elementToBeClickable(loginButton));
+
+alertisPreset()
+elementSelectionStateToBe(
+elementToBeClickable()
+elementToBeSelected()
+presenceOfElementLocatedBy()
+presenceOfElementLocated()
+visibilityOfELementLocated()
+invisibilityOfELementLocated()
+....
+
+Ex:
+public class SynchronizationDemo {
+    public static void main(String[] args) throws InterruptedException {
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        driver.manage().window().maximize();
+
+        //Implicit Wait
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        //Explicit Wait
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement userNmeTextBox = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
+        userNmeTextBox.sendKeys("Admin");
+
+        WebElement passwordTextBox = driver.findElement(By.name("password"));
+        passwordTextBox.sendKeys("admin123");
+
+        WebElement loginButton = driver.findElement(By.tagName("button"));
+        loginButton.click();
+
+        Thread.sleep(3000);
+        driver.quit();
+
+    }
+}
+
+Navigate Methods
+================
+->Methods:
+driver.navigate().to("url");
+driver.navigate().back();
+driver.navigate().forward();
+driver.navigate().refresh();
+
+
+public class NavigatemethodsDemo {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+
+        driver.get("https://www.google.com");
+        driver.navigate().to("https://www.facebook.com");
+        driver.navigate().back();
+        driver.navigate().forward();
+        driver.navigate().refresh();
+        driver.quit();
+
+    }
+}
+
+Difference between get() and navigate().to()
+--------------------------------------------
+get()
+->waits for page to load while opening
+->parameter only string 
+
+navigate().to()
+->internally calls get(), by converting object format to string format if url is of form object type
+->acceps url in string and url class reference
+
+URL url=new URL("https://www.google.com");
+driver.navigate().to(url);
+
+Browser windows
+===============
+->Methods
+driver.getWindowHandle()
+driver.getWindowHandles()
+driver.switchTo().window(Strig handle)
+
+->To switch to child windows
+
+Ex:
+public class BrowserWindow {
+    public static void main(String[] args) throws InterruptedException {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        driver.findElement(By.linkText("OrangeHRM, Inc")).click();
+        Thread.sleep(3000);
+
+        Set<String> handles = driver.getWindowHandles();
+        Iterator<String> it = handles.iterator();
+
+        while (it.hasNext()) {
+            String handle = it.next();
+            driver.switchTo().window(handle);
+            if (title.equalsIgnoreCase("Human Resources Management Software | OrangeHRM")) {
+                driver.findElement(By.xpath("(//button[text()='Book a Free Demo'])[2]")).click();
+                String text = driver.findElement(By.xpath("//h1[contains(text(),'Manage Your People and Operations')]")).getText();
+                System.out.println("String Text: " + text);
+            }
+        }
+        driver.quit();
+    }
+}
+
+Chekbox and Radiobuttons
+========================
+->Methods
+element.click()
+element.isSelected()
+
+->Identify the checkbox web element and click() on it
+
+Ex:
+public class CheckboxAndRadioButtons {
+    public static void main(String[] args) throws InterruptedException {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://testautomationpractice.blogspot.com/");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        System.out.println("****Checkbox*****");
+        WebElement daysCheckbox = driver.findElement(By.id("sunday"));
+        System.out.println(daysCheckbox.isSelected());
+        daysCheckbox.click();
+        System.out.println(daysCheckbox.isSelected());
+
+        System.out.println("****Radio Button*****");
+        WebElement genderRadiobutton = driver.findElement(By.id("female"));
+        System.out.println(genderRadiobutton.isSelected());
+        genderRadiobutton.click();
+        System.out.println(genderRadiobutton.isSelected());
+        Thread.sleep(3000);
+        driver.quit();
+
+
+    }
+}
+
+Ex: To select all the checkboxes and count it
+
+public class CheckboxAndRadioButtons {
+    public static void main(String[] args) throws InterruptedException {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://testautomationpractice.blogspot.com/");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        //To select all checkbox and count it
+        List<WebElement> allCheckbox = driver.findElements(By.xpath("//*[@type='checkbox']"));
+        System.out.println("Total number of checkboxes: "+allCheckbox.size());
+        for (WebElement checkBox : allCheckbox) {
+            checkBox.click();
+        }
+
+        driver.quit();
+
+
+    }
+}
+
+Alerts  or Popup
+================
+->Methods
+Alert alert=driver.switchTo().alert();
+alert.accept()
+alert.dismiss()
+alert.sendkeys("");
+alert().getText();
+
+Types
+-----
+Normal Alert
+Confirmation Alert
+Prompt Alert
+
+->Without switch command handling alert window.
+Using explicit wait
+
+Ex:
+public class AlertClassDemo {
+    public static void main(String[] args) throws InterruptedException {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://testautomationpractice.blogspot.com/");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        //Using Switch command
+        driver.findElement(By.xpath("//button[text()='Prompt']")).click();
+        Alert alert = driver.switchTo().alert();
+        alert.sendKeys("appu boss");
+        alert.accept();
+
+        //Using Explicit wait
+        driver.findElement(By.xpath("//button[text()='Prompt']")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        Thread.sleep(5000);
+        alert.accept();
+
+    }
+}
+
+Authentication Popup
+--------------------
+->Need to provide username and password a part of url
+Ex:https://the-internet.herokuapp.com/basic_auth
+Ex:https://admin:admin@the-internet.herokuapp.com/basic_auth
+Syntax:https://username:password@the-internet.herokuapp.com/basic_auth
+
+Ex:
+public class AuthenticationPopup {
+    public static void main(String[] args) {
+
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://admin:admin@the-internet.herokuapp.com/basic_auth");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+    }
+}
+
+Frames
+======
+->Methods
+driver.switchTo().frame("");
+id/name/web element/index
+driver.switchTo().defaultContent();
+
+->Tag: frame or iframe
+->Switch to frame and perform application, then switch back to default content.
+
+Ex:
+public class FrameDemo {
+    private static String appu;
+
+    public static void main(String[] args) throws InterruptedException {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://ui.vision/demo/webtest/frames/");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        WebElement frame1 = driver.findElement(By.xpath("//frame[@src='frame_1.html']"));
+        driver.switchTo().frame(frame1);
+        Thread.sleep(3000);
+        driver.findElement(By.xpath("//input[@name='mytext1']")).sendKeys("appu");
+        Thread.sleep(3000);
+
+    }
+}
+
+Switching methods
+=================
+driver.switchTo().window("Handle");
+driver.swithcTo().alert();
+diver.switchTo().frame("id/name/webelement/index
+");
+
+Dropdown
+========
+->Types
+Select Dropdown
+Bootstrap Dropdown
+Hidden Dropdown
+
+Select dropdown
+-----------------
+->It has Select tag
+Methods:
+Select select = new Select(driver.findElement(By.id("colors")));
+select.selectByValue("Blue");
+select.selectByIdex("Blue"); //index starts from 0
+select.selectByVisibleText("Blue");
+select.getFirstSelectedOption();
+select.getOptions();
+select.isMultiple(); //to check is it multi selected or not
+
+Ex: Single select dropdown
+public class SelectDropdownDemo {
+    public static void main(String[] args) throws InterruptedException {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://testautomationpractice.blogspot.com/");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        Select select = new Select(driver.findElement(By.id("colors")));
+        select.selectByValue("blue");
+        System.out.println("Selected value is:" + select.getFirstSelectedOption());
+
+        List<WebElement> list = select.getOptions();
+        list.stream().map(s -> s.getText()).forEach(s -> System.out.println("Value is: " + s));
+
+        Thread.sleep(5000);
+        driver.quit();
+    }
+}
+
+Ex: Multi select dropdown
+public class MultiSelectDemo {
+    public static void main(String[] args) throws InterruptedException {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://jquery-az.com/boots/demo.php?ex=63.0_2");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        //Multi Select
+        try {
+            Select s = new Select(driver.findElement(By.id("option-droup-demo")));
+            System.out.println(s.isMultiple());
+
+            List<WebElement> l = s.getAllSelectedOptions();
+            l.stream().map(x -> x.getText()).forEach(x -> System.out.println("Multi Value is: " + x));
+
+            s.deselectAll();
+
+            List<WebElement> l2 = s.getAllSelectedOptions();
+            l2.stream().map(x -> x.getText()).forEach(x -> System.out.println("Multi Value is: " + x));
+
+            List<WebElement> li = s.getOptions();
+            li.stream().map(x -> x.getText()).forEach(x -> System.out.println("Value is:" + x));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        Thread.sleep(5000);
+        driver.quit();
+    }
+}
+
+
+Bootstrap dropdown:
+->Itentify eneric xpath and work on it
+
+public class BootStrapDropdownDemo {
+    public static void main(String[] args) throws InterruptedException {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://jquery-az.com/boots/demo.php?ex=63.0_2");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        driver.findElement(By.xpath("//button[contains(@class,'multiselect')]")).click();
+
+
+        //Multi Select options
+        List<String> list = Arrays.asList("Oracle", "MySQL", "Java", "Python");
+        String text = "C#";
+        String xp = "//input[contains(@value,'"+text+"')]";
+        System.out.println(xp);
+
+        for (String s : list) {
+            String newXp=xp.replace(text, s);
+            System.out.println("New Xpath is: "+newXp);
+            driver.findElement(By.xpath(newXp)).click();
+            Thread.sleep(3000);
+        }
+
+        driver.quit();
+    }
+}
+
+Dynamic dropdown/Hidden Dropdown
+-------------------------------
+->Loads the option on click on it
+->Steps:
+Identify generic xpath using debugger
+Iterate and get required element and click on it
+Ex:
+public class HiddenDropdownDemo {
+    public static void main(String[] args) throws InterruptedException {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        driver.findElement(By.xpath("//input[@name='username']")).sendKeys("Admin");
+        driver.findElement(By.xpath("//input[@name='password']")).sendKeys("admin123");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement ele = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@type='submit']")));
+        // driver.findElement(By.xpath("(//button[@type='submit']")).click();
+        ele.click();
+
+        driver.findElement(By.xpath("//span[text()='PIM']")).click();
+
+        driver.findElement(By.xpath("//label[text()='Job Title']/parent::div/following-sibling::div/div/div/div")).click();
+
+        List<WebElement> list = driver.findElements(By.xpath("//div[contains(@class,'oxd-select-option')]/span"));
+        System.out.println("Total options are: " + list.size());
+        list.stream().map(x -> x.getText()).forEach(x -> System.out.println("Option is: " + x));
+
+        //Selecting element
+        for (WebElement e : list) {
+            if (e.getText().equalsIgnoreCase("Automaton Tester")) {
+                e.click();
+                break;
+            }
+        }
+        Thread.sleep(4000);
+        driver.quit();
+    }
+}
+
