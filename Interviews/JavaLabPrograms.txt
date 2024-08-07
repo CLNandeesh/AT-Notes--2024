@@ -1,0 +1,24 @@
+P1: To count occurrence of each character in a string
+=====================================================
+public class LettersInname {
+    public static void main(String[] args) {
+        String str = "Punith Rajkuamr";
+        String str2 = str.replace(" ", "");
+        Map<Character, Integer> map = new HashMap<>();
+
+        char[] ch = str2.toCharArray();
+        for (char c : ch) {
+            int i = 0;
+            if (map.containsKey(c)) {
+                map.put(c, map.get(c) + 1);
+            } else {
+                map.put(c, 1);
+            }
+        }
+        System.out.println(map);
+    }
+}
+
+OUTPUT:
+{P=1, a=2, R=1, r=1, t=1, u=2, h=1, i=1, j=1, k=1, m=1, n=1}
+
