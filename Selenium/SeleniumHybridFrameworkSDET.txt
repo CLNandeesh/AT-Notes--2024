@@ -1,0 +1,26 @@
+Selenium Hybrid Automation Framework
+====================================
+Objective of Framework
+----------------------
+->Modularity
+->Maintenance
+->Reusability
+
+Types of Framework
+------------------
+Built In : 
+->TestNg, Junit, Cucumber, ...
+
+Customized: 
+->Built In + Additional API
+->Data driver, Keyword driven, Hybrid framework
+
+Phases/Stages
+-------------
+->Analysingg AUT
+   No of pages
+   What are all the elements/How/Type
+   What to Automate/What we cannot Automate
+
+->Choose Test case for Automate
+   
