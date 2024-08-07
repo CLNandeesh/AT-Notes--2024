@@ -76,7 +76,7 @@ pom.xml
 
 Utilities
 ->Frequent methods
-->XLUtilities
+->XL Utilities
 ->Data providers
 ->Extend report
 ->Screenshot 
