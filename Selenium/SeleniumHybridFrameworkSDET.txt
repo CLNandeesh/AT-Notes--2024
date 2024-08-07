@@ -9,7 +9,7 @@ Objective of Framework
 Types of Framework
 ------------------
 Built In : 
-->TestNg, Junit, Cucumber, ...
+->Test Ng, Junit, Cucumber, ...
 
 Customized: 
 ->Built In + Additional API
@@ -17,10 +17,87 @@ Customized:
 
 Phases/Stages
 -------------
-->Analysingg AUT
+->Analysing AUT
    No of pages
    What are all the elements/How/Type
    What to Automate/What we cannot Automate
 
 ->Choose Test case for Automate
-   
+   100 Test cases: 90 feasible for automation, then all 90 can be automated so its 100% automation.
+   Priority:
+       P1:Sanity TC 
+       P2:Data driven TC/ Re tests TC
+       P3:Regression TC
+       P4:Any other TC
+
+->Design and Development of Framework
+    Creating folder structure
+    Implementing TC
+
+->Execution
+    Local execution and Remote execution[Selenium grid, Jenkins]
+
+->Maintenance
+   Git and GitHub 
+  
+Maintenance and Execution
+    CI/CD: GitHub and Jenkins
+
+AUT
+---
+Domain: 
+  ECommerce 
+    Online shopping application
+    Ex: Amazon, Jio Mart, ...
+ 
+URL: https://demo.opencart.com/admin/
+
+Components
+----------
+Java: Programming language
+Selenium: Automation framework
+Test NG: Unit testing framework
+Maven: Build tool
+POM: Design pattern
+
+POM
+->Separate class for each page                            
+->Object Identification and Actions
+
+Test cases
+->Validation
+
+Test NG. xml
+->TC execution configuration[Grouping, Parallel browser execution,..]
+
+pom.xml
+->Dependency
+->Internally calls Testng.xml for execution
+
+Utilities
+->Frequent methods
+->XLUtilities
+->Data providers
+->Extend report
+->Screenshot 
+
+Test Data
+->Excel files
+
+Resources
+->Log4J
+->Properties
+
+Reports
+->TestNG
+->Extend Report
+
+Logs
+->Info, Debug, Warn
+->Log4j
+
+CI/CD
+->Git, GitHub and Jenkins
+
+
+
