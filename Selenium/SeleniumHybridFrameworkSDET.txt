@@ -99,5 +99,80 @@ Logs
 CI/CD
 ->Git, GitHub and Jenkins
 
+Steps
+-----
+Step 1: Create maven project add dependency
+
+Reporting:
+extentreports
+
+Logging:
+log4j-slf4j-impl
+log4j
+log4j-core
+
+Excel data:
+poi-ooxml
+poi
+
+Common utility:
+commons-lang3
+commons-io
+
+Unit testing:
+testing
+
+UI Automation:
+selenium-java
+
+Step 2:
+->Create Project Structure
+
+Step 3:
+Create Base Page class:
+->Create a BasePage class under pageobjects package
+->Contains Constructor to initialize Web elements of all the Page Object classes.
+
+public class BasePage {
+
+    WebDriver driver;
+    public BasePage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+    }
+
+}
+
+Create Page Object class:
+->Create required Page Object Classes for all required pages and extends BasePage class under pageobjects package
+->Add Constructor containing super() to call parent class constructor
+->Identify Webelement using @FindBy annotation
+->Add Action methods
+
+public class HomePage extends BasePage {
+
+    public HomePage(WebDriver driver) {
+        super((driver));
+    }
+
+    @FindBy(xpath = "//span[text()='My Account']")
+    WebElement lnkMyAccount;
+
+    @FindBy(xpath = "//a[text()='Register']")
+    WebElement lnkRegister;
+
+    public void clickMyAccount() {
+        lnkMyAccount.click();
+    }
+
+    public void clickRegister() {
+        lnkRegister.click();
+    }
+
+}
+
+Create Test case:
+->Create Test case under testcases package and extends BaseClass
+
 
 
