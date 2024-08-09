@@ -129,7 +129,8 @@ Step 2:
 ->Create Project Structure
 
 Step 3:
-Create Base Page class:
+3.1 Create Base Page class
+--------------------------
 ->Create a BasePage class under pageobjects package
 ->Contains Constructor to initialize Web elements of all the Page Object classes.
 
@@ -143,7 +144,8 @@ public class BasePage {
 
 }
 
-Create Page Object class:
+3.2 Create Page Object class
+----------------------------
 ->Create required Page Object Classes for all required pages and extends BasePage class under pageobjects package
 ->Add Constructor containing super() to call parent class constructor
 ->Identify Webelement using @FindBy annotation
@@ -171,8 +173,119 @@ public class HomePage extends BasePage {
 
 }
 
-Create Test case:
+3.3 Create Test case
+---------------------
 ->Create Test case under testcases package and extends BaseClass
+->This class should contains methods to call POC action methods and to perform validations.
+
+Ex:
+public class TC01AccountRegistrationtest extends BaseClass{
+    @Test
+    void validateAccountRegistration() throws InterruptedException {
+
+        HomePage homePage = new HomePage(driver);
+        homePage.clickMyAccount();
+        homePage.clickRegister();
+
+        AccountRegistrationPage accountRegistrationPage = new AccountRegistrationPage(driver);
+        accountRegistrationPage.setFirstName("nandeesh");
+        accountRegistrationPage.setLastName("cl");
+        accountRegistrationPage.setEmail("nandeesh@gmail.com");
+        accountRegistrationPage.setPassword("Apjkalam!123");
+        accountRegistrationPage.agreePolicy();
+        accountRegistrationPage.clickContinue();
+        String actualMessage = accountRegistrationPage.getConfirmationMessage();
+        Assert.assertEquals(actualMessage, "Your Account Has Been Created!");
+    }
+}
+
+3.4 Create Base Class under testbase package 
+--------------------------------------------
+->Keep all setup and teardown method
+->All Test case class should extends this class
+
+Ex:
+public class BaseClass {
+    public WebDriver driver;
+
+    @BeforeClass
+    void setup() throws InterruptedException {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get("https://demo.opencart.com/en-gb?route=account/register");
+    }
+
+    @AfterClass
+    void tearDown() {
+        driver.quit();
+    }
+}
+
+Step 4:
+Adding Logs
+-----------
+->Log Levels
+All<Trace<Debug<Info<Warn<Error<Fatal<Off
+
+->Appenders- Where to generate logs [Console/File] 
+->Loggers - What type of logs to generate[All<Trace<Debug<Info<Warn<Error<Fatal<Off]
+Above two should be updated in log4j2.xml file
+
+Steps:
+->Add dependency
+->Add log4j2.xml configuration file into src/test/resources folder
+log4j2.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="log-path">./logs</Property>
+        <Property name="log-pattern">%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</Property>
+    </Properties>
+    
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${log-pattern}"/>
+        </Console>
+
+        <RollingFile name="File" fileName="${log-path}/automation.log"
+                     filePattern="${log-path}/automation-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="${log-pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="1MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="INFO">
+            <!--<AppenderRef ref="Console"/>-->
+            <AppenderRef ref="File"/>
+        </Root>
+    </Loggers>
+</Configuration>
 
 
+//What type of Logs and COnsole or File log setting to be made here
+    <Loggers>
+        <Root level="INFO">    //what type of log level needed
+            <!--<AppenderRef ref="Console"/>-->  //Do we need console logs
+            <AppenderRef ref="File"/>            //Do we need file logs
+        </Root>
+    </Loggers>
+
+//Location configurations
+    <Properties>
+        <Property name="log-path">./logs</Property>
+        <Property name="log-pattern">%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</Property>
+    </Properties>
+
+->Update BaseClass
+->In setup() load Log4j xml file
+public Logger logger;
+logger= LogManager.getLogger(this.getClass());
+
+->Add Log statements in required class
 
