@@ -1,0 +1,53 @@
+Devops Contents
+===============
+Introduction to Devops
+Git and Github
+
+
+
+
+
+Introduction to Devops
+======================
+->Basic Devops-On Premises
+->Cloud Devops-AWS, Azure, GCP
+->Hybrid Model-On Premise Cloud
+->Container Devops- Kubernetes, Docker, OpenShift
+->Devsecops- Sonar cube
+
+Developer developed files
+Ex: 6 java file
+Converted to Binary files[Bytecodes]->Single Zip[JAR]
+Deploy single Zip file to Server
+
+Git and GitHub
+==============
+//To clear the screen
+clear
+
+//To list the file
+ls
+
+//To create the file
+touch filenamewithextension filenamewithextension 
+
+//To remove file
+rm filenamewithextension
+
+//To create directory
+mkdir directoryname directoryname
+
+//To delete folder
+rmdir foldername foldername
+
+//Changing directory
+cd directoryname
+
+//To move back one above folder
+cd..
+
+//To check present working directory
+pwd
+
+
+
