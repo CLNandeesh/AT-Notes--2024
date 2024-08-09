@@ -391,3 +391,32 @@ Base class setup()
         </classes>
     </test> <!-- Test -->
 </suite> <!-- Suite -->
+
+Step 6 Reading Common values from properties file
+---------------------------------------------
+->Add config.properties file under src/test/resources
+->Update Base class setup() for loading config.properties file
+->Get the value and use it using getProperty()
+
+config.properties
+registerAppURL=https://demo.opencart.com/en-gb?route=account/register\
+
+Base Class
+
+import java.util.Properties;
+
+public class BaseClass {
+    public Properties properties;
+
+
+    @BeforeClass
+    void setup() throws InterruptedException, IOException {
+        //Properties file reading
+        FileReader fileReader = new FileReader("./src//test//resources//config.properties");
+        properties = new Properties();
+        properties.load(fileReader);
+        String registerUrl = properties.getProperty("registerAppURL");
+        driver.get(registerUrl);
+    }
+
+}
