@@ -22,32 +22,100 @@ Deploy single Zip file to Server
 
 Git and GitHub
 ==============
+Linux Commands
+--------------
 //To clear the screen
 clear
 
 //To list the file
 ls
 
+//To list hidden files
+ls -a
+
+//To list files in details[long listing]
+ls -l
+
+//To list hidden files in details
+ls -la 
+
 //To create the file
 touch filenamewithextension filenamewithextension 
 
+//To create hidden file
+touch .filenamewithextension
+
 //To remove file
 rm filenamewithextension
+rm filename* 
 
 //To create directory
 mkdir directoryname directoryname
 
 //To delete folder
+rm -rf foldername
+rm -rf foldername*
 rmdir foldername foldername
 
 //Changing directory
 cd directoryname
 
 //To move back one above folder
-cd..
+cd ..
 
 //To check present working directory
 pwd
 
+//To know current user
+whoami
 
+//To know date
+date
+
+//To see content of the file
+cat filenamewithextension
+
+Git Commands
+------------
+//To initialize the local repo
+git init
+
+//To check the status
+git status
+
+//To add to staging are
+git add filenamewithextension filenamewithextension
+git add .
+
+Red: Not added to staging area
+Green: Added to staging area but not commited
+
+//To add to local repo
+git commit -m "commit message"
+
+//To configure User at first time
+git config --global user.email "email"
+git config --global user.name "name"
+
+//To check config details
+git config
+
+//To See all commit details
+git log 
+git log --oneline
+
+//To add from local to remote
+git push
+
+//To add from remote to workspace
+git pull
+
+//To add from remote to local
+git fetch
+
+//To clone the repo
+git clone <url>
+
+//Create new repo and clone to local
+Create repo
 
