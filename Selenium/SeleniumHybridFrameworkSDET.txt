@@ -6,6 +6,7 @@ Objective of Framework
 ->Maintenance
 ->Reusability
 
+*********************************************************************************************************************************************************
 Types of Framework
 ------------------
 Built In : 
@@ -15,6 +16,7 @@ Customized:
 ->Built In + Additional API
 ->Data driver, Keyword driven, Hybrid framework
 
+*********************************************************************************************************************************************************
 Phases/Stages
 -------------
 ->Analysing AUT
@@ -43,6 +45,7 @@ Phases/Stages
 Maintenance and Execution
     CI/CD: GitHub and Jenkins
 
+*********************************************************************************************************************************************************
 AUT
 ---
 Domain: 
@@ -52,6 +55,7 @@ Domain:
  
 URL: https://demo.opencart.com/admin/
 
+*********************************************************************************************************************************************************
 Components
 ----------
 Java: Programming language
@@ -99,9 +103,11 @@ Logs
 CI/CD
 ->Git, GitHub and Jenkins
 
+*********************************************************************************************************************************************************
 Steps
 -----
 Step 1: Create maven project add dependency
+-------------------------------------------
 
 Reporting:
 extentreports
@@ -125,10 +131,11 @@ testing
 UI Automation:
 selenium-java
 
-Step 2:
-->Create Project Structure
+Step 2 Create Project Structure
+--------------------------------
 
-Step 3:
+Step 3: Implementation of POC , Base Class and Test case class
+--------------------------------------------------------------
 3.1 Create Base Page class
 --------------------------
 ->Create a BasePage class under pageobjects package
@@ -222,9 +229,8 @@ public class BaseClass {
     }
 }
 
-Step 4:
-Adding Logs
------------
+Step 4:Adding Logs
+------------------
 ->Log Levels
 All<Trace<Debug<Info<Warn<Error<Fatal<Off
 
@@ -285,7 +291,103 @@ log4j2.xml
 ->Update BaseClass
 ->In setup() load Log4j xml file
 public Logger logger;
-logger= LogManager.getLogger(this.getClass());
+logger = LogManager.getLogger(this.getClass());
 
 ->Add Log statements in required class
+log.info()
+log.debug()
+log.error()
 
+Packages:
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+Note: Loggers>Root level if we make Off then it wont generate any logs
+
+Step 5: Run Tests on Desired browser/Cross browser/Parallel testing
+-------------------------------------------------------------------
+5.1: Desired browser testing
+
+->Desired browser and Cross browser can be achieved by using <parameter> tag and @Parameters annotation
+->Create testng.xml file and use Parameter tag to pass data
+->Add required classes containing test methods
+->Pass browser name and OS to Base Class setup() from testng.xml file
+
+testing.xml file
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Practice Suite">
+    <test name="Test Basics 1">
+        <parameter name="os" value="windows"></parameter>
+        <parameter name="browser" value="chrome"></parameter>
+        <classes>
+            <class name="testcases.TC01AccountRegistrationtest"/>
+        </classes>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->
+
+Base class setup()
+    @BeforeClass
+    @Parameters({"os", "browser"})
+    void setup(String osName, String browserName) throws InterruptedException {
+        logger = LogManager.getLogger(this.getClass());
+
+        switch (browserName.toLowerCase()) {
+            case "chrome" -> driver = new ChromeDriver();
+            case "firefox" -> driver = new FirefoxDriver();
+            case "edge" -> driver = new EdgeDriver();
+            default -> {
+                System.out.println("Invalid Browser");
+                return;
+            }
+        }
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get("https://demo.opencart.com/en-gb?route=account/register");
+    }
+
+5.2: Cross Browser testing
+->Configure Testng.xml file 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Practice Suite">
+    <test name="chrometest">
+        <parameter name="os" value="windows"></parameter>
+        <parameter name="browser" value="chrome"></parameter>
+        <classes>
+            <class name="testcases.TC01AccountRegistrationtest"/>
+        </classes>
+    </test> <!-- Test -->
+
+    <test name="firefoxtest">
+        <parameter name="os" value="windows"></parameter>
+        <parameter name="browser" value="firefox"></parameter>
+        <classes>
+            <class name="testcases.TC01AccountRegistrationtest"/>
+        </classes>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->
+
+5.3: Parallel testing with Cross browser
+->Add parallel="tests" attribute in Suite tag
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Practice Suite" parallel="tests">
+    <test name="chrometest">
+        <parameter name="os" value="windows"></parameter>
+        <parameter name="browser" value="chrome"></parameter>
+        <classes>
+            <class name="testcases.TC01AccountRegistrationtest"/>
+        </classes>
+    </test> <!-- Test -->
+
+    <test name="firefoxtest">
+        <parameter name="os" value="windows"></parameter>
+        <parameter name="browser" value="firefox"></parameter>
+        <classes>
+            <class name="testcases.TC01AccountRegistrationtest"/>
+        </classes>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->
