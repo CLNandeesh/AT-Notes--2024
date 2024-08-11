@@ -171,5 +171,54 @@ password.txt //to ignore password.txt file
 *.mp4 //to ignore all mp4 files
 
 //stash
-->
+->To save existing changes to temporary memory and came back and work on later without adding to staging area
+
+Ex:
+work on file 1
+git stash //save file 1 details in temporary memory without adding to staging area
+work on other file file2
+git status //sows only file2 not file 1
+add commit. this will commit only file 2 not file 1
+now need to work on file 1
+git stash list //shows all stash
+git stash pop //go to recent stash , file 1
+work on it file 1, add and commit
+
+To go to any specific stash
+git stash apply stash@{1} 
+ 
+To move to temporary memory all the current changes without adding to staging
 git stash
+To come back to it 
+git pop
+To come back to specific stash
+git stash apply stash@{1}
+
+//Blame
+->To see all modification details of specific files, commit. 
+Ex:
+git blame <filenamewithextension>
+git blame <commitid>
+
+//branching
+master branch >production env
+release branch >qa env
+develop branch >dev env
+feature branch  >dev local laptop
+
+
+Pull request flow
+Create feature branch from develop branch
+work on feature branch
+merge feature branch to develop branch by creating pull request
+merge develop branch to release branch by creating pull request
+merge release branch to production branch by creating pull request
+
+Ex: 
+git branch <branchname>
+git switch <branchname>
+git checkout <branchname>
+
+
+
+
