@@ -1,6 +1,7 @@
 Devops Contents
 ===============
 Introduction to Devops
+Linux commands
 Git and Github
 
 
@@ -20,114 +21,155 @@ Ex: 6 java file
 Converted to Binary files[Bytecodes]->Single Zip[JAR]
 Deploy single Zip file to Server
 
-Git and GitHub
-==============
 Linux Commands
---------------
-//To clear the screen
-clear
+==============
+//clear
+->To clear the screen
 
-//To list the file
-ls
 
-//To list hidden files
-ls -a
+//ls
+->To list files
+Ex:
+ls  //to list all files
+ls -a //to list hidden files
+ls -l //to list files in details
+ls -la //to list hidden files in details
 
-//To list files in details[long listing]
-ls -l
+//touch
+->To create new files
+Ex:
+touch filenamewithextension
+touch filenamewithextension filenamewithextension
+touch .filenamewithextension //to create hidden file
 
-//To list hidden files in details
-ls -la 
-
-//To create the file
-touch filenamewithextension filenamewithextension 
-
-//To create hidden file
-touch .filenamewithextension
-
-//To remove file
+//rm, rmdir
+->To remove file
+Ex:
 rm filenamewithextension
 rm filename* 
-
-//To create directory
-mkdir directoryname directoryname
-
-//To delete folder
+rm -rf filename foldername
 rm -rf foldername
 rm -rf foldername*
 rmdir foldername foldername
 
-//Changing directory
+//mkdir
+->To create directory
+Ex:
+mkdir directoryname directoryname
+
+
+//cd
+>To change working directory
+Ex:
 cd directoryname
 
-//To move back one above folder
+//cd
+->To move back one above folder
+Ex:
 cd ..
 
-//To check present working directory
-pwd
+//pwd
+->To check present working directory
 
-//To know current user
-whoami
+//whoami
+->To know current user
 
-//To know date
-date
+//date
+->To know date
 
-//To see content of the file
+//cat
+->To see content of the file
 cat filenamewithextension
 
-Git Commands
-------------
-//To initialize the local repo
+Git and Github Commands
+=======================
+//init
+->To initialize the local repo
+Ex:
 git init
 
-//To check the status
+//status
+->To check the status
+Ex:
 git status
+Red: Not added to staging area
+Green: Added to staging area but not committed
 
-//To add to staging area
+//add
+->To add to staging area
+Ex:
 git add filenamewithextension filenamewithextension
 git add .
 
-Red: Not added to staging area
-Green: Added to staging area but not commited
+//commit
+->To add to local repo from staging area
+Ex:
+git commit -m <commit message>
+git commit -am <commit message> //To add and commit at once , but initially once it has to be added
 
-//To add to local repo
-git commit -m "commit message"
+//config
+->To configure User at first time
+Ex:
+git config --global user.email <email>
+git config --global user.name <name>
+git config --list //to see all configuration details
 
-//To configure User at first time
-git config --global user.email "email"
-git config --global user.name "name"
 
-//To check config details
-git config
-
-//To See all commit details
+//log
+->To See all commit details
+Ex:
 git log 
 git log --oneline
 
-//To add from local to remote
+//push
+->To add from local to remote
+Ex:
 git push
 
-//To add from remote to workspace
+//pull
+->To add from remote to workspace
+Ex:
 git pull
 
-//To add from remote to local
+//fetch
+->To add from remote to local
+Ex:
 git fetch
 
-//To clone the repo from remote to local
+//clone
+->To clone the repo from remote to local
+Ex:
 git clone <url>
 
-//Create new repo and clone to local
-Create repo in remote
-Clone to Local  using git clone <url>
-Initialize local repo using git init
+//Create and Clone repo
+->Create new repo and clone to local
+->Create repo in remote
+->Clone to Local  using git clone <url>
+->Initialize local repo using git init
 
-//To see all configuration
-git config --list
-
-//To create alias for commands
+//alias
+->To create alias for commands
+Ex:
 git config --global alias.st status
-git status can be replaced with git st
+->git status can be replaced with git st
+git st
 
-//To see the difference between 2 files before adding to staging area
-git diff 
+//diff
+->To see the modified file details[before adding to be used]
+Ex:
+git diff //to see all modified files details 
+git diff <filename> //to see modified details of specific file
 
+//.gitignore
+>To ignore specific files not pushing to local/remote repo
+->Add all those file/folder names into .gitignore file
+->git status , will not show above file details as part of staging area
+
+Ex: 
+*.zip //to ignore all zip files
+password.txt //to ignore password.txt file
+*.mp4 //to ignore all mp4 files
+
+//stash
+->
+git stash
