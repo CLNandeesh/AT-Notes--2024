@@ -83,7 +83,7 @@ git init
 //To check the status
 git status
 
-//To add to staging are
+//To add to staging area
 git add filenamewithextension filenamewithextension
 git add .
 
@@ -113,9 +113,21 @@ git pull
 //To add from remote to local
 git fetch
 
-//To clone the repo
+//To clone the repo from remote to local
 git clone <url>
 
 //Create new repo and clone to local
-Create repo
+Create repo in remote
+Clone to Local  using git clone <url>
+Initialize local repo using git init
+
+//To see all configuration
+git config --list
+
+//To create alias for commands
+git config --global alias.st status
+git status can be replaced with git st
+
+//To see the difference between 2 files before adding to staging area
+git diff 
 
