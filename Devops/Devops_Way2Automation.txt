@@ -219,6 +219,18 @@ git branch <branchname>
 git switch <branchname>
 git checkout <branchname>
 
+Branching strategy
+->Create branch from main in GitHub say august
+->Fetch the new branch to local using
+git fetch
+->Checkout to new branch august
+git checkout august
+git switch august
+->Work on this branch
+->Add, Commit this local branch august data to remote branch august 
+git add .; git commit -m "new branch"; git push origin august
+->Create pull request to merge august branch data to main branch
 
+->
 
 
