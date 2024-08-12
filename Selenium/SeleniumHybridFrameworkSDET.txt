@@ -1,14 +1,39 @@
 Selenium Hybrid Automation Framework
 ====================================
+->Objective
+->Types of Framework
+->Phases or Stages
+->AUT
+->Components
+->Framework Creation Steps 
+	Step 1: Create maven project add dependency
+	Step 2: Create Project Structure
+	Step 3: Implementation of POC , Base Class and Test case class
+		3.1 Create Base Page class
+		3.2 Create Page Object class
+		3.3 Create Test case class and methods
+		3.4 Create Base Class under testbase package 
+	Step 4:Adding Logs
+	Step 5: Run Tests on Desired browser/Cross browser/Parallel testing
+		5.1: Desired browser testing
+		5.2: Cross Browser testing
+		5.3: Parallel testing with Cross browser
+	Step 6 Reading Common values from properties file
+	Step 7 Data driven Testing
+	Step 8: Grouping Test cases
+	Step 9: Add Extent reports
+	Step 10: Run failed test cases
+
+*********************************************************************************************************************************************************
 Objective of Framework
-----------------------
+======================
 ->Modularity
 ->Maintenance
 ->Reusability
 
 *********************************************************************************************************************************************************
 Types of Framework
-------------------
+==================
 Built In : 
 ->Test Ng, Junit, Cucumber, ...
 
@@ -18,7 +43,7 @@ Customized:
 
 *********************************************************************************************************************************************************
 Phases/Stages
--------------
+=============
 ->Analysing AUT
    No of pages
    What are all the elements/How/Type
@@ -47,7 +72,7 @@ Maintenance and Execution
 
 *********************************************************************************************************************************************************
 AUT
----
+===
 Domain: 
   ECommerce 
     Online shopping application
@@ -57,7 +82,7 @@ URL: https://demo.opencart.com/admin/
 
 *********************************************************************************************************************************************************
 Components
-----------
+==========
 Java: Programming language
 Selenium: Automation framework
 Test NG: Unit testing framework
@@ -104,34 +129,107 @@ CI/CD
 ->Git, GitHub and Jenkins
 
 *********************************************************************************************************************************************************
-Steps
------
+Framework Creation Steps
+========================
 Step 1: Create maven project add dependency
 -------------------------------------------
+Ex:
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-Reporting:
-extentreports
+    <groupId>org.appu</groupId>
+    <artifactId>SeleniumSDET</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
-Logging:
-log4j-slf4j-impl
-log4j
-log4j-core
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-Excel data:
-poi-ooxml
-poi
+    <dependencies>
 
-Common utility:
-commons-lang3
-commons-io
+        <!-- SELENIUM-->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.20.0</version>
+        </dependency>
 
-Unit testing:
-testing
+        <!-- TESTNG-->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.10.2</version>
+            <scope>test</scope>
+        </dependency>
 
-UI Automation:
-selenium-java
+        <!-- COMMONS: For common utilities methods-->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.16.1</version>
+        </dependency>
 
-Step 2 Create Project Structure
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.15.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+
+        <!-- APACHE POI: For Excel activities-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.3.0</version>
+        </dependency>
+
+        <!-- LOG4J: For Logs-->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.23.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.23.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- EXTENT REPORT: For Reporting-->
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>5.1.2</version>
+        </dependency>
+
+    </dependencies>
+</project>
+
+Step 2: Create Project Structure
 --------------------------------
 
 Step 3: Implementation of POC , Base Class and Test case class
@@ -141,8 +239,8 @@ Step 3: Implementation of POC , Base Class and Test case class
 ->Create a BasePage class under pageobjects package
 ->Contains Constructor to initialize Web elements of all the Page Object classes.
 
+Ex:
 public class BasePage {
-
     WebDriver driver;
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -153,7 +251,7 @@ public class BasePage {
 
 3.2 Create Page Object class
 ----------------------------
-->Create required Page Object Classes for all required pages and extends BasePage class under pageobjects package
+->Create required Page Object Class under pageobjects package for all required pages and extends BasePage class 
 ->Add Constructor containing super() to call parent class constructor
 ->Identify Webelement using @FindBy annotation
 ->Add Action methods
@@ -180,10 +278,10 @@ public class HomePage extends BasePage {
 
 }
 
-3.3 Create Test case
----------------------
-->Create Test case under testcases package and extends BaseClass
-->This class should contains methods to call POC action methods and to perform validations.
+3.3 Create Test case class and methods
+--------------------------------------
+->Create Test case class under testcases package and extends BaseClass
+->Create Test methods to call POC action methods and to perform validations.
 
 Ex:
 public class TC01AccountRegistrationtest extends BaseClass{
@@ -208,12 +306,12 @@ public class TC01AccountRegistrationtest extends BaseClass{
 
 3.4 Create Base Class under testbase package 
 --------------------------------------------
-->Keep all setup and teardown method
-->All Test case class should extends this class
+->Keep all setup, teardown and screenshot methods
+->All Test case class should extends this BaseClass
 
 Ex:
 public class BaseClass {
-    public WebDriver driver;
+    public static WebDriver driver;
 
     @BeforeClass
     void setup() throws InterruptedException {
@@ -240,8 +338,39 @@ Above two should be updated in log4j2.xml file
 
 Steps:
 ->Add dependency
-->Add log4j2.xml configuration file into src/test/resources folder
-log4j2.xml
+->Add log4j2.xml configuration file into src/test/resources folder ->log4j2.xml
+->Update BaseClass
+->In setup() load Log4j xml file
+public Logger logger;
+logger = LogManager.getLogger(this.getClass());
+
+->Add Log statements in required class
+log.info()
+log.debug()
+log.error()
+
+Packages:
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+Note: Loggers>Root level if we make Off then it wont generate any logs
+
+
+//What type of Logs and COnsole or File log setting to be made here
+    <Loggers>
+        <Root level="INFO">    //what type of log level needed
+            <!--<AppenderRef ref="Console"/>-->  //Do we need console logs
+            <AppenderRef ref="File"/>            //Do we need file logs
+        </Root>
+    </Loggers>
+
+//Location configurations
+    <Properties>
+        <Property name="log-path">./logs</Property>
+        <Property name="log-pattern">%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</Property>
+    </Properties>
+
+Ex:log4j2.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="INFO">
     <Properties>
@@ -274,46 +403,87 @@ log4j2.xml
 </Configuration>
 
 
-//What type of Logs and COnsole or File log setting to be made here
-    <Loggers>
-        <Root level="INFO">    //what type of log level needed
-            <!--<AppenderRef ref="Console"/>-->  //Do we need console logs
-            <AppenderRef ref="File"/>            //Do we need file logs
-        </Root>
-    </Loggers>
 
-//Location configurations
-    <Properties>
-        <Property name="log-path">./logs</Property>
-        <Property name="log-pattern">%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</Property>
-    </Properties>
-
-->Update BaseClass
-->In setup() load Log4j xml file
-public Logger logger;
-logger = LogManager.getLogger(this.getClass());
-
-->Add Log statements in required class
-log.info()
-log.debug()
-log.error()
-
-Packages:
+Ex:
+package testcases;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-Note: Loggers>Root level if we make Off then it wont generate any logs
+public class BaseClass {
+    public static WebDriver driver;
+    public Logger logger;
+    public Properties properties;
+
+    @BeforeClass
+    @Parameters({"os", "browser"})
+    void setup(String osName, String browserName) throws InterruptedException, IOException {
+        
+        //Logging
+        logger = LogManager.getLogger(this.getClass());
+
+        //Properties file reading
+        FileReader fileReader = new FileReader("./src//test//resources//config.properties");
+        properties = new Properties();
+        properties.load(fileReader);
+        String loginURL = properties.getProperty("url");
+
+        switch (browserName.toLowerCase()) {
+            case "chrome" -> driver = new ChromeDriver();
+            case "firefox" -> driver = new FirefoxDriver();
+            case "edge" -> driver = new EdgeDriver();
+            default -> {
+                System.out.println("Invalid Browser");
+                return;
+            }
+        }
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        System.out.println("URL is:" + loginURL);
+        driver.get(loginURL);
+    }
+
+}
+
+Ex: Test methods 
+public class TC02Logintest extends  BaseClass{
+
+    @Test(groups = {"sanity"})
+    void validateLoginWithValidCredentials() throws InterruptedException {
+        try {
+
+            logger.info("validateLoginWithValidCredentials Started");
+            LoginPage loginPage=new LoginPage(driver);
+            loginPage.enterEmail("nandeesh.apjkalam@gmail.com");
+            loginPage.enterPassword("Apjkalam!123");
+            loginPage.clickLogin();
+
+            MyAccountPage myAccountPage=new MyAccountPage(driver);
+            boolean status=myAccountPage.isMyAcccountTextDisplayed();
+            Assert.assertEquals(status,true);
+            logger.info("validateLoginWithValidCredentials Ended");
+
+        } catch (Exception e) {
+            logger.error("Test case failed");
+            logger.debug("Debug Logs");
+            Assert.fail();
+        }
+
+    }
+}
+
 
 Step 5: Run Tests on Desired browser/Cross browser/Parallel testing
 -------------------------------------------------------------------
 5.1: Desired browser testing
-
-->Desired browser and Cross browser can be achieved by using <parameter> tag and @Parameters annotation
-->Create testng.xml file and use Parameter tag to pass data
+----------------------------
+->Desired browser and Cross browser can be achieved by using <parameter> tag in xml file and @Parameters annotation in test, setup, teardown methods
+<parameter name="browser" value="chrome"></parameter>
+@Parameters({"os", "browser"})
+->Create testng.xml file and use parameter tag to pass data
 ->Add required classes containing test methods
 ->Pass browser name and OS to Base Class setup() from testng.xml file
 
-testing.xml file
+Ex: testing.xml file
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Practice Suite">
@@ -326,6 +496,7 @@ testing.xml file
     </test> <!-- Test -->
 </suite> <!-- Suite -->
 
+Ex: Base class which accepts data
 Base class setup()
     @BeforeClass
     @Parameters({"os", "browser"})
@@ -347,8 +518,11 @@ Base class setup()
     }
 
 5.2: Cross Browser testing
+--------------------------
 ->Configure Testng.xml file 
+->Specify browser value in xml file
 
+Ex:
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Practice Suite">
@@ -370,11 +544,14 @@ Base class setup()
 </suite> <!-- Suite -->
 
 5.3: Parallel testing with Cross browser
-->Add parallel="tests" attribute in Suite tag
+----------------------------------------
+->Add parallel="tests" attribute in Suite tag and also specify thread count
+thread-count="5"
+parallel="tests"
 
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Practice Suite" parallel="tests">
+<suite name="Practice Suite" thread-count="5" parallel="tests">
     <test name="chrometest">
         <parameter name="os" value="windows"></parameter>
         <parameter name="browser" value="chrome"></parameter>
@@ -393,21 +570,20 @@ Base class setup()
 </suite> <!-- Suite -->
 
 Step 6 Reading Common values from properties file
----------------------------------------------
+-------------------------------------------------
 ->Add config.properties file under src/test/resources
 ->Update Base class setup() for loading config.properties file
 ->Get the value and use it using getProperty()
 
-config.properties
+Ex: config.properties[key=vale]
 registerAppURL=https://demo.opencart.com/en-gb?route=account/register\
 
-Base Class
+Ex: Base Class
 
 import java.util.Properties;
 
 public class BaseClass {
     public Properties properties;
-
 
     @BeforeClass
     void setup() throws InterruptedException, IOException {
@@ -423,6 +599,27 @@ public class BaseClass {
 
 Step 7 Data driven Testing
 ---------------------------
+Data provider method
+public class DataProviders {
+
+	@DataProvider(name="LoginData")
+	public String [][] getData() throws IOException
+	{
+         	return logindata;//returning two dimension array			
+	}
+	
+}
+DDT Test method
+public class TC003LoginDDTtest extends BaseClass {
+    @Test(dataProvider = "LoginData", dataProviderClass = DataProviders.class)
+    void validateLoginDDT(String email, String password, String exp) throws InterruptedException {
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
+        loginPage.clickLogin();
+    }
+}
+ 
 ->Prepare test data in excel and keep it in testdata folder
 ->Create ExcelUtility class under utilities package
      It has all methods to get row count, column count, get data, set data,..
@@ -513,11 +710,168 @@ public class TC003LoginDDTtest extends BaseClass {
     }
 }
  
+Ex: Excel utility class
+package utilities;
+
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class ExcelUtility {
+
+	public FileInputStream fi;
+	public FileOutputStream fo;
+	public XSSFWorkbook workbook;
+	public XSSFSheet sheet;
+	public XSSFRow row;
+	public XSSFCell cell;
+	public CellStyle style;   
+	String path;
+	
+	public ExcelUtility(String path)
+	{
+		this.path=path;
+	}
+		
+	public int getRowCount(String sheetName) throws IOException 
+	{
+		fi=new FileInputStream(path);
+		workbook=new XSSFWorkbook(fi);
+		sheet=workbook.getSheet(sheetName);
+		int rowcount=sheet.getLastRowNum();
+		workbook.close();
+		fi.close();
+		return rowcount;		
+	}
+	
+	public int getCellCount(String sheetName,int rownum) throws IOException
+	{
+		fi=new FileInputStream(path);
+		workbook=new XSSFWorkbook(fi);
+		sheet=workbook.getSheet(sheetName);
+		row=sheet.getRow(rownum);
+		int cellcount=row.getLastCellNum();
+		workbook.close();
+		fi.close();
+		return cellcount;
+	}
+	
+	
+	public String getCellData(String sheetName,int rownum,int colnum) throws IOException
+	{
+		fi=new FileInputStream(path);
+		workbook=new XSSFWorkbook(fi);
+		sheet=workbook.getSheet(sheetName);
+		row=sheet.getRow(rownum);
+		cell=row.getCell(colnum);
+		
+		DataFormatter formatter = new DataFormatter();
+		String data;
+		try{
+		data = formatter.formatCellValue(cell); //Returns the formatted value of a cell as a String regardless of the cell type.
+		}
+		catch(Exception e)
+		{
+			data="";
+		}
+		workbook.close();
+		fi.close();
+		return data;
+	}
+	
+	public void setCellData(String sheetName,int rownum,int colnum,String data) throws IOException
+	{
+		File xlfile=new File(path);
+		if(!xlfile.exists())    // If file not exists then create new file
+		{
+		workbook=new XSSFWorkbook();
+		fo=new FileOutputStream(path);
+		workbook.write(fo);
+		}
+				
+		fi=new FileInputStream(path);
+		workbook=new XSSFWorkbook(fi);
+			
+		if(workbook.getSheetIndex(sheetName)==-1) // If sheet not exists then create new Sheet
+			workbook.createSheet(sheetName);
+		sheet=workbook.getSheet(sheetName);
+					
+		if(sheet.getRow(rownum)==null)   // If row not exists then create new Row
+				sheet.createRow(rownum);
+		row=sheet.getRow(rownum);
+		
+		cell=row.createCell(colnum);
+		cell.setCellValue(data);
+		fo=new FileOutputStream(path);
+		workbook.write(fo);		
+		workbook.close();
+		fi.close();
+		fo.close();
+	}
+	
+	
+	public void fillGreenColor(String sheetName,int rownum,int colnum) throws IOException
+	{
+		fi=new FileInputStream(path);
+		workbook=new XSSFWorkbook(fi);
+		sheet=workbook.getSheet(sheetName);
+		
+		row=sheet.getRow(rownum);
+		cell=row.getCell(colnum);
+		
+		style=workbook.createCellStyle();
+		
+		style.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+		style.setFillPattern(FillPatternType.SOLID_FOREGROUND); 
+				
+		cell.setCellStyle(style);
+		workbook.write(fo);
+		workbook.close();
+		fi.close();
+		fo.close();
+	}
+	
+	
+	public void fillRedColor(String sheetName,int rownum,int colnum) throws IOException
+	{
+		fi=new FileInputStream(path);
+		workbook=new XSSFWorkbook(fi);
+		sheet=workbook.getSheet(sheetName);
+		row=sheet.getRow(rownum);
+		cell=row.getCell(colnum);
+		
+		style=workbook.createCellStyle();
+		
+		style.setFillForegroundColor(IndexedColors.RED.getIndex());
+		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+		
+		cell.setCellStyle(style);		
+		workbook.write(fo);
+		workbook.close();
+		fi.close();
+		fo.close();
+	}
+	
+}
+
 Step 8: Grouping Test cases
 ---------------------------
 ->Use groups attribute for @Test,@BeforeClass @AfterClass methods  
 Ex:
 @Test(groups={"sanity"})
+@BeforeClass(groups = {"sanity"})
+@AfterClass(groups = {"sanity"})
 
 ->In Testng.xml specify the groups method to be executed inside suite tag
 
@@ -539,4 +893,203 @@ Ex:
     </test> <!-- Test -->
 </
 
+Step 9: Add Extent reports
+--------------------------
+->Create ExtentReportUtility[ExtentReportManager] class under utilities package
+	ExtentReportManager class implements ITestListener interface
+           Usses three classes
+		    public ExtentSparkReporter sparkReporter;
+    		    public ExtentReports extent;
+    		    public ExtentTest test; //Method level
+	Implements below methods
+		onStart
+                   Report Configuration [ExtentSparkReporter,ExtentReports]
+ 		onTestSuccess [ExtentTest]
+		   Update status as Pass
+		onTestFailure [ExtentTest]
+                   Takes screenshot, attach to report and update status as fail
+		onTestSkipped[ExtentTest]
+		    Update tatus as Skipped
+		onFinish [ExtentReports]
+		    Flush the report
+
+->Add captureScreen() method in Baseclass
+	TakesScreenshot and getScreenshotAs()
+
+Ex:
+    public String captureScreen(String tname) throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
+        TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
+        File sourceFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
+        String targetFilePath = System.getProperty("user.dir") + "\\screenshots\\" + tname + "_" + timeStamp + ".png";
+        File targetFile = new File(targetFilePath);
+        sourceFile.renameTo(targetFile);
+        return targetFilePath;
+    }
+
+
+->Add ExtentReportUtility(Listener Class) in Testng.xml file
+Ex:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Practice Suite">
+    <listeners>
+        <listener class-name="utilities.ExtentReportManager"/>
+    </listeners>
+    
+    <test name="Test Basics 1">
+        <parameter name="os" value="windows"></parameter>
+        <parameter name="browser" value="chrome"></parameter>
+        <classes>
+            <class name="testcases.TC003LoginDDTtest"/>
+        </classes>
+    </test> <!-- Test -->
+</suite> 
+->Make sure Webdriver is static in Base class, same driver reference will be used in ExtentreportUtility
+
+Ex: Excl Utiities class [ExtentReportManager]
+package utilities;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.ImageHtmlEmail;
+import org.apache.commons.mail.resolver.DataSourceUrlResolver;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
+import testcases.BaseClass;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+public class ExtentReportManager implements ITestListener {
+    public ExtentSparkReporter sparkReporter;
+    public ExtentReports extent;
+    public ExtentTest test;
+
+    String repName;
+
+    public void onStart(ITestContext testContext) {
+		
+		/*SimpleDateFormat df=new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
+		Date dt=new Date();
+		String currentdatetimestamp=df.format(dt);
+		*/
+
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());// time stamp
+        repName = "Test-Report-" + timeStamp + ".html";
+        sparkReporter = new ExtentSparkReporter(".\\reports\\" + repName);// specify location of the report
+
+        sparkReporter.config().setDocumentTitle("opencart Automation Report"); // Title of report
+        sparkReporter.config().setReportName("opencart Functional Testing"); // name of the report
+        sparkReporter.config().setTheme(Theme.DARK);
+
+        extent = new ExtentReports();
+        extent.attachReporter(sparkReporter);
+        extent.setSystemInfo("Application", "opencart");
+        extent.setSystemInfo("Module", "Admin");
+        extent.setSystemInfo("Sub Module", "Customers");
+        extent.setSystemInfo("User Name", System.getProperty("user.name"));
+        extent.setSystemInfo("Environemnt", "QA");
+
+        String os = testContext.getCurrentXmlTest().getParameter("os");
+        extent.setSystemInfo("Operating System", os);
+
+        String browser = testContext.getCurrentXmlTest().getParameter("browser");
+        extent.setSystemInfo("Browser", browser);
+
+        List<String> includedGroups = testContext.getCurrentXmlTest().getIncludedGroups();
+        if (!includedGroups.isEmpty()) {
+            extent.setSystemInfo("Groups", includedGroups.toString());
+        }
+    }
+
+    public void onTestSuccess(ITestResult result) {
+
+        test = extent.createTest(result.getTestClass().getName());
+        test.assignCategory(result.getMethod().getGroups()); // to display groups in report
+        test.log(Status.PASS, result.getName() + " got successfully executed");
+
+    }
+
+    public void onTestFailure(ITestResult result) {
+        test = extent.createTest(result.getTestClass().getName());
+        test.assignCategory(result.getMethod().getGroups());
+
+        test.log(Status.FAIL, result.getName() + " got failed");
+        test.log(Status.INFO, result.getThrowable().getMessage());
+
+        try {
+            String imgPath = new BaseClass().captureScreen(result.getName());
+            test.addScreenCaptureFromPath(imgPath);
+
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void onTestSkipped(ITestResult result) {
+        test = extent.createTest(result.getTestClass().getName());
+        test.assignCategory(result.getMethod().getGroups());
+        test.log(Status.SKIP, result.getName() + " got skipped");
+        test.log(Status.INFO, result.getThrowable().getMessage());
+    }
+
+    public void onFinish(ITestContext testContext) {
+
+        extent.flush();
+
+		//To open report once test is executed
+        String pathOfExtentReport = System.getProperty("user.dir") + "\\reports\\" + repName;
+        File extentReport = new File(pathOfExtentReport);
+
+
+        try {
+            Desktop.getDesktop().browse(extentReport.toURI());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+		//To send report in email after execution
+		 try {
+			  URL url = new URL("file:///"+System.getProperty("user.dir")+"\\reports\\"+repName);
+
+		  // Create the email message
+		  ImageHtmlEmail email = new ImageHtmlEmail();
+		  email.setDataSourceResolver(new DataSourceUrlResolver(url));
+		  email.setHostName("smtp.googlemail.com");
+		  email.setSmtpPort(465);
+		  email.setAuthenticator(new DefaultAuthenticator("nandeesh.apjkalam@gmail.com","Apjkalam!123"));
+		  email.setSSLOnConnect(true);
+		  email.setFrom("nandeesh.apjkalam@gmail.com"); //Sender
+		  email.setSubject("Test Results");
+		  email.setMsg("Please find Attached Report....");
+		  email.addTo("appuismyhero@gmail.com"); //Receiver
+		  email.attach(url, "extent report", "please check report...");
+		  email.send(); // send the email
+		  }
+		  catch(Exception e)
+		  {
+			  e.printStackTrace();
+			  }
+
+
+    }
+
+}
+
+Step 10: Run failed test cases
+------------------------------
+->Under test-output folder
+    Run testng-failed.xml file
+  	This xml contains only previous failed test cases details
 
