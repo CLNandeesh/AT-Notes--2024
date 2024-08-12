@@ -421,6 +421,122 @@ public class BaseClass {
 
 }
 
-Step 7 Datadriven Testing
--------------------------
+Step 7 Data driven Testing
+---------------------------
+->Prepare test data in excel and keep it in testdata folder
+->Create ExcelUtility class under utilities package
+     It has all methods to get row count, column count, get data, set data,..
+     Need to create object for this class by passing the path and use those methods
+->Create DataProviders class[@DataProvider] and keep in utilities package
+     Create dataProvider method getdata() inside it 
+        Create Object for ExcelUtility by passing Excel test data file path, use those methods present in ExcelUtility class and read the test data from excel, put into 2D array and return it to calling method[test case method]
+->Create Datadriver Testcase method
+  Accept data from dataProvider method
+
+@Test(dataProvider = "LoginData", dataProviderClass = DataProviders.class)
+Arg 1: Data provider name
+Arg 2: Data provider class name, sinc its in other package else its optional
+
+
+Ex: Data Provider class containing getData() method which will send data in form of 2d array to data driven test case methods
+public class DataProviders {
+
+	@DataProvider(name="LoginData")
+	public String [][] getData() throws IOException
+	{
+		String path=".\\testData\\Opencart_LoginData.xlsx";//taking xl file from testData
+		
+		ExcelUtility xlutil=new ExcelUtility(path);//creating an object for XLUtility
+		
+		int totalrows=xlutil.getRowCount("Sheet1");	
+		int totalcols=xlutil.getCellCount("Sheet1",1);
+				
+		String logindata[][]=new String[totalrows][totalcols];//created for two dimension array which can store the data user and password
+		
+		for(int i=1;i<=totalrows;i++)  //1   //read the data from xl storing in two deminsional array
+		{		
+			for(int j=0;j<totalcols;j++)  //0    i is rows j is col
+			{
+				logindata[i-1][j]= xlutil.getCellData("Sheet1",i, j);  //1,0
+			}
+		}
+	return logindata;//returning two dimension array
+				
+	}
+	
+}
+
+Ex: DDT Method
+package testcases;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import pageobjects.LoginPage;
+import pageobjects.MyAccountPage;
+import utilities.DataProviders;
+
+public class TC003LoginDDTtest extends BaseClass {
+    @Test(dataProvider = "LoginData", dataProviderClass = DataProviders.class)
+    void validateLoginDDT(String email, String password, String exp) throws InterruptedException {
+        logger.info("validateLoginDDT Started");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
+        loginPage.clickLogin();
+
+        MyAccountPage myAccountPage = new MyAccountPage(driver);
+        boolean status = myAccountPage.isMyAcccountTextDisplayed();
+
+        /*
+        Valid data: Login success    PASS
+                    Login fail       FAIL
+        In Valid data: Login success FAIL
+                       Login fail    PASS
+        */
+
+        if (exp.equalsIgnoreCase("valid")) {
+            if (status == true) {
+                Assert.assertTrue(true);
+                myAccountPage.clickLogout();
+            } else {
+                Assert.assertTrue(false);
+            }
+        } else if (exp.equalsIgnoreCase("invalid")) {
+            if (status == true) {
+                Assert.assertTrue(false);
+                myAccountPage.clickLogout();
+            } else {
+                Assert.assertTrue(true);
+            }
+        }
+        logger.info("validateLoginDDT Ended");
+    }
+}
+ 
+Step 8: Grouping Test cases
+---------------------------
+->Use groups attribute for @Test,@BeforeClass @AfterClass methods  
+Ex:
+@Test(groups={"sanity"})
+
+->In Testng.xml specify the groups method to be executed inside suite tag
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Practice Suite">
+    <groups>
+        <run>
+            <include name="sanity"/>
+            <exclude name="regression"></exclude>
+        </run>
+    </groups>
+    <test name="Test Basics 1">
+        <parameter name="os" value="windows"></parameter>
+        <parameter name="browser" value="chrome"></parameter>
+        <classes>
+            <class name="testcases.TC003LoginDDTtest"/>
+        </classes>
+    </test> <!-- Test -->
+</
+
 
