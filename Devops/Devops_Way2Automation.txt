@@ -1,0 +1,224 @@
+Devops Contents
+===============
+Introduction to Devops
+Linux commands
+Git and Github
+
+
+
+
+
+Introduction to Devops
+======================
+->Basic Devops-On Premises
+->Cloud Devops-AWS, Azure, GCP
+->Hybrid Model-On Premise Cloud
+->Container Devops- Kubernetes, Docker, OpenShift
+->Devsecops- Sonar cube
+
+Developer developed files
+Ex: 6 java file
+Converted to Binary files[Bytecodes]->Single Zip[JAR]
+Deploy single Zip file to Server
+
+Linux Commands
+==============
+//clear
+->To clear the screen
+
+
+//ls
+->To list files
+Ex:
+ls  //to list all files
+ls -a //to list hidden files
+ls -l //to list files in details
+ls -la //to list hidden files in details
+
+//touch
+->To create new files
+Ex:
+touch filenamewithextension
+touch filenamewithextension filenamewithextension
+touch .filenamewithextension //to create hidden file
+
+//rm, rmdir
+->To remove file
+Ex:
+rm filenamewithextension
+rm filename* 
+rm -rf filename foldername
+rm -rf foldername
+rm -rf foldername*
+rmdir foldername foldername
+
+//mkdir
+->To create directory
+Ex:
+mkdir directoryname directoryname
+
+
+//cd
+>To change working directory
+Ex:
+cd directoryname
+
+//cd
+->To move back one above folder
+Ex:
+cd ..
+
+//pwd
+->To check present working directory
+
+//whoami
+->To know current user
+
+//date
+->To know date
+
+//cat
+->To see content of the file
+cat filenamewithextension
+
+Git and Github Commands
+=======================
+//init
+->To initialize the local repo
+Ex:
+git init
+
+//status
+->To check the status
+Ex:
+git status
+Red: Not added to staging area
+Green: Added to staging area but not committed
+
+//add
+->To add to staging area
+Ex:
+git add filenamewithextension filenamewithextension
+git add .
+
+//commit
+->To add to local repo from staging area
+Ex:
+git commit -m <commit message>
+git commit -am <commit message> //To add and commit at once , but initially once it has to be added
+
+//config
+->To configure User at first time
+Ex:
+git config --global user.email <email>
+git config --global user.name <name>
+git config --list //to see all configuration details
+
+
+//log
+->To See all commit details
+Ex:
+git log 
+git log --oneline
+
+//push
+->To add from local to remote
+Ex:
+git push
+
+//pull
+->To add from remote to workspace
+Ex:
+git pull
+
+//fetch
+->To add from remote to local
+Ex:
+git fetch
+
+//clone
+->To clone the repo from remote to local
+Ex:
+git clone <url>
+
+//Create and Clone repo
+->Create new repo and clone to local
+->Create repo in remote
+->Clone to Local  using git clone <url>
+->Initialize local repo using git init
+
+//alias
+->To create alias for commands
+Ex:
+git config --global alias.st status
+->git status can be replaced with git st
+git st
+
+//diff
+->To see the modified file details[before adding to be used]
+Ex:
+git diff //to see all modified files details 
+git diff <filename> //to see modified details of specific file
+
+//.gitignore
+>To ignore specific files not pushing to local/remote repo
+->Add all those file/folder names into .gitignore file
+->git status , will not show above file details as part of staging area
+
+Ex: 
+*.zip //to ignore all zip files
+password.txt //to ignore password.txt file
+*.mp4 //to ignore all mp4 files
+
+//stash
+->To save existing changes to temporary memory and came back and work on later without adding to staging area
+
+Ex:
+work on file 1
+git stash //save file 1 details in temporary memory without adding to staging area
+work on other file file2
+git status //sows only file2 not file 1
+add commit. this will commit only file 2 not file 1
+now need to work on file 1
+git stash list //shows all stash
+git stash pop //go to recent stash , file 1
+work on it file 1, add and commit
+
+To go to any specific stash
+git stash apply stash@{1} 
+ 
+To move to temporary memory all the current changes without adding to staging
+git stash
+To come back to it 
+git pop
+To come back to specific stash
+git stash apply stash@{1}
+
+//Blame
+->To see all modification details of specific files, commit. 
+Ex:
+git blame <filenamewithextension>
+git blame <commitid>
+
+//branching
+master branch >production env
+release branch >qa env
+develop branch >dev env
+feature branch  >dev local laptop
+
+
+Pull request flow
+Create feature branch from develop branch
+work on feature branch
+merge feature branch to develop branch by creating pull request
+merge develop branch to release branch by creating pull request
+merge release branch to production branch by creating pull request
+
+Ex: 
+git branch <branchname>
+git switch <branchname>
+git checkout <branchname>
+
+
+
+
