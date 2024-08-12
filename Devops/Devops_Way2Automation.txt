@@ -227,7 +227,7 @@ git clean -n
 git clean -f
 
 //revert
-->To revert previous or specific commit
+->To revert previous or specific commit[delete all the changes from local repo, staging area and workspace]
 Ex:
 git show <commitid> //show all details of specific commit
 git revert <commit id> //whatever changes done as part of this commit will be deleted[deleted all files from that commit from workspace]
