@@ -23,7 +23,8 @@ Selenium Hybrid Automation Framework
 	Step 8: Grouping Test cases
 	Step 9: Add Extent reports
 	Step 10: Run failed test cases
-
+	Step 11: Running Test on Selenium Grid
+	Step 12: Docker integration with Selenium grid
 *********************************************************************************************************************************************************
 Objective of Framework
 ======================

@@ -1,0 +1,25 @@
+Devops Contents
+================
+
+
+
+Devops Fundamentals
+===================
+What is Devops
+--------------
+->Delivery improvement
+->A culture or process of improving  organizations application delivery by ensuring there is proper automation with maintaining code quality, ensuring there is continuous monitoring[Observability]and continuous testing in place.
+->Avoids manual process and fasten up application delivery process. 
+
+Delivery
+Bring the application present in developer local workspace to production environment where client can uses it.
+
+Why Devops
+----------
+->To bring the application present in developer local workspace to production environment where client can uses it.
+->To improve organizations application delivery.
+
+Roles:
+Automation, Ensure Quality, Ensure monitoring, and testing activities.
+Tools worked on 
+
