@@ -112,3 +112,20 @@ Tools worked on
 *******************************************************************************************************************************************************
 Day 2:
 ======
+Software Development Lifecycle
+------------------------------
+Requirement gathering and Planning  
+Define : Requirement documentations
+Design : LLD and HLD
+Develop <- Devops
+Test <- Devops
+Deploy <- Devops
+  High quality product
+
+Devops: 
+Develop->Code->Review and Push to Source code repo[GitHub]
+Testing ->QE 
+Deployment ->Push code to Production environment
+
+Day 3:
+======
