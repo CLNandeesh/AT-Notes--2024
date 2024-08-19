@@ -1,0 +1,131 @@
+Devops Contents
+================
+Day 1:
+What is Devops
+Why Devops
+
+Day 2:
+SDLC
+Real time project for Devops and SDLC
+
+Day 3:
+Virtual machines
+Real time project for a VM and how to solve them
+
+Day 4:
+VM Cont...
+
+Day 5:
+Linux basics
+
+Day 6:
+Basics Shell scripting
+
+Day 7:
+Advance Shell scripting
+Real time use cases
+
+Day 8:
+Shell scripting Interview questions
+
+Day 9:
+VCS
+GIT
+
+Day 10:
+GIT
+GitHub
+
+Day 11:
+GitHub
+Real time project for GitHub
+
+Day 12:
+AWS Basics
+
+Day 13 and 14:
+Configuration Management using Ansible
+Ansible Basics, Tower and Problems
+
+Day 15 and 16:
+Infrastructure as Code
+Terraform
+Cross Plane
+
+Day 17,18 and 19:
+AWS Intermediate level
+Real time project implementations for AWS
+
+Day 20:
+Project Management
+
+Day 21,22,23 and 24:
+CICD
+Live project with Jenkins, GitHub
+Interview Questions
+
+Day 25:
+Reporting and Escalations
+Service Now
+
+Day 26,27,28 and 29:
+Containerization
+Docker
+Docker Live projects
+
+Day 30,31,32,33 and 34:
+Container Orchestration Environments
+Kubernetes
+Kubernetes Live projects
+
+Day 35 and 36:
+AWS Advanced
+
+Day 37 and 38:
+Monitoring and Observability
+
+Day 39 and 40:
+Interview QA
+
+*******************************************************************************************************************************************************
+Day 1:
+======
+
+What is Devops
+--------------
+->Delivery improvement
+->A culture or process of improving  organizations application delivery by ensuring there is proper automation with maintaining code quality, ensuring there is continuous monitoring[Observability]and continuous testing in place.
+->Avoids manual process and fasten up application delivery process. 
+
+Delivery
+Bring the application present in developer local workspace to production environment where client can uses it.
+
+Why Devops
+----------
+->To bring the application present in developer local workspace to production environment where client can uses it.
+->To improve organizations application delivery.
+
+Roles:
+Automation, Ensure Quality, Ensure monitoring, and testing activities.
+Tools worked on 
+
+*******************************************************************************************************************************************************
+Day 2:
+======
+Software Development Lifecycle
+------------------------------
+Requirement gathering and Planning  
+Define : Requirement documentations
+Design : LLD and HLD
+Develop <- Devops
+Test <- Devops
+Deploy <- Devops
+  High quality product
+
+Devops: 
+Develop->Code->Review and Push to Source code repo[GitHub]
+Testing ->QE 
+Deployment ->Push code to Production environment
+
+Day 3:
+======

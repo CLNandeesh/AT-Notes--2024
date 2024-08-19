@@ -3,7 +3,7 @@ Devops Contents
 Introduction to Devops
 Linux commands
 Git and Github
-
+Maven Build tool
 
 
 
@@ -67,6 +67,7 @@ cd directoryname
 ->To move back one above folder
 Ex:
 cd ..
+cd ../../  //to come two folder back
 
 //pwd
 ->To check present working directory
@@ -80,6 +81,42 @@ cd ..
 //cat
 ->To see content of the file
 cat filenamewithextension
+->To create new file[if file already existed with same name that will be deleted]
+cat > filenamewithextension
+type any text
+ctrl Z To come out of editing mode
+->To add any content in already created file
+cat >>filenamewithextension
+type any text
+ctrl Z To come out of editing mode
+
+//vi editor commands
+->To create new file and enter into vi editor
+vi filenamewithextension
+Escape + i  //to get into editing mode where we can enter any text 
+type any text
+Escape : wq ! //to come out of editing mode and file
+
+//Navigation inside vi editor
+j //move down [down arrow key]
+k //move up [up arrow key]
+h //move left
+l //move right
+
+//Jumping words
+w //move forward one word
+b //move backward one word
+e //move to end of a word
+
+x   //delete the character under cursor
+u   //undo
+yy  //copy
+yw  //copy from cursor to end of the current word
+d  //delete from cursor to end of the line
+dw  //delete from cursor to end of the current word
+
+
+
 
 Git and Github Commands
 =======================
@@ -219,6 +256,79 @@ git branch <branchname>
 git switch <branchname>
 git checkout <branchname>
 
+//clean
+->To delete the file from workspace
+Ex:
+git clean -i
+git clean -n
+git clean -f
 
+//revert
+->To revert previous or specific commit[delete all the changes from local repo, staging area and workspace]
+Ex:
+git show <commitid> //show all details of specific commit
+git revert <commit id> //whatever changes done as part of this commit will be deleted[deleted all files from that commit from workspace]
+
+
+//restore
+->To remove changes from staging to local workspace [files wont be deleted]
+Ex:
+git restore --staged filenamewithextension filenamewithextension
+git restore --staged .
+
+//Merge Conflicts
+->Scenario
+Master branch:
+  file.java 
+     a=10;
+Release branch
+  file.java 
+     a=1000;
+Try to merge release to master
+  Results in merge conflict
+  Sit both dev with lead and keep either one or delete the PR, commit  and merge again
+->Same file modified by 2 or more dev and try to merge leads to merge conflict
+
+//reflog
+->Gives whole history wrt to master
+git reflog
+
+Maven Build tool
+================
+//mvn -v or maven -version
+->To see the version
+
+//mvn clean
+->To clean all target folder files[.class files, jar files,..] 
+->mvn clean -X  //to see in debug mode
+
+//mvn validate
+->Validates the project is correct and all necessary information is available.
+->mvn validate -X //to see in debug mode
+
+//mvn compile
+->To compile all source file and save .class files in target folder
+->mv compile -X //to see compilation in debug mode
+
+//mvn package
+->To create all jar files of all .class files based on projects configuration
+
+//mvn install
+->Installs the packaged JAR/WAR file into the local Maven repository, making it available for other projects to use
+
+//mvn test
+->Runs the tests using the testing framework specified in the project (like JUnit or TestNG)
+
+//mvn deploy
+->Deploys the packaged JAR/WAR file to a remote repository for sharing with other developers.
+
+
+Life cycle
+mvn clean  //cleans trgt folder
+mvn validate  //to check all files exist
+mvn compile //to compile source code
+mvn package //to create ajr files
+mvn install //to install all necessary jars
+mvn test  //to execute .class files
 
 
